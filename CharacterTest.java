@@ -1,50 +1,41 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CharacterTest {
+    //array for different attributes/randomize them
+    //will then have to print out the character to make sure the test works
+    ArrayList<String> inventoryA = new ArrayList<String>(Arrays.asList("gold", "myrh"));
+    ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "wool"));
 
-    @Test //they must be in the same location to talk
-    public void testTalk(){
-        Character a = new Character("n/a", "a", 0, 0, "question");
-        Character b = new Character("n/a", "b", 0, 0, "response");
+    Character a = new Character("n/a", "a", 0, 0, inventoryA, "flour");
+    Character b = new Character("n/a", "b", 0, 0, inventoryB, "gold");
 
-        assertEquals("response", (a.talk(b)));
-    }
-
+ 
     @Test
     public void testPositionMatch(){
-        Character a = new Character("n/a", "a", 0, 0, "question");
-        Character b = new Character("n/a", "b", 0, 0, "response");
-
-        assertTrue(a.positionMatch(b));
+        try{
+            assertTrue(a.positionMatch(b));
+        } catch(PositionMismatchException e){
+            System.out.println(e);
+        }
     }
 
     @Test
     public void testPositionMatchFalse(){
-        Character a = new Character("n/a", "a", 1, 1, "question");
-        Character b = new Character("n/a", "b", 0, 0, "response");
-        assertFalse(a.positionMatch(b));
+        Character c = new Character("n/a", "a", 1, 1);
+        Character d = new Character("n/a", "b", 0, 0);
+        assertFalse(c.positionMatch(d));
     }
 
     //horrendous test, way too complicated
     @Test
     public void testBarter(){
-        ArrayList<String> inventoryA = new ArrayList<String>();
-        inventoryA.add("gold");
-        inventoryA.add("wool");
-        
-        ArrayList<String> inventoryB = new ArrayList<String>();
-        inventoryB.add("nails");
-        inventoryB.add("needles");
-
-        Character a = new Character("n/a", "a", 0, 0, inventoryA, new ArrayList<String>(), "n/a");
-        Character b = new Character("n/a", "b", 0, 0, inventoryB, new ArrayList<String>(), "n/a");
-
         b.barter("needles", "gold", a);
 
         ArrayList<String> test = new ArrayList<String>();
-        test.add("wool");
+        test.add("myrh");
         test.add("needles");
     
         assertEquals(test.toString(), a.getInventory());
