@@ -96,7 +96,9 @@ public class Character{
     //for npc conversations, you can do talk, and then it probably shows you what they do, and you either do it or not.
     //eg. Welcome to town! I'm the blacksmith, I'm open to trading if you need weapons? y/n
     //method for an npc to fulfill their role/
-    public void introduction(Character c){
+    //right now this passes in a character, but I think that later, I will just make it that, if you want to do any of the npc's functions, you must
+    //be in the same location by an external test, in the text based game part I think?
+    public void intro(Character c){
         if(positionMatch(c)){
             System.out.println("Hello traveler! I am the " + this.occupation + " here.");
             System.out.println("Would you like to barter?");
@@ -151,8 +153,8 @@ public class Character{
      */
     public void barter(String trade, String payment, Character player){ //LATER CHANGE CHARACTER TO PLAYER, NPC'S SHOULDN"T TRADE
         if(positionMatch(player)){ 
-            if(this.wants.contains(payment)){
-                if(this.inventory.contains(trade) && player.checkInventory(payment)){
+            if(this.wants.equals(payment)){
+                if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
                     drop(trade); //the npc drops the item they're giving away
                     grab(payment); //they grab the payment
                     player.grab(trade); //player grabs the item they want
@@ -186,7 +188,7 @@ public class Character{
 
         baker.barter("nails", "gems", smith);
 
-        smith.introduction(baker);
+        smith.intro(baker);
         
     }
     

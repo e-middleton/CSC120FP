@@ -9,9 +9,13 @@ public class CharacterTest {
     ArrayList<String> inventoryA = new ArrayList<String>(Arrays.asList("gold", "myrh"));
     ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "wool"));
 
+    //for passing tests
     Character a = new Character("n/a", "a", 0, 0, inventoryA, "flour");
     Character b = new Character("n/a", "b", 0, 0, inventoryB, "gold");
 
+    //for failing tests
+    Character c = new Character("n/a", "a", 1, 1, inventoryA, "flour");
+    Character d = new Character("n/a", "b", 0, 0, inventoryB, "gold");
  
     @Test
     public void testPositionMatch(){
@@ -24,8 +28,6 @@ public class CharacterTest {
 
     @Test
     public void testPositionMatchFalse(){
-        Character c = new Character("n/a", "a", 1, 1);
-        Character d = new Character("n/a", "b", 0, 0);
         assertFalse(c.positionMatch(d));
     }
 
@@ -33,12 +35,23 @@ public class CharacterTest {
     @Test
     public void testBarter(){
         b.barter("needles", "gold", a);
-
         ArrayList<String> test = new ArrayList<String>();
         test.add("myrh");
         test.add("needles");
-    
         assertEquals(test.toString(), a.getInventory());
     }
+
+    @Test(expected=PositionMismatchException.class)
+    public void testBarterFail(){
+        c.barter("needles", "diamond", d);
+    }
+
+    @Test(expected=RuntimeException.class)
+    public void testBarterFail2(){
+        b.drop("gold");
+        a.barter("needles", "gold", b);
+    }
+
+    
     
 }
