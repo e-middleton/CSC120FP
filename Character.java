@@ -36,6 +36,17 @@ public class Character{
         this.wants = wants;
     }
 
+    public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
+        this.description = description;
+        this.occupation = occupation;
+        this.position_x = position_x;
+        this.position_y = position_y;
+        this.inventory = inventory;
+        this.wants = null;
+    }
+
+
+
     /**
      * Getter for the character's description
      * @return description as a string
