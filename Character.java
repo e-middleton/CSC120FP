@@ -79,6 +79,14 @@ public class Character{
         return this.position_y;
     }
 
+    public void setPosition_x(int x){
+        this.position_x = x;
+    }
+
+    public void setPosition_y(int y){
+        this.position_y = y;
+    }
+
 
     /**
      * prints out the character's wants, aka, what they are willing to trade for
