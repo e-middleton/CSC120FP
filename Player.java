@@ -10,6 +10,27 @@ public class Player extends Character{
     private HashMap<String, Integer> workbag; //separate inventory for yarn because idk how else
 
     /**
+     * Auto constructor 
+     */
+    public Player(){
+        super("n/a", "Dorothy", 0, 0);
+        this.outfit = new Hashtable<String, Boolean>(); //winter outfit (goal)
+        this.workbag = new HashMap<String, Integer>(6); //empty yarn holder
+
+        this.outfit.put("hat", false);
+        this.outfit.put("gloves", false);
+        this.outfit.put("pants", false);
+        this.outfit.put("sweater", false);
+        this.outfit.put("socks", false);
+
+        //initialize values in workbag (possible yarn types = "fingering weight", "dk weight", "worsted weight" "bulky weight")
+        this.workbag.put("fingering weight", 0);
+        this.workbag.put("dk weight", 0);
+        this.workbag.put("worsted weight", 0);
+        this.workbag.put("bulky weight", 0);
+    }
+
+    /**
      * Constructor for Player that takes the usual attributes as well as initializes an empty outfit, inventory, and workbag
      */
     public Player(String description, String occupation, int position_x, int position_y){

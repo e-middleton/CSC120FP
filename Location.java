@@ -45,6 +45,10 @@ public class Location {
     }
 
     //JANKY
+    /**
+     * Method for printing out the occupations/names of the characters in a location as a long String.
+     * @return
+     */
     public String getCast(){
         String names = ""; //needs to be initialized
         for(int i = 0; i < this.cast.size(); i++){
@@ -54,6 +58,10 @@ public class Location {
         return names;
     }
 
+    /**
+     * Method for looking around a location, gets the description of (this) location,
+     * and if there are npc's, it gets their occupations as well
+     */
     public void lookAround(){
         System.out.println("You see " + getDescription());
         if(!(getCast().equals(null))){
@@ -62,19 +70,37 @@ public class Location {
         }
     }
 
+    /**
+     * Returns a character based upon their occupation/name by looking through the cast of a given location.
+     * @param s the name/occupation of the character
+     * @return the Character (type) being looked for
+     */
     public Character getPerson(String s){
         int index = 0; //only will get passed if the bool is changed
         boolean check = false;
-        for(int i = 0; i < this.cast.size(); i++){
+        for(int i = 0; i < this.cast.size(); i++){ //if anybody in the cast has an occupation matching the name given, the index is saved
             if(cast.get(i).getOccupation().equals(s)){
                 index = i;
                 check = true;
             }
         }
         if(check){
-            return cast.get(index);
+            return cast.get(index); //index of the person matching the occupation, then that index in the cast is passed
         } else{
             throw new RuntimeException("This person is not in this location.");
+        }
+    }
+
+    /**
+     * A method for getting a description of a Character based on their occupation given that they are in the cast of a location
+     * @param s the occupation/name of the character being described
+     */
+    public void lookAtCharacter(String s){ //describes a person if they are in the location being checked.
+        try{
+            Character c = getPerson(s); //returns a person if they exist in the cast of a given location
+            System.out.println(c.getDescription());
+        } catch(RuntimeException e){
+            System.out.println(e.getMessage() + " They cannot be looked at.");
         }
     }
 
@@ -88,8 +114,7 @@ public class Location {
         village.add(smith);
         village.add(baker);
         Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village);
-        System.out.println(home.getPerson("smith").getPosition_x());
-        System.out.println(home.getPerson("smith").getPosition_y());
+
     }
     
 }
