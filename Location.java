@@ -44,18 +44,25 @@ public class Location {
         return this.position_y;
     }
 
-    //JANKY
+
     /**
      * Method for printing out the occupations/names of the characters in a location as a long String.
      * @return
      */
     public String getCast(){
-        String names = ""; //needs to be initialized
-        for(int i = 0; i < this.cast.size(); i++){
-            names += this.cast.get(i).getOccupation(); //gets a npc's name/occupation
-            names += ", ";
+        String names = "The "; //needs to be initialized
+        if(this.cast.size() == 1){
+            return this.cast.get(0).getOccupation(); //if there's only one person, their name/occupation is the only thing passed
+        } else if(!this.cast.isEmpty()){
+            for(int i = 0; (i < this.cast.size() -1); i++){ //for if there are multiple people
+                names += this.cast.get(i).getOccupation();
+                names += ", ";
+            }
+            names += "and " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
+            return names;
+        } else{
+            return "There are no people in this location.";
         }
-        return names;
     }
 
     /**
@@ -64,10 +71,8 @@ public class Location {
      */
     public void lookAround(){
         System.out.println("You see " + getDescription());
-        if(!(getCast().equals(null))){
-            System.out.println("A few people catch your eye. They are ");
-            System.out.println(getCast());
-        }
+        System.out.println("You also see...");
+        System.out.println(getCast()); //either the names/occupation of the people, or the lack of them
     }
 
     /**
@@ -108,13 +113,12 @@ public class Location {
 
     public static void main(String[] args) {
         Character smith = new Character("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour");
-        System.out.println(smith.getPosition_x() + "\n" + smith.getPosition_y());
         Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold");
         ArrayList<Character> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
         Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village);
-
+        home.lookAround();
     }
     
 }
