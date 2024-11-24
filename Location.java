@@ -24,22 +24,41 @@ public class Location {
 
     }
 
+    /**
+     * getter for description
+     * @return a string describing the location
+     */
     public String getDescription(){
         return this.description;
     }
 
+    /**
+     * Getter for the name of the location, used like an ID tag
+     * @return the name of the location
+     */
     public String getName(){
         return this.name;
     }
 
+    /**
+     * Getter for the inventory of a location. It just prints the objects in the location
+     */
     public void getInventory(){
         System.out.println(this.inventory.toString());
     }
 
+    /**
+     * Getter for the x coordinate of the position, cannot be changed
+     * @return the x coordinate of the location's position
+     */
     public int getPosition_x(){
         return this.position_x;
     }
 
+    /**
+     * Getter for the y-coordinate of the location's position. cannot be changed.
+     * @return y-coordinate of the location's position.
+     */
     public int getPosition_y(){
         return this.position_y;
     }
@@ -112,8 +131,8 @@ public class Location {
     //do I need an enter/exit method?
 
     public static void main(String[] args) {
-        Character smith = new Character("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour");
-        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold");
+        Character smith = new Character("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
+        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2);
         ArrayList<Character> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);

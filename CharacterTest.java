@@ -10,12 +10,12 @@ public class CharacterTest {
     ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "wool"));
 
     //for passing tests
-    Character a = new Character("n/a", "a", 0, 0, inventoryA, "flour");
-    Character b = new Character("n/a", "b", 0, 0, inventoryB, "gold");
+    Character a = new Character("n/a", "a", 0, 0, inventoryA, "flour", 1);
+    Character b = new Character("n/a", "b", 0, 0, inventoryB, "gold", 2);
 
     //for failing tests
-    Character c = new Character("n/a", "a", 1, 1, inventoryA, "flour");
-    Character d = new Character("n/a", "b", 0, 0, inventoryB, "gold");
+    Character c = new Character("n/a", "a", 1, 1, inventoryA, "flour", 1);
+    Character d = new Character("n/a", "b", 0, 0, inventoryB, "gold", 2);
  
     @Test
     public void testPositionMatch(){

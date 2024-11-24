@@ -10,6 +10,7 @@ public class Character{
     protected int position_y;
     protected ArrayList<String> inventory; //change to type ITEM when class has been created
     protected String wants; //change to type ITEM
+    protected int wantsNum;
 
     /**
      * Constructor with everything except the array lists of wishes, and inventory
@@ -27,13 +28,14 @@ public class Character{
         this.wants = null; //doesn't want anything
     }
 
-    public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory, String wants){
+    public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory, String wants, int wantsNum){
         this.description = description;
         this.occupation = occupation;
         this.position_x = position_x;
         this.position_y = position_y;
         this.inventory = inventory;
         this.wants = wants;
+        this.wantsNum = wantsNum;
     }
 
     public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
@@ -122,17 +124,29 @@ public class Character{
             System.out.println("Hello traveler! I am the " + this.occupation + " here.");
             System.out.println("Would you like to barter?");
             System.out.println("Currently I have " + getInventory());
-            System.out.println("And I am willing to trade for " + this.wants);
+            System.out.println("And I am willing to trade for " + "(" + this.wantsNum + ") " + this.wants);
         } else{
             throw new PositionMismatchException();
         }
     }
 
-    //putting something in your inventory
+    /**
+     * Puts an object in the character's inventory, inventory is not allowed to hold more than 15 items.
+     * @param s the object being picked up.
+     */
     public void grab(String s){
-        this.inventory.add(s);
+        if(this.inventory.size() < 16){
+            this.inventory.add(s);
+        } else{
+            throw new RuntimeException("Your bag is too heavy. This object cannot be picked up.");
+        }
     }
 
+    /**
+     * Checks if a character's inventory contains a given object
+     * @param s the object being searched for
+     * @return true or false if the inventory contains the object
+     */
     public boolean checkInventory(String s){
         if(this.inventory.contains(s)){
             return true;
@@ -141,12 +155,17 @@ public class Character{
         }
     }
 
-    //print out a Character's inventory
+    /**
+     * Prints out a list of what is in a character's inventory
+     */
     public void checkInventory(){
         System.out.println(this.inventory.toString());
     }
 
-    //remove an item from a Character's inventory
+    /**
+     * Removes an item from a character's inventory, provided that it was in the inventory originally.
+     * @param s the item being dropped
+     */
     public void drop(String s){
         if(this.inventory.contains(s)){
             this.inventory.remove(s);
@@ -155,6 +174,9 @@ public class Character{
         }
     }
 
+    /**
+     * Method for printing out options that the character has. Obsolete now that intro() exists.
+     */
     public void showOptions(){
         System.out.println("\n+ barter()"); //currently only bartering is a function
     }
@@ -199,8 +221,8 @@ public class Character{
         bag.add("gold");
         bag.add("sock yarn");
         bag.add("wool");
-        Character smith = new Character("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour");
-        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, purse, "gold");
+        Character smith = new Character("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour", 1);
+        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, purse, "gold", 2);
 
         // smith.checkInventory();
         // baker.checkInventory();
