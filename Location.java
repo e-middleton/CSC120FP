@@ -7,14 +7,22 @@ public class Location {
     private int position_x;
     private int position_y;
     private ArrayList<Character> cast;
+    private boolean north;
+    private boolean east;
+    private boolean south;
+    private boolean west;
 
-    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast){
+    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast, boolean north, boolean east, boolean south, boolean west){
         this.description = description;
         this.name = name;
         this.inventory = inventory;
         this.position_x = position_x; //getter but no setter. (or is this given by map?)
         this.position_y = position_y;
         this.cast = cast;
+        this.north = north;
+        this.east = east;
+        this.south = south;
+        this.west = west;
 
         //automatically makes everybody's position correct for the location they're in.
         for(int i = 0; i < cast.size(); i++){
@@ -22,6 +30,22 @@ public class Location {
             cast.get(i).setPosition_y(this.position_y);
         }
 
+    }
+
+    public boolean getNorth(){
+        return this.north;
+    }
+
+    public boolean getEast(){
+        return this.east;
+    }
+
+    public boolean getSouth(){
+        return this.south;
+    }
+
+    public boolean getWest(){
+        return this.west;
     }
 
     /**
@@ -136,7 +160,7 @@ public class Location {
         ArrayList<Character> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
-        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village);
+        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true);
         home.lookAround();
     }
     

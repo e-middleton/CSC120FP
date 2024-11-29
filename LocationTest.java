@@ -10,7 +10,7 @@ public class LocationTest {
     Character a = new Character("n/a", "a", 0, 0, inventoryA, "flour", 1);
     Character b = new Character("n/a", "b", 0, 0, inventoryB, "gold", 2);
     ArrayList<Character> village = new ArrayList<>(Arrays.asList(a, b));
-    Location homeBase = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village);
+    Location homeBase = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true);
     
     @Test
     public void testGetPerson(){

@@ -40,14 +40,14 @@ public class Play {
      */
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
-        System.out.println("+walk (forward, backward, left, right) \n+lookAround \n+talk");
+        System.out.println("+walk (north, south, east, west) \n+lookAround \n+talk");
     }
 
     /**
      * Method for looking around a given location. NEED TO CHANGE TO BE THE PLAYER'S CURRENT LOCATION, NOT PASSING IN A SET LOCATION
      */
-    public void lookAround(Location a){
-        a.lookAround();
+    public void lookAround(Player hero, Map map){
+        map.findLocation(hero).lookAround();
     }
 
     /**
@@ -65,37 +65,32 @@ public class Play {
      * @param command the command that the player typed in broken up by whitespace
      * @param a the Player
      */
-    public void walk(String[] command, Player a){
-        if(command[1].equals("right")){ //walk right
-            try{
-                a.walk(1, 0);
-                System.out.println("You have successfully walked right!");
-            } catch(InvalidLocationException e){
-                System.out.println("Unable to walk in this direction. Please try to walk in a new direction."); //exception handling
-            }
-        }
-        else if(command[1].equals("left")){ //walk left
-            try{
-                a.walk(-1, 0);
-                System.out.println("You have successfully walked left!");
-            } catch(InvalidLocationException e){
-                System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
-            }
-        } else if(command[1].equals("forward")){ //walk forward
-            try{
-                a.walk(0, 1);
-                System.out.println(("You have successfully walked forward!"));
-            } catch(InvalidLocationException e){
+    public void walk(String[] command, Player a, Map map){
+
+        if(command[1].equals("north")){ //walk north
+            if(map.walkNorth(a)){
+                System.out.println(("You have successfully walked north!"));
+            } else{
                 System.out.println("Unable to walk in this direction. Please to try walk in a new direction.");
             }
-        }
-        else if(command[1].equals("backward")){ //walk backward
-            try{
-                a.walk(0, -1);
-                System.out.println(("You have successfully walked backward!"));
-            } catch(InvalidLocationException e){
+        } else if(command[1].equals("east")){ //walk east
+            if(map.walkEast(a)){
+                System.out.println("You have successfully walked east!");
+            } else{
                 System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
-            } 
+            }
+        } else if(command[1].equals("south")){ //walk south
+            if(map.walkSouth(a)){
+                System.out.println(("You have successfully walked south!"));
+            } else{
+                System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
+            }
+        } else if(command[1].equals("west")){ //walk west
+            if(map.walkWest(a)){
+                System.out.println("You have successfully walked west!");
+            } else{
+                System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
+            }
         } else{
             System.out.println(command[1] + " Is an unknown direction. Please try to walk in a different direction."); //typo
         }
@@ -141,15 +136,16 @@ public class Play {
 
     public static void main(String[] args) {
         Play game = new Play();
+        Map map = new Map(); //default 2x2 map
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
 
         Character smith = new Character("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
-        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2);
+        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2) ;
         ArrayList<Character> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
-        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 0, 0, village);
+        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 0, 0, village, true, true, true, true);
 
 
         System.out.println("Hello, welcome to the game!");
@@ -161,12 +157,12 @@ public class Play {
         while(!((response.toLowerCase()).equals("end"))){
             response = input.nextLine();
             String[] command = game.sliceAndDice(response);
-            if(command[0].equals("walk")){ //walk right
+            if(command[0].equals("walk")){ //walk north, east, south, west
                 System.out.println(command[0] + command[1]);
-                game.walk(command, hero);
+                game.walk(command, hero, map);
             }
             else if(command[0].equals("look") && command[1].equals("around")){ //look around LOCATION (general)
-                 game.lookAround(home); //NEED TO PASS IN PLAYER/THEIR CURRENT LOCATION IN MAP, NOT SET LOCATION
+                 game.lookAround(hero, map); 
             }
             else if((command[0]).equals("look") && command[1].equals("at")){ //look at PERSON
                 try{

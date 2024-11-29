@@ -114,7 +114,7 @@ public class Player extends Character{
     //checks to make sure they're not walking off the map before they walk
     //the map is a 5x5 grid currently
     //only 1 and -1 will be passed in for x and y because no jumping around the map is allowed. Only sequential movements.
-    public void walk(int x, int y){
+    public void walk(int y, int x){
         if(x > 1 || x < -1){
             throw new InvalidMovementException();
         }
