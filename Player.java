@@ -6,14 +6,14 @@ import java.util.ArrayList;
  * Class for the player/protagonist of the game. Inherits from Character and is able to walk around, knit, talk to people, look around
  */
 public class Player extends Character{
-    private Hashtable<String, Boolean> outfit; //change to item class later
-    private HashMap<String, Integer> workbag; //separate inventory for yarn because idk how else
+    private Hashtable<String, Boolean> outfit; 
+    private HashMap<String, Integer> workbag; //separate inventory for yarn because their quantity is relevant
 
     /**
-     * Auto constructor 
+     * Default constructor for player, sets their location to home, their name as Dorothy, and their inventory/workbag begins empty
      */
     public Player(){
-        super("n/a", "Dorothy", 0, 0);
+        super("n/a", "Dorothy", 1, 2);
         this.outfit = new Hashtable<String, Boolean>(); //winter outfit (goal)
         this.workbag = new HashMap<String, Integer>(6); //empty yarn holder
 
@@ -31,7 +31,11 @@ public class Player extends Character{
     }
 
     /**
-     * Constructor for Player that takes the usual attributes as well as initializes an empty outfit, inventory, and workbag
+     * Constructor for player with specific attributes
+     * @param description the description of the player
+     * @param occupation the name/occupation of the player
+     * @param position_x the starting x or column position in the map
+     * @param position_y the starting y or row position in the map, their inventory begins empty
      */
     public Player(String description, String occupation, int position_x, int position_y){
         super(description, occupation, position_x, position_y);
@@ -60,8 +64,8 @@ public class Player extends Character{
      * Constructor for player with a predetermined inventory created at initialization
      * @param description a description of the player, not super important but inherited from Character
      * @param occupation typically the player's name
-     * @param position_x the x index of the player's position
-     * @param position_y the y index of the player's position
+     * @param position_x the x or column index of the player's position
+     * @param position_y the y or row index of the player's position
      * @param inventory an arrayList of things the player has
      * initializes an empty outfit and workbag
      */
@@ -82,9 +86,11 @@ public class Player extends Character{
         this.workbag.put("bulky weight", 0);
     }
 
-    //mini function for checking position for testing
+    /**
+     * Mini method for testing where a player is
+     */
     public void whereAmI(){
-        System.out.println("I am at " + this.position_x + ", " + this.position_y);
+        System.out.println("I am at column " + this.position_x + ", and row " + this.position_y);
     }
 
     /**
@@ -110,8 +116,14 @@ public class Player extends Character{
         
     }
 
-    //negative numbers for walking south or west
-    //only 1 and -1 will be passed in for x and y because no jumping around the map is allowed. Only sequential movements.
+    
+    /**
+     * Method for walking around, called by walk methods in the Map class if permitted,
+     * negative numbers for south or west movements
+     * only 1 or -1 may be passed in for walking because no jumping is permitted
+     * @param y the row up or down they walk
+     * @param x the column left or right they are walking
+     */
     public void walk(int y, int x){
         if(x > 1 || x < -1){
             throw new InvalidMovementException();
@@ -119,7 +131,7 @@ public class Player extends Character{
         if(y > 1 || y < -1){
             throw new InvalidMovementException();
         }
-        this.position_x += x;
+        this.position_x += x; 
         this.position_y += y;
     }
 
@@ -224,6 +236,62 @@ public class Player extends Character{
         }
     }
 
+    /**
+     * Method for checking the win condition of the game, if all the items of clothing have been knit and added to outfit.
+     * @return true/false, all the clothing has been knit.
+     */
+    public boolean hasWon(){
+        if(this.outfit.get("hat") && this.outfit.get("gloves") && this.outfit.get("pants") && this.outfit.get("sweater") && this.outfit.get("socks")){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    /**
+     * Whether or not socks have already been knitted
+     * @return t/f the player already has socks
+     */
+    public boolean hasSocks(){
+        return this.outfit.get("socks");
+    }
+
+    /**
+     * Whether or not gloves have already been knitted
+     * @return t/f the player has gloves
+     */
+    public boolean hasGloves(){
+        return this.outfit.get("gloves");
+    }
+
+    /**
+     * whether or not a sweater has already been knitted
+     * @return t/f the player has a sweater
+     */
+    public boolean hasSweater(){
+        return this.outfit.get("sweater");
+    }
+
+    /**
+     * Whether or not pants have already been knitted
+     * @return t/f the player has pants
+     */
+    public boolean hasPants(){
+        return this.outfit.get("pants");
+    }
+
+    /**
+     * Whether or not a hat has already been knitten
+     * @return t/f the player has a hat
+     */
+    public boolean hasHat(){
+        return this.outfit.get("hat");
+    }
+
+    /**
+     * Main method, used for testing
+     * @param args empty array of Strings
+     */
     public static void main(String[] args){
         ArrayList<String> purse = new ArrayList<String>();
         purse.add("flour");

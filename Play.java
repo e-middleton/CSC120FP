@@ -131,6 +131,119 @@ public class Play {
         }
     }
 
+    /**
+     * Method for knitting clothing items, checks if the item has already been knit, if it has, it does not reknit
+     * @param hero the player who is knitting their clothing
+     * @param command the command typed in, parsed for different options, split by white space
+     * @param input the scanner used to give the player a chance to say no
+     */
+    public void knit(Player hero, String[] command, Scanner input){
+        String response;
+        if(command[1].equals("socks")){
+            if(hero.hasSocks()){
+                System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
+                response = input.nextLine();
+                if(response.equals("yes")){
+                    try{
+                        hero.knitSocks();
+                    } catch(RuntimeException e){
+                        System.out.println(e.getMessage());
+                    }
+                } else{
+                    return; //exit the knitting method if they don't wish to continue
+                }
+            } else{
+                try{
+                    hero.knitSocks();
+                } catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(command[1].equals("hat")){
+            if(hero.hasHat()){
+                System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
+                response = input.nextLine();
+                if(response.equals("yes")){
+                    try{
+                        hero.knitHat();
+                    } catch(RuntimeException e){
+                        System.out.println(e.getMessage());
+                    }
+                } else{
+                    return;
+                }
+            } else{
+                try{
+                    hero.knitHat();
+                } catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(command[1].equals("gloves")){
+            if(hero.hasGloves()){
+                System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
+                response = input.nextLine();
+                if(response.equals("yes")){
+                    try{
+                        hero.knitGloves();
+                    } catch(RuntimeException e){
+                        System.out.println(e.getMessage());
+                    }
+                } else{
+                    return;
+                }
+            } else{
+                try{
+                    hero.knitGloves();
+                } catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(command[1].equals("sweater")){
+            if(hero.hasSweater()){
+                System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
+                response = input.nextLine();
+                if(response.equals("yes")){
+                    try{
+                        hero.knitSweater();
+                    } catch(RuntimeException e){
+                        System.out.println(e.getMessage());
+                    }
+                } else{
+                    return;
+                }
+            } else{
+                try{
+                    hero.knitSweater();
+                } catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else if(command[1].equals("pants")){
+            if(hero.hasPants()){
+                System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
+                response = input.nextLine();
+                if(response.equals("yes")){
+                    try{
+                        hero.knitPants();
+                    } catch(RuntimeException e){
+                        System.out.println(e.getMessage());
+                    }
+                } else{
+                    return;
+                }
+            } else{
+                try{
+                    hero.knitPants();
+                } catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else{
+            System.out.println(command[1] + " is an unknown clothing item. Please choose something else to knit.");
+        }
+    }
+
 
     
 
@@ -154,7 +267,8 @@ public class Play {
         String response = input.nextLine();
 
         //main play loop, it currently ends when the player says end.
-        while(!((response.toLowerCase()).equals("end"))){
+        //also checks to see if the win condition has been met
+        while(!((response.toLowerCase()).equals("end")) && !(hero.hasWon())){ 
             response = input.nextLine();
             String[] command = game.sliceAndDice(response);
             if(command[0].equals("walk")){ //walk north, east, south, west
@@ -190,13 +304,21 @@ public class Play {
                 } else{
                     System.out.println("This item is not in this location. It cannot be grabbed.");
                 }
+            } else if(command[0].equals("knit")){ //knit (all)
+                game.knit(hero, command, input);
+            } else if(command[0].equals("what") && command[1].equals("can") && command[3].equals("knit")){ //see knitting options, "what can I knit" "what can she knit"
+                hero.canKnit();
             }
+        }
         
-            //grab
-            //drop
+            
             //barter
             //check inventory(print) //Look at inventory?
 
+        if(hero.hasWon()){
+            System.out.println("Congratulations, you've survived winter! Nice and cozy!");
+        } else{
+            System.out.println("You're freezing and cold. You haven't knit your outfit. You might not survive! :(");
         }
         input.close();  
     }

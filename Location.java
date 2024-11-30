@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * Location class, has methods for walking in/out, looking around, looking at specific characters, 
+ * for getting a list of everybody within the location, for adding and removing items from the location, 
+ * and getters for all attributes
+ */
 public class Location {
     private String description;
     private String name;
@@ -12,6 +17,15 @@ public class Location {
     private boolean south;
     private boolean west;
 
+    /**
+     * Shortened/incomplete constructor for Locations, used for testing/unsure locations
+     * @param x the x or column index of the location in the map
+     * @param y the y or row index of the location in the map
+     * @param north t/f they can walk north
+     * @param east t/f it is possible to walk east
+     * @param south t/f it is possible to walk south
+     * @param west t/f it is possible to walk west
+     */
     public Location(int x, int y, boolean north, boolean east, boolean south, boolean west){
         this.description = null;
         this.name = null;
@@ -25,6 +39,19 @@ public class Location {
         this.west = west;
     }
 
+    /**
+     * Constructor for Location with all the attributes
+     * @param description a description of the location
+     * @param name the name/id tag of the location
+     * @param inventory the arrayList of objects in the location
+     * @param position_x the x or column index of the Location in the map
+     * @param position_y the y or row index of the Location in the map
+     * @param cast the arrayList of Characters in the Location
+     * @param north t/f it is possible to go north from this location
+     * @param east t/f it is possible to walk east
+     * @param south t/f it is possible to walk south
+     * @param west t/f it is possible to walk west
+     */
     public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast, boolean north, boolean east, boolean south, boolean west){
         this.description = description;
         this.name = name;
@@ -125,6 +152,11 @@ public class Location {
          
     }
 
+    /**
+     * Method for removing an item from the inventory of a Location, 
+     * first checking if it was in the location originally.
+     * @param s the object being taken out of the Location
+     */
     public void removeItem(String s){
         if(this.inventory.contains(s)){
             this.inventory.remove(s);
@@ -133,6 +165,11 @@ public class Location {
         }
     }
 
+    /**
+     * Method for checking if a given item is in the inventory of a location
+     * @param s the object being checked for
+     * @return true/false the object is in the Location
+     */
     public boolean containsItem(String s){
         return this.inventory.contains(s);
     }
