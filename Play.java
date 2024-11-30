@@ -176,6 +176,20 @@ public class Play {
             }
             else if(command[0].equals("talk") && command[1].equals("to")){ //talk
                 game.talk(hero, command[2], home); //player, name of the person they're talking to, location NEED TO CHANGE TO PLAYER"S LOCATION
+            } else if(command[0].equals("drop")){ //dropping an item, adding it as a string to location inventory
+                try{
+                    hero.drop(command[1]);
+                    map.findLocation(hero).addItem(command[1]);
+                } catch(RuntimeException e){
+                    System.out.println(e.getMessage());
+                }
+            } else if(command[0].equals("grab")){ //grabbing an item, removing it from location inventory
+                if(map.findLocation(hero).containsItem(command[1])){
+                    hero.grab(command[1]);
+                    map.findLocation(hero).removeItem(command[1]);
+                } else{
+                    System.out.println("This item is not in this location. It cannot be grabbed.");
+                }
             }
         
             //grab

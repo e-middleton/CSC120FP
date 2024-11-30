@@ -12,6 +12,19 @@ public class Location {
     private boolean south;
     private boolean west;
 
+    public Location(int x, int y, boolean north, boolean east, boolean south, boolean west){
+        this.description = null;
+        this.name = null;
+        this.inventory = new ArrayList<String>();
+        this.position_x = x;
+        this.position_y = y;
+        this.cast = new ArrayList<Character>();
+        this.north = north;
+        this.east = east;
+        this.south = south;
+        this.west = west;
+    }
+
     public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast, boolean north, boolean east, boolean south, boolean west){
         this.description = description;
         this.name = name;
@@ -32,18 +45,34 @@ public class Location {
 
     }
 
+    /**
+     * method to get the value of the possibility of traveling/walking north
+     * @return t/f it is possible to walk north
+     */
     public boolean getNorth(){
         return this.north;
     }
 
+    /**
+     * method to get the value of the possibility of traveling/walking east
+     * @return t/f it is possible to walk east
+     */
     public boolean getEast(){
         return this.east;
     }
 
+    /**
+     * method to get the value of the possibility of traveling/walking north
+     * @return t/f it is possible to walk south
+     */
     public boolean getSouth(){
         return this.south;
     }
 
+    /**
+     * method to get the value of the possibility of traveling/walking west
+     * @return t/f it is possible to walk west
+     */
     public boolean getWest(){
         return this.west;
     }
@@ -87,6 +116,26 @@ public class Location {
         return this.position_y;
     }
 
+    /**
+     * Method for adding an item to the inventory for a location, no checks done, usually when a character drops something
+     * @param s the item being added to a location
+     */
+    public void addItem(String s){
+        this.inventory.add(s);
+         
+    }
+
+    public void removeItem(String s){
+        if(this.inventory.contains(s)){
+            this.inventory.remove(s);
+        } else{
+            throw new RuntimeException("This item is not in this location.");
+        }
+    }
+
+    public boolean containsItem(String s){
+        return this.inventory.contains(s);
+    }
 
     /**
      * Method for printing out the occupations/names of the characters in a location as a long String.

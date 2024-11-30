@@ -110,9 +110,7 @@ public class Player extends Character{
         
     }
 
-    //negative numbers for walking backwards(up) or left
-    //checks to make sure they're not walking off the map before they walk
-    //the map is a 5x5 grid currently
+    //negative numbers for walking south or west
     //only 1 and -1 will be passed in for x and y because no jumping around the map is allowed. Only sequential movements.
     public void walk(int y, int x){
         if(x > 1 || x < -1){
@@ -121,16 +119,8 @@ public class Player extends Character{
         if(y > 1 || y < -1){
             throw new InvalidMovementException();
         }
-        if((this.position_x + x) >= 0 && ((this.position_x + x) < 5)){
-            this.position_x += x;
-        } else{
-            throw new InvalidLocationException();
-        }
-        if((this.position_y + y) >= 0 && (this.position_y + y) < 5){
-            this.position_y += y;
-        } else{
-            throw new InvalidLocationException();
-        }
+        this.position_x += x;
+        this.position_y += y;
     }
 
     /**
