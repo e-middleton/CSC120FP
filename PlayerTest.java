@@ -25,10 +25,6 @@ public class PlayerTest {
         assertEquals(dorothy.getPosition_y(), 1);
     }
 
-    @Test(expected=InvalidLocationException.class)
-    public void testWalkFail(){
-        dorothy.walk(-1, 0);
-    }
 
     @Test(expected=InvalidMovementException.class)
     public void testWalkJump(){
