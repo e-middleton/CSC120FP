@@ -101,18 +101,14 @@ public class Play {
      * Will only work if player and npc are in the same location/the npc is in the given location.
      * @param hero the player who is looking around
      * @param s the name/occupation of the character they are trying to look at
-     * @param b the location the hero is currently in, CHANGE
+     * @param map finds the location the hero is currently in
      */
-    public void lookAt(Player hero, String s, Location b){ //for now I need to pass in a location, but I should later be able to just use the map indexes?
-        if(positionMatch(hero, b)){ //making sure the hero and location are the same position in the map
-            try{
-                System.out.println("you see...");
-                b.lookAtCharacter(s); //goes into the location, checks to see if the person's name is in the cast, then grabs their description
-            } catch(RuntimeException e){
-                System.out.println(e.getMessage());
-            }
-        } else{
-            throw new PositionMismatchException();
+    public void lookAt(Player hero, String s, Map map){ 
+        System.out.println("You see...");
+        try{
+            map.findLocation(hero).lookAtCharacter(s);
+        } catch(RuntimeException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -121,15 +117,35 @@ public class Play {
      * The npc's response never changes, it justs says who they are and what they trade for
      * @param hero the player
      * @param npc the name of the npc they're trying to talk to. They're grabbed from the location's cast.
-     * @param b the location CHANGE
+     * @param map the map, used to get the player's current location
      */
-    public void talk(Player hero, String npc, Location b){ //NEED TO USE PLAYER"S LOCATION
+    public void talk(Player hero, String npc, Map map){ 
         try{
-            b.getPerson(npc).intro(hero); //
+            map.findLocation(hero).getPerson(npc).intro(hero); //
         } catch(PositionMismatchException e){
             System.out.println("You do not see any " + npc + " around. They are not in this location.");
         }
     }
+
+    public void barter(Player hero, String npc, Map map, Scanner input){
+        try{
+            if(positionMatch(hero, map.findLocation(hero).getPerson(npc))){ //might not be a necessary check, CHECK
+                System.out.println("What would you like to barter for? "); //barter __ for __
+                String response = input.nextLine();
+                String[] command = sliceAndDice(response);
+                try{
+                    map.findLocation(hero).getPerson(npc).barter(command[3], command[1], hero);
+                } catch(IndexOutOfBoundsException b){                          //handles incorrect typing
+                    System.out.println("Please enter a valid for of: barter _payment_ for _commodity_");
+                } catch(RuntimeException e){                                   //if one or more object is missing
+                    System.out.println(e.getMessage());
+                }
+            }
+        } catch(MissingNPCException b){ //if the person is in the wrong location
+            System.out.println("You are not in the same location as " + npc);
+        }
+    }
+    
 
     /**
      * Method for knitting clothing items, checks if the item has already been knit, if it has, it does not reknit
@@ -253,17 +269,10 @@ public class Play {
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
 
-        Character smith = new Character("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
-        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2) ;
-        ArrayList<Character> village = new ArrayList<>();
-        village.add(smith);
-        village.add(baker);
-        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 0, 0, village, true, true, true, true);
-
-
+        hero.grab("apple");
+    
         System.out.println("Hello, welcome to the game!");
         System.out.println("Would you like to play? Yes to play end to end");
-        game.showOptions();
         String response = input.nextLine();
 
         //main play loop, it currently ends when the player says end.
@@ -272,7 +281,6 @@ public class Play {
             response = input.nextLine();
             String[] command = game.sliceAndDice(response);
             if(command[0].equals("walk")){ //walk north, east, south, west
-                System.out.println(command[0] + command[1]);
                 game.walk(command, hero, map);
             }
             else if(command[0].equals("look") && command[1].equals("around")){ //look around LOCATION (general)
@@ -280,7 +288,7 @@ public class Play {
             }
             else if((command[0]).equals("look") && command[1].equals("at")){ //look at PERSON
                 try{
-                    game.lookAt(hero, command[2], home);
+                    game.lookAt(hero, command[2], map);
                 } catch(PositionMismatchException e){
                     System.out.println(command[2] + " cannot be seen, you are not in the same location.");
                 }
@@ -289,7 +297,7 @@ public class Play {
                 game.showOptions();
             }
             else if(command[0].equals("talk") && command[1].equals("to")){ //talk
-                game.talk(hero, command[2], home); //player, name of the person they're talking to, location NEED TO CHANGE TO PLAYER"S LOCATION
+                game.talk(hero, command[2], map); //player, name of the person they're talking to, map for location
             } else if(command[0].equals("drop")){ //dropping an item, adding it as a string to location inventory
                 try{
                     hero.drop(command[1]);
@@ -308,6 +316,11 @@ public class Play {
                 game.knit(hero, command, input);
             } else if(command[0].equals("what") && command[1].equals("can") && command[3].equals("knit")){ //see knitting options, "what can I knit" "what can she knit"
                 hero.canKnit();
+            } else if(command[0].equals("barter") && command[1].equals("with")){ //barter
+                game.barter(hero, command[2], map, input);
+            }
+            else{
+                System.out.println(command[0] + " is an unknown command.");
             }
         }
         
