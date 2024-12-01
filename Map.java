@@ -83,6 +83,7 @@ public class Map {
         Location square = findLocation(hero);
         if(square.getNorth()){
             hero.walk(1, 0);
+            System.out.println("You have entered the " + findLocation(hero).getName());
             return true;
         } else{
             return false;
@@ -99,6 +100,7 @@ public class Map {
         Location square = findLocation(hero);
         if(square.getEast()){
             hero.walk(0, 1);
+            System.out.println("You have entered the " + findLocation(hero).getName());
             return true;
         } else{
             return false;
@@ -115,6 +117,7 @@ public class Map {
         Location square = findLocation(hero);
         if(square.getSouth()){
             hero.walk(-1, 0);
+            System.out.println("You have entered the " + findLocation(hero).getName());
             return true;
         } else{
             return false;
@@ -131,6 +134,7 @@ public class Map {
         Location square = findLocation(hero);
         if(square.getWest()){
             hero.walk(0, -1);
+            System.out.println("You have entered the " + findLocation(hero).getName());
             return true;
         } else{
             return false;
