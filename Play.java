@@ -127,6 +127,16 @@ public class Play {
         }
     }
 
+    /**
+     * Method for bartering with a character, checks if you are in the same location
+     * then it asks what you would like to barter for, string for string, 
+     * if something is mistyped, it requires the person to begin with 
+     * "barter with character" all over again
+     * @param hero the player who is doing the bartering
+     * @param npc the name/occupation of the npc being looked for
+     * @param map the map to location match
+     * @param input the scanner used to get the players input/trade info
+     */
     public void barter(Player hero, String npc, Map map, Scanner input){
         try{
             if(positionMatch(hero, map.findLocation(hero).getPerson(npc))){ //might not be a necessary check, CHECK
