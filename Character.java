@@ -192,7 +192,7 @@ public class Character{
      * @param payment the payment the player is going to give the npc
      * @param player currently another character, but eventually is going to be the player, the person asking for something.
      */
-    public void barter(String trade, String payment, Character player){ //LATER CHANGE CHARACTER TO PLAYER, NPC'S SHOULDN"T TRADE
+    public void barter(String trade, String payment, Character player){ 
         if(positionMatch(player)){ 
             if(this.wants.equals(payment)){
                 if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
