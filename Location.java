@@ -221,7 +221,7 @@ public class Location {
         if(check){
             return cast.get(index); //index of the person matching the occupation, then that index in the cast is passed
         } else{
-            throw new RuntimeException("This person is not in this location.");
+            throw new MissingNPCException();
         }
     }
 
@@ -233,8 +233,8 @@ public class Location {
         try{
             Character c = getPerson(s); //returns a person if they exist in the cast of a given location
             System.out.println(c.getDescription());
-        } catch(RuntimeException e){
-            System.out.println(e.getMessage() + " They cannot be looked at.");
+        } catch(MissingNPCException e){
+            System.out.println("You don't see any " + s + " in the " + this.name);
         }
     }
 
