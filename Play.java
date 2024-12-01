@@ -143,8 +143,16 @@ public class Play {
                 System.out.println("What would you like to barter for? "); //barter __ for __
                 String response = input.nextLine();
                 String[] command = sliceAndDice(response);
+                String trade = null;
                 try{
-                    map.findLocation(hero).getPerson(npc).barter(command[3], command[1], hero);
+                    for(int i = 0; i<command.length; i++    ){ //fixes issue of barter __ for worsted yarn (two words)
+                        if(command[i].equals("yarn")){
+                            trade = command[i-1] + " " + command[i];
+                        } else{
+                            trade = command[3];
+                        }
+                    }
+                    map.findLocation(hero).getPerson(npc).barter(trade, command[1], hero);
                 } catch(IndexOutOfBoundsException b){                          //handles incorrect typing
                     System.out.println("Please enter a valid for of: barter _payment_ for _commodity_");
                 } catch(RuntimeException e){                                   //if one or more object is missing
@@ -334,6 +342,7 @@ public class Play {
             }
         }
         
+        hero.canKnit();
             
             //barter
             //check inventory(print) //Look at inventory?
