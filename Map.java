@@ -15,11 +15,11 @@ public class Map {
         this.locations = new Location[4][4]; //4x4
         //Gardener, in map[2][0] "garden", objects for garden
         ArrayList<String> gardenerSupplies = new ArrayList<String>(Arrays.asList("worsted yarn", "hoe", "seedlings"));
-        ArrayList<String> gardenStuff = new ArrayList<String>(Arrays.asList("apple", "moldy orange", "compost bin"));
+        ArrayList<String> gardenStuff = new ArrayList<String>(Arrays.asList("apple", "moldyOrange", "compost"));
         Character gardener = new Character("An old man, sitting at the bottom of a tree, gently weeding around the base of its roots.", "gardener", 0, 2, gardenerSupplies, "apple", 1);
 
         //Merchant, in map[1][1] "trading post"
-        ArrayList<String> merchantSupplies = new ArrayList<String>(Arrays.asList("red dye", "scissors", "darning needles", "bulky yarn", "bobbin"));
+        ArrayList<String> merchantSupplies = new ArrayList<String>(Arrays.asList("dye", "scissors", "needles", "bulky yarn", "bobbin"));
         Character merchant = new Character("A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity.", "merchant", 1, 1, merchantSupplies, "gold", 1);
        
         //Spinner, in map[1][0] "repair guild"
@@ -27,14 +27,14 @@ public class Map {
         Character spinner = new Character("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
 
         //Goblin, in map[1][3] "mine"
-        ArrayList<String> goblinSupplies = new ArrayList<String>(Arrays.asList("moldy breadcrusts", "knuckle bones?", "cat teeth", "needles"));
+        ArrayList<String> goblinSupplies = new ArrayList<String>(Arrays.asList("breadcrusts", "knuckles?", "teeth", "needles"));
         Character goblin = new Character("A short and hungry looking creature, eyeing your ankles with a disturbing gaze.", "goblin", 3, 1, goblinSupplies, "teeth", 12);
 
         //objects for map[2][3] "ore room"
         ArrayList<String> oreRoomStuff = new ArrayList<String>(Arrays.asList("gold", "gold", "amethyst", "pickaxe", "silver"));
 
         //objects for map[3][3] "magic circle"
-        ArrayList<String> magicCircleStuff = new ArrayList<String>(Arrays.asList("purple-spotted mushroom", "potion bottle"));
+        ArrayList<String> magicCircleStuff = new ArrayList<String>(Arrays.asList("purple-mushroom", "potion"));
 
         //objects for map[0][3] "yarn trove"
         ArrayList<String> yarnTroveStuff = new ArrayList<String>(Arrays.asList("sock yarn", "sock yarn", "sock yarn"));
