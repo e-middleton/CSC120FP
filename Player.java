@@ -149,14 +149,27 @@ public class Player extends Character{
 
     /**
      * Method for adding yarn to the yarn inventory (workbag), checks to make sure that it's a recognized type of yarn
-     * then increments the number of balls of yarn in that category by one
+     * then increments the number of balls of yarn in that category however many is required for the garment (idk why I did this)
      * @param s the type of yarn being added
      */
     public void grabYarn(String s){
         String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
-        System.out.println(yarnWeight);
-        if(this.workbag.containsKey(yarnWeight)){
-            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by one
+        if(s.substring(0, s.lastIndexOf("yarn")).equals("fingering ")){
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 2)); //increments the value by two for a pair of socks/gloves
+            } 
+        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 7)); //increments the value by seven for pants
+            } 
+        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by seven for pants
+            } 
+        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 5)); //increments the value by five for a sweater
+            } 
         } else{
             throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your workbag.");
         }
