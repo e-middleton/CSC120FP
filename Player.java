@@ -136,13 +136,27 @@ public class Player extends Character{
     }
 
     /**
+     * Puts an object in the character's inventory, inventory is not allowed to hold more than 15 items.
+     * @param s the object being picked up.
+     */
+    public void grab(String s){
+        if(!s.contains("yarn")){
+            super.grab(s);
+        } else{
+            grabYarn(s);
+        }
+    }
+
+    /**
      * Method for adding yarn to the yarn inventory (workbag), checks to make sure that it's a recognized type of yarn
      * then increments the number of balls of yarn in that category by one
      * @param s the type of yarn being added
      */
     public void grabYarn(String s){
-        if(this.workbag.containsKey(s)){
-            this.workbag.replace(s, ((this.workbag.get(s)) + 1)); //increments the value by one
+        String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
+        System.out.println(yarnWeight);
+        if(this.workbag.containsKey(yarnWeight)){
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by one
         } else{
             throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your workbag.");
         }
