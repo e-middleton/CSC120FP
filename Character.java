@@ -11,13 +11,14 @@ public class Character{
     protected ArrayList<String> inventory; //change to type ITEM when class has been created
     protected String wants; //change to type ITEM
     protected int wantsNum;
+    protected int hasNum;
 
     /**
      * Constructor with everything except the array lists of wishes, and inventory
-     * @param description // a brief description of the character, called for when the player looksAround()
-     * @param occupation //the occupation of the NPC
-     * @param position_x //the horizontal/row index of their position on the map
-     * @param position_y //vertical/column index of their position on the map
+     * @param description a brief description of the character, called for when the player looksAround()
+     * @param occupation the occupation of the NPC
+     * @param position_x the horizontal/row index of their position on the map
+     * @param position_y vertical/column index of their position on the map
      */
     public Character(String description, String occupation, int position_x, int position_y){
         this.description = description;
@@ -28,6 +29,17 @@ public class Character{
         this.wants = null; //doesn't want anything
     }
 
+    /**
+     * Full constructor for Character with every possible attribute
+     * @param description a written description of the character and their appearance
+     * @param occupation the name/occupation of the character, used as an ID
+     * @param position_x the x or column position of the npc
+     * @param position_y the y or row position of the npc
+     * @param inventory the arrayList of strings that serves as the character's inventory
+     * @param wants what the character wants to trade for, if wants = gold, the character will only trade if given gold
+     * @param wantsNum how many of the given object the Character wants. 
+     * @param hasNum how many of the item they have, used to keep track of payment
+     */
     public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory, String wants, int wantsNum){
         this.description = description;
         this.occupation = occupation;
@@ -36,6 +48,7 @@ public class Character{
         this.inventory = inventory;
         this.wants = wants;
         this.wantsNum = wantsNum;
+        this.hasNum = 0;
     }
 
     public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
@@ -118,7 +131,7 @@ public class Character{
      * @param player the player who they're talking to
      */
     public void intro(Character player){ //exception thrown in Location and handled in Play if mismatched
-        System.out.println("Hello traveler! I am the " + this.occupation + " here.");
+        System.out.println("Hello traveler, I am the " + this.occupation);
         System.out.println("Would you like to barter?");
         System.out.println("Currently I have " + getInventory());
         System.out.println("And I am willing to trade for " + "(" + this.wantsNum + ") " + this.wants);
@@ -215,12 +228,13 @@ public class Character{
      * @return t/f if the payment has been completed
      */
     public boolean takePayment(Character player, String payment){ 
-        while(wantsNum >= 1){
+        while(this.wantsNum > this.hasNum){ //while they want more than they have
             player.drop(payment); //player drops the payment and it is taken by the npc
             grab(payment); //grabs payment
-            this.wantsNum -= 1;
+            this.hasNum += 1;
         }
-        if(this.wantsNum == 0){ //has the payment in full been given
+        if(this.wantsNum == this.hasNum){ //has the payment in full been given
+            this.hasNum = 0; //resets to zero because trade has been completed
             return true;
         } else{
             return false;
@@ -228,6 +242,10 @@ public class Character{
     }
 
 
+    /**
+     * Main method in Character, used for testing
+     * @param args empty array of String
+     */
     public static void main(String[] args) {
         ArrayList<String> purse = new ArrayList<String>();
         purse.add("nails");
