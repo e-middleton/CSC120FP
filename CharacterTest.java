@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class CharacterTest {
     //array for different attributes/randomize them
     //will then have to print out the character to make sure the test works
-    ArrayList<String> inventoryA = new ArrayList<String>(Arrays.asList("gold", "myrh"));
+    ArrayList<String> inventoryA = new ArrayList<String>(Arrays.asList("gold", "gold", "myrh"));
     ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "wool"));
 
     //for passing tests
@@ -31,13 +31,11 @@ public class CharacterTest {
         assertFalse(c.positionMatch(d));
     }
 
-    //horrendous test, way too complicated
+   
     @Test
     public void testBarter(){
         b.barter("needles", "gold", a);
-        ArrayList<String> test = new ArrayList<String>();
-        test.add("myrh");
-        test.add("needles");
+        ArrayList<String> test = new ArrayList<String>(Arrays.asList("myrh", "needles"));
         assertEquals(test.toString(), a.getInventory());
     }
 
