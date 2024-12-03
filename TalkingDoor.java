@@ -1,9 +1,25 @@
+/**
+ * Class for TalkingDoor which is used differently from other NPCs, 
+ * only special ability is to pose riddles instead of barter
+ */
 public class TalkingDoor extends Character{
 
+    /**
+     * Constructor for talking door
+     * @param description the description of how the door appears
+     * @param occupation name/id
+     * @param x x or column position
+     * @param y y or row position
+     */
     public TalkingDoor(String description, String occupation, int x, int y){
         super(description, occupation, x, y);
     }
 
+    /**
+     * method for posing a riddle, overrides the regular intro speech that other npc's have
+     * @param a Character the intro is being given to
+     */
+    @Override
     public void intro(Character a){ //overrides the super.intro() 
         System.out.println("I'm almost a String");
         System.out.println("but that isn't quite right");
