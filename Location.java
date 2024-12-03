@@ -113,6 +113,13 @@ public class Location {
     }
 
     /**
+     * Only called by Play.answerRiddle() to make going into the yarn room possible
+     */
+    public void setSouth(){
+        this.south = true;
+    }
+
+    /**
      * method to get the value of the possibility of traveling/walking west
      * @return t/f it is possible to walk west
      */
