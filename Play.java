@@ -1,10 +1,15 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Play class, contains all the necessary methods for the text-based game to work together and intake user input
+ */
 public class Play {
 
+    /**
+     * constructor for play, no necessary attributes
+     */
     public Play(){
-
     }
 
     /**
@@ -281,6 +286,10 @@ public class Play {
 
     
 
+    /**
+     * Main function for Play(), contains the while loop for the game, ends when win condition is reached, or end is typed out
+     * @param args
+     */
     public static void main(String[] args) {
         Play game = new Play();
         Map map = new Map(); //default 2x2 map
@@ -336,16 +345,17 @@ public class Play {
                 hero.canKnit();
             } else if(command[0].equals("barter") && command[1].equals("with")){ //barter
                 game.barter(hero, command[2], map, input);
+            } else if(command[0].equals("check") && command[1].equals("inventory")){ //check inventory
+                hero.checkInventory();
+            } else if(command[0].equals("what") && command[1].equals("can") && command[3].equals("knit")){ //"what can I knit"
+                hero.canKnit();
             }
             else{
                 System.out.println(command[0] + " is an unknown command.");
             }
         }
         
-        hero.canKnit();
-            
-            //barter
-            //check inventory(print) //Look at inventory?
+        //check inventory(print) //Look at inventory?
 
         if(hero.hasWon()){
             System.out.println("Congratulations, you've survived winter! Nice and cozy!");
