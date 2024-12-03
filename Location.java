@@ -259,6 +259,7 @@ public class Location {
      */
     public void lookAtCharacter(String s){ //describes a person if they are in the location being checked.
         try{
+            System.out.println("You see...");
             Character c = getPerson(s); //returns a person if they exist in the cast of a given location
             System.out.println(c.getDescription());
         } catch(MissingNPCException e){
