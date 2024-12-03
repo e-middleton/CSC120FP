@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Character class, used for NPC's and is the parent of the Player class
@@ -254,9 +255,13 @@ public class Character{
         bag.add("gold");
         bag.add("gold");
         bag.add("sock yarn");
-        bag.add("wool");
+        bag.add("bobbin");
         Character smith = new Character("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour", 1);
         Character baker = new Character("A worker in a small northern town", "baker", 0, 0, purse, "gold", 2);
+        ArrayList<String> spinnerSupplies = new ArrayList<String>(Arrays.asList("roving", "beeswax", "flax", "sock yarn"));
+        Character spinner = new Character("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
+
+        spinner.barter("sock yarn", "bobbin", smith);
 
         // smith.checkInventory();
         // baker.checkInventory();
