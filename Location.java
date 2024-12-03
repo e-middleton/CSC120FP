@@ -16,6 +16,8 @@ public class Location {
     private boolean east;
     private boolean south;
     private boolean west;
+    private boolean containsMoth;
+    private Moth moth;
 
     /**
      * Shortened/incomplete constructor for Locations, used for testing/unsure locations
@@ -37,6 +39,8 @@ public class Location {
         this.east = east;
         this.south = south;
         this.west = west;
+        this.containsMoth = false;
+        this.moth = null; //no moth
     }
 
     /**
@@ -52,7 +56,7 @@ public class Location {
      * @param south t/f it is possible to walk south
      * @param west t/f it is possible to walk west
      */
-    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast, boolean north, boolean east, boolean south, boolean west){
+    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
         this.name = name;
         this.inventory = inventory;
@@ -63,6 +67,10 @@ public class Location {
         this.east = east;
         this.south = south;
         this.west = west;
+        this.containsMoth = containsMoth;
+        if(this.containsMoth){
+            this.moth = new Moth(); //if a true is passed in, a moth is created in the Location
+        }
 
         //automatically makes everybody's position correct for the location they're in.
         for(int i = 0; i < cast.size(); i++){
@@ -70,6 +78,14 @@ public class Location {
             cast.get(i).setPosition_y(this.position_y);
         }
 
+    }
+
+    /**
+     * getter for the containsMoth attribute
+     * @return true/false this location has a moth
+     */
+    public boolean hasMoth(){
+        return this.containsMoth;
     }
 
     /**
@@ -102,6 +118,18 @@ public class Location {
      */
     public boolean getWest(){
         return this.west;
+    }
+
+    /**
+     * grabs the moth from the location if there exists such a moth
+     * @return the moth
+     */
+    public Moth getMoth(){
+        if(this.hasMoth()){
+            return this.moth;
+        } else{
+            throw new MissingNPCException();
+        }
     }
 
     /**
@@ -246,7 +274,7 @@ public class Location {
         ArrayList<Character> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
-        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true);
+        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true, false);
         home.lookAround();
     }
     
