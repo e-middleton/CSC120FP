@@ -45,7 +45,7 @@ public class Play {
      */
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
-        System.out.println("+walk (north, south, east, west) \n+look around \n+talk to \n+look at _person_ \n+barter with _person_");
+        System.out.println("+walk (north, south, east, west) \n+look around \n+talk to _person_ \n+look at _person_ \n+barter with _person_ \n+what can I knit \n+knit _clothing item_");
     }
 
     /**
@@ -128,6 +128,22 @@ public class Play {
         map.findLocation(hero).lookAtCharacter(s); //exception handling in Location
     }
 
+    public void answerRiddle(Player hero, Map map, Scanner input){
+        try{
+            map.findLocation(hero).getPerson("door").intro(hero);
+            String response = input.nextLine();
+            if(response.toLowerCase().equals("yarn")){
+                System.out.println("Very well, you may pass.");
+                map.findLocation(hero).setSouth();
+            } else{
+                System.out.println("I'm sorry, you may not pass.");
+            }
+        } catch(MissingNPCException e){
+            System.out.println("There is no door here to talk to.");
+        }
+
+    }
+
     /**
      * Method for talking to npc's provided that they're in the same location that the player is
      * The npc's response never changes, it justs says who they are and what they trade for
@@ -135,11 +151,16 @@ public class Play {
      * @param npc the name of the npc they're trying to talk to. They're grabbed from the location's cast.
      * @param map the map, used to get the player's current location
      */
-    public void talk(Player hero, String npc, Map map){ 
-        try{
-            map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
-        } catch(MissingNPCException e){
-            System.out.println("There is no " + npc + " in the " + map.findLocation(hero).getName());
+    public void talk(Player hero, String npc, Map map, Scanner input){ 
+        if(npc.equals("door")){
+            System.out.println();
+            answerRiddle(hero, map, input);
+        } else{
+            try{
+                map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
+            } catch(MissingNPCException e){
+                System.out.println("There is no " + npc + " in the " + map.findLocation(hero).getName());
+            }
         }
     }
 
@@ -294,8 +315,6 @@ public class Play {
     }
 
 
-    
-
     /**
      * Main function for Play(), contains the while loop for the game, ends when win condition is reached, or end is typed out
      * @param args
@@ -326,11 +345,11 @@ public class Play {
             else if((command[0]).equals("look") && command[1].equals("at")){ //look at PERSON
                 game.lookAt(hero, command[2], map);
             }
-            else if(command[0].equals("show") && command[1].equals("options")){ //show options
+            else if(command[0].equals("help")){ //show options
                 game.showOptions();
             }
             else if(command[0].equals("talk") && command[1].equals("to")){ //talk
-                game.talk(hero, command[2], map); //player, name of the person they're talking to, map for location
+                game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
             } else if(command[0].equals("drop")){ //dropping an item, adding it as a string to location inventory
                 try{
                     hero.drop(command[1]);
