@@ -94,6 +94,48 @@ public class Player extends Character{
     }
 
     /**
+     * Method for returning whether or not the player has any yarn at all
+     * @return t/f the player has yarn
+     */
+    public boolean hasYarn(){
+        boolean check = false;
+        if(this.workbag.get("fingering weight") >= 1){
+            check = true;
+        } else if(this.workbag.get("dk weight") >= 1){
+            check = true;
+        } else if(this.workbag.get("worsted weight") >= 1){
+            check = true;
+        } else if(this.workbag.get("bulky weight") >= 1){
+            check = true;
+        }
+       return check;
+    }
+
+    /**
+     * Only able to be called by the moth
+     * it finds a yarn category that contins yarn, "eats" the yarn
+     * and tells you which type of yarn was eaten
+     * @return String name of the yarn that was eaten
+     */
+    public String eatYarn(){
+        String yarn = "";
+        if(this.workbag.get("fingering weight") >= 1){
+            yarn += "fingering weight yarn";
+            this.workbag.replace("fingering weight", 0); //yarn is eaten up
+        } else if(this.workbag.get("dk weight") >= 1){
+            yarn += "dk weight yarn";
+            this.workbag.replace("dk weight", 0);
+        } else if(this.workbag.get("worsted weight") >= 1){
+            yarn += "worsted weight yarn";
+            this.workbag.replace("worsted weight", 0);
+        } else if(this.workbag.get("bulky weight") >= 1){
+            yarn += "bulky weight yarn";
+            this.workbag.replace("bulky weight", 0);
+        }
+        return yarn;
+    }
+
+    /**
      * Method for printing out which of the items of winter clothing a player has, based upon the value t/f in the key value pair of outfit
      */
     public void showOutfit(){
