@@ -244,6 +244,7 @@ public class Character{
         purse.add("gin");
         ArrayList<String> bag = new ArrayList<String>();
         bag.add("gold");
+        bag.add("gold");
         bag.add("sock yarn");
         bag.add("wool");
         Character smith = new Character("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour", 1);
@@ -252,9 +253,10 @@ public class Character{
         // smith.checkInventory();
         // baker.checkInventory();
 
-        baker.barter("nails", "gems", smith);
+        baker.barter("nails", "gold", smith);
+        smith.checkInventory();
 
-        smith.intro(baker);
+    
         
     }
     
