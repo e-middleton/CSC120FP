@@ -113,21 +113,15 @@ public class Character{
     }
 
 
-    //to talk to a person, you must be in the same position in the map
-    //for npc conversations, you can do talk, and then it probably shows you what they do, and you either do it or not.
-    //eg. Welcome to town! I'm the blacksmith, I'm open to trading if you need weapons? y/n
-    //method for an npc to fulfill their role/
-    //right now this passes in a character, but I think that later, I will just make it that, if you want to do any of the npc's functions, you must
-    //be in the same location by an external test, in the text based game part I think?
-    public void intro(Character c){
-        if(positionMatch(c)){
-            System.out.println("Hello traveler! I am the " + this.occupation + " here.");
-            System.out.println("Would you like to barter?");
-            System.out.println("Currently I have " + getInventory());
-            System.out.println("And I am willing to trade for " + "(" + this.wantsNum + ") " + this.wants);
-        } else{
-            throw new PositionMismatchException();
-        }
+    /**
+     * Method for getting the intro/set speech of an NPC
+     * @param player the player who they're talking to
+     */
+    public void intro(Character player){ //exception thrown in Location and handled in Play if mismatched
+        System.out.println("Hello traveler! I am the " + this.occupation + " here.");
+        System.out.println("Would you like to barter?");
+        System.out.println("Currently I have " + getInventory());
+        System.out.println("And I am willing to trade for " + "(" + this.wantsNum + ") " + this.wants);
     }
 
     /**
@@ -193,27 +187,23 @@ public class Character{
      * @param player currently another character, but eventually is going to be the player, the person asking for something.
      */
     public void barter(String trade, String payment, Character player){ 
-        if(positionMatch(player)){ 
-            if(this.wants.equals(payment)){
-                if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
-                    try{
-                        if(takePayment(player, payment)){ //ensure that full payment occurs
-                            drop(trade); //the npc drops the item they're giving away
-                            player.grab(trade); //player grabs item they want
-                            System.out.println("A successful trade of " + payment +"(s) for " + trade + "!");
-                        }
-                    } catch(RuntimeException e){
-                        System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
+        if(this.wants.equals(payment)){
+            if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
+                try{
+                    if(takePayment(player, payment)){ //ensure that full payment occurs
+                        drop(trade); //the npc drops the item they're giving away
+                        player.grab(trade); //player grabs item they want
+                        System.out.println("A successful trade of " + payment +"(s) for " + trade + "!");
                     }
-                } else{
-                    throw new RuntimeException("Those items cannot be bartered, one or both is not in the inventory.");
+                } catch(RuntimeException e){
+                    System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
                 }
             } else{
-                System.out.println("The " + this.occupation + " does not want " + payment + " please choose another thing to trade");
-            } 
-        }else{
-            throw new PositionMismatchException();
-        }
+                throw new RuntimeException("Those items cannot be bartered, one or both is not in the inventory.");
+            }
+        } else{
+            System.out.println("The " + this.occupation + " does not want " + payment + " please choose another thing to trade");
+        } 
     }
 
     /**
