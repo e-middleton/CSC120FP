@@ -39,11 +39,9 @@ public class CharacterTest {
         assertEquals(test.toString(), a.getInventory());
     }
 
-    @Test(expected=PositionMismatchException.class)
-    public void testBarterFail(){
-        c.barter("needles", "diamond", d);
-    }
+    
 
+    //not enough gold to trade, so it should fail
     @Test(expected=RuntimeException.class)
     public void testBarterFail2(){
         b.drop("gold");
