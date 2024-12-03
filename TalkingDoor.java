@@ -12,7 +12,7 @@ public class TalkingDoor extends Character{
         System.out.println("I'm hard here to find,");
         System.out.println("still harder to use");
         System.out.println("Here's a hint,");
-        System.out.println("I make up the socks");
+        System.out.println("I make up socks");
         System.out.println("inside of your shoes.");
         System.out.println();
         System.out.println("What am I?");
