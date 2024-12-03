@@ -74,24 +74,40 @@ public class Play {
 
         if(command[1].equals("north")){ //walk north
             if(map.walkNorth(a)){
+                if(map.findLocation(a).hasMoth()){ //if there's a moth
+                    System.out.println("Oh no! There's a moth in here!");
+                    map.findLocation(a).getMoth().eat(a); //moth eats yarn
+                } 
                 return;
             } else{
                 System.out.println("Unable to walk in this direction. Please to try walk in a new direction.");
             }
         } else if(command[1].equals("east")){ //walk east
             if(map.walkEast(a)){
+                if(map.findLocation(a).hasMoth()){ //if there's a moth
+                    System.out.println("Oh no! There's a moth in here!");
+                    map.findLocation(a).getMoth().eat(a); //moth eats yarn
+                }
                 return;
             } else{
                 System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
             }
         } else if(command[1].equals("south")){ //walk south
             if(map.walkSouth(a)){
+                if(map.findLocation(a).hasMoth()){ //if there's a moth
+                    System.out.println("Oh no! There's a moth in here!");
+                    map.findLocation(a).getMoth().eat(a); //moth eats yarn
+                }
                 return;
             } else{
                 System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
             }
         } else if(command[1].equals("west")){ //walk west
             if(map.walkWest(a)){
+                if(map.findLocation(a).hasMoth()){ //if there's a moth
+                    System.out.println("Oh no! There's a moth in here!");
+                    map.findLocation(a).getMoth().eat(a); //moth eats yarn
+                }
                 return;
             } else{
                 System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
