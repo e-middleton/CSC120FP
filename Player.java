@@ -184,6 +184,7 @@ public class Player extends Character{
     public void grab(String s){
         if(!s.contains("yarn")){
             super.grab(s);
+            System.out.println(s + " has been added to your inventory.");
         } else{
             grabYarn(s);
         }
@@ -199,18 +200,22 @@ public class Player extends Character{
         if(s.substring(0, s.lastIndexOf("yarn")).equals("fingering ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 2)); //increments the value by two for a pair of socks/gloves
+                System.out.println(s + " is now in your workbag.");
             } 
         } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 7)); //increments the value by seven for pants
+                System.out.println(s + " is now in your workbag.");
             } 
         } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by seven for pants
+                System.out.println(s + " is now in your workbag.");
             } 
         } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 5)); //increments the value by five for a sweater
+                System.out.println(s + " is now in your workbag.");
             } 
         } else{
             throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your workbag.");
