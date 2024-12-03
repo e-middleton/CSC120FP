@@ -45,7 +45,7 @@ public class Play {
      */
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
-        System.out.println("+walk (north, south, east, west) \n+lookAround \n+talk");
+        System.out.println("+walk (north, south, east, west) \n+look around \n+talk to \n+look at _person_ \n+barter with _person_");
     }
 
     /**
@@ -125,7 +125,6 @@ public class Play {
      * @param map finds the location the hero is currently in
      */
     public void lookAt(Player hero, String s, Map map){ 
-        System.out.println("You see...");
         map.findLocation(hero).lookAtCharacter(s); //exception handling in Location
     }
 
@@ -138,9 +137,9 @@ public class Play {
      */
     public void talk(Player hero, String npc, Map map){ 
         try{
-            map.findLocation(hero).getPerson(npc).intro(hero); //
-        } catch(PositionMismatchException e){
-            System.out.println("You do not see any " + npc + " around. They are not in this location.");
+            map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
+        } catch(MissingNPCException e){
+            System.out.println("There is no " + npc + " in the " + map.findLocation(hero).getName());
         }
     }
 
@@ -156,25 +155,24 @@ public class Play {
      */
     public void barter(Player hero, String npc, Map map, Scanner input){
         try{
-            if(positionMatch(hero, map.findLocation(hero).getPerson(npc))){ //might not be a necessary check, CHECK
-                System.out.println("What would you like to barter for? "); //barter __ for __
-                String response = input.nextLine();
-                String[] command = sliceAndDice(response);
-                String trade = null;
-                try{
-                    for(int i = 0; i<command.length; i++    ){ //fixes issue of barter __ for worsted yarn (two words)
-                        if(command[i].equals("yarn")){
-                            trade = command[i-1] + " " + command[i];
-                        } else{
-                            trade = command[3];
-                        }
+            map.findLocation(hero).getPerson(npc); //checks for matching location
+            System.out.println("What would you like to barter for? "); //barter __ for __
+            String response = input.nextLine();
+            String[] command = sliceAndDice(response);
+            String trade = null;
+            try{
+                for(int i = 0; i<command.length; i++    ){ //fixes issue of barter __ for worsted yarn (two words)
+                    if(command[i].equals("yarn")){
+                        trade = command[i-1] + " " + command[i];
+                    } else{
+                        trade = command[3];
                     }
-                    map.findLocation(hero).getPerson(npc).barter(trade, command[1], hero);
-                } catch(IndexOutOfBoundsException b){                          //handles incorrect typing
-                    System.out.println("Please enter a valid for of: barter _payment_ for _commodity_");
-                } catch(RuntimeException e){                                   //if one or more object is missing
-                    System.out.println(e.getMessage());
                 }
+                map.findLocation(hero).getPerson(npc).barter(trade, command[1], hero);
+            } catch(IndexOutOfBoundsException b){                          //handles incorrect typing
+                System.out.println("Please enter a valid for of: barter _payment_ for _commodity_");
+            } catch(RuntimeException e){                                   //if one or more object is missing and the trade is incomplete
+                System.out.println(e.getMessage());
             }
         } catch(MissingNPCException b){ //if the person is in the wrong location
             System.out.println("You are not in the same location as " + npc);
@@ -197,8 +195,8 @@ public class Play {
                 if(response.equals("yes")){
                     try{
                         hero.knitSocks();
-                    } catch(RuntimeException e){
-                        System.out.println(e.getMessage());
+                    } catch(MissingMaterialException e){
+                        System.out.println("You have insufficient yarn for this action");
                     }
                 } else{
                     return; //exit the knitting method if they don't wish to continue
@@ -206,8 +204,8 @@ public class Play {
             } else{
                 try{
                     hero.knitSocks();
-                } catch(RuntimeException e){
-                    System.out.println(e.getMessage());
+                } catch(MissingMaterialException e){
+                    System.out.println("You have insufficient yarn for this action");
                 }
             }
         } else if(command[1].equals("hat")){
@@ -217,8 +215,8 @@ public class Play {
                 if(response.equals("yes")){
                     try{
                         hero.knitHat();
-                    } catch(RuntimeException e){
-                        System.out.println(e.getMessage());
+                    } catch(MissingMaterialException e){
+                        System.out.println("You have insufficient yarn for this action");
                     }
                 } else{
                     return;
@@ -226,8 +224,8 @@ public class Play {
             } else{
                 try{
                     hero.knitHat();
-                } catch(RuntimeException e){
-                    System.out.println(e.getMessage());
+                } catch(MissingMaterialException e){
+                    System.out.println("You have insufficient yarn for this action");
                 }
             }
         } else if(command[1].equals("gloves")){
@@ -237,8 +235,8 @@ public class Play {
                 if(response.equals("yes")){
                     try{
                         hero.knitGloves();
-                    } catch(RuntimeException e){
-                        System.out.println(e.getMessage());
+                    } catch(MissingMaterialException e){
+                        System.out.println("You have insufficient yarn for this action");
                     }
                 } else{
                     return;
@@ -246,8 +244,8 @@ public class Play {
             } else{
                 try{
                     hero.knitGloves();
-                } catch(RuntimeException e){
-                    System.out.println(e.getMessage());
+                } catch(MissingMaterialException e){
+                    System.out.println("You have insufficient yarn for this action");
                 }
             }
         } else if(command[1].equals("sweater")){
@@ -257,8 +255,8 @@ public class Play {
                 if(response.equals("yes")){
                     try{
                         hero.knitSweater();
-                    } catch(RuntimeException e){
-                        System.out.println(e.getMessage());
+                    } catch(MissingMaterialException e){
+                        System.out.println("You have insufficient yarn for this action");
                     }
                 } else{
                     return;
@@ -266,8 +264,8 @@ public class Play {
             } else{
                 try{
                     hero.knitSweater();
-                } catch(RuntimeException e){
-                    System.out.println(e.getMessage());
+                } catch(MissingMaterialException e){
+                    System.out.println("You have insufficient yarn for this action");
                 }
             }
         } else if(command[1].equals("pants")){
@@ -277,8 +275,8 @@ public class Play {
                 if(response.equals("yes")){
                     try{
                         hero.knitPants();
-                    } catch(RuntimeException e){
-                        System.out.println(e.getMessage());
+                    } catch(MissingMaterialException e){
+                        System.out.println("You have insufficient yarn for this action");
                     }
                 } else{
                     return;
@@ -286,8 +284,8 @@ public class Play {
             } else{
                 try{
                     hero.knitPants();
-                } catch(RuntimeException e){
-                    System.out.println(e.getMessage());
+                } catch(MissingMaterialException e){
+                    System.out.println("You have insufficient yarn for this action");
                 }
             }
         } else{
@@ -304,7 +302,7 @@ public class Play {
      */
     public static void main(String[] args) {
         Play game = new Play();
-        Map map = new Map(); //default 2x2 map
+        Map map = new Map(); //default 4x4 map
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
 
@@ -326,11 +324,7 @@ public class Play {
                  game.lookAround(hero, map); 
             }
             else if((command[0]).equals("look") && command[1].equals("at")){ //look at PERSON
-                try{
-                    game.lookAt(hero, command[2], map);
-                } catch(PositionMismatchException e){
-                    System.out.println(command[2] + " cannot be seen, you are not in the same location.");
-                }
+                game.lookAt(hero, command[2], map);
             }
             else if(command[0].equals("show") && command[1].equals("options")){ //show options
                 game.showOptions();
