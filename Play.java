@@ -126,11 +126,7 @@ public class Play {
      */
     public void lookAt(Player hero, String s, Map map){ 
         System.out.println("You see...");
-        try{
-            map.findLocation(hero).lookAtCharacter(s);
-        } catch(RuntimeException e){
-            System.out.println(e.getMessage());
-        }
+        map.findLocation(hero).lookAtCharacter(s); //exception handling in Location
     }
 
     /**
