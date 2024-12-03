@@ -361,7 +361,7 @@ public class Play {
 
         //main play loop, it currently ends when the player says end.
         //also checks to see if the win condition has been met
-        while(!((response.toLowerCase()).equals("end")) && !(hero.hasWon())){ 
+        while((!((response.toLowerCase()).equals("end"))) && !(hero.hasWon())){ 
             response = input.nextLine();
             String[] command = game.sliceAndDice(response);
             if(command[0].equals("walk")){ //walk north, east, south, west
@@ -386,9 +386,15 @@ public class Play {
                     System.out.println(e.getMessage());
                 }
             } else if(command[0].equals("grab")){ //grabbing an item, removing it from location inventory
-                if(map.findLocation(hero).containsItem(command[1])){
-                    hero.grab(command[1]);
-                    map.findLocation(hero).removeItem(command[1]);
+                String item = "";
+                if(response.contains("yarn")){
+                    item = command[1] + " " + command[2];
+                } else{
+                    item = command[1];
+                }
+                if(map.findLocation(hero).containsItem(item)){
+                    hero.grab(item);
+                    map.findLocation(hero).removeItem(item);
                 } else{
                     System.out.println("This item is not in this location. It cannot be grabbed.");
                 }
