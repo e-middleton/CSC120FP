@@ -31,5 +31,63 @@ public class PlayerTest {
         dorothy.walk(1, 3);
     }
 
+    @Test(expected=MissingMaterialException.class)
+    public void testKnitSocksFail(){
+        dorothy.knitSocks();
+    }
+
+    @Test(expected=MissingMaterialException.class)
+    public void testKnitGlovesFail(){
+        dorothy.knitGloves();
+    }
     
+    @Test(expected=MissingMaterialException.class)
+    public void testKnitHatFail(){
+        dorothy.knitHat();
+    }
+
+    @Test(expected=MissingMaterialException.class)
+    public void testKnitSweaterFail(){
+        dorothy.knitSweater();
+    }
+
+    @Test(expected=MissingMaterialException.class)
+    public void testKnitPantsFail(){
+        dorothy.knitPants();
+    }
+
+    @Test
+    public void testKnitSocks(){
+        dorothy.grabYarn("fingering yarn");
+        dorothy.knitSocks();
+        assertEquals(true, dorothy.hasSocks());
+    }
+
+    @Test
+    public void testKnitGloves(){
+        dorothy.grabYarn("fingering yarn");
+        dorothy.knitGloves();
+        assertEquals(true, dorothy.hasGloves());
+    }
+
+    @Test
+    public void testKnitHat(){
+        dorothy.grab("dk yarn");
+        dorothy.knitHat();
+        assertEquals(true, dorothy.hasHat());
+    }
+
+    @Test
+    public void testKnitSweater(){
+        dorothy.grab("bulky yarn");
+        dorothy.knitSweater();
+        assertEquals(true, dorothy.hasSweater());
+    }
+
+    @Test
+    public void testKnitPants(){
+        dorothy.grab("worsted yarn");
+        dorothy.knitPants();
+        assertEquals(true, dorothy.hasPants());
+    }
 }
