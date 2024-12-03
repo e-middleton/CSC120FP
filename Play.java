@@ -128,20 +128,50 @@ public class Play {
         map.findLocation(hero).lookAtCharacter(s); //exception handling in Location
     }
 
+    /**
+     * Method for answering the riddle the door sets for the player, 
+     * if correctly answered, player is able to go south into the yarn trove
+     * @param hero the player answering the riddle
+     * @param map for the location of the player and door
+     * @param input the Scanner used to get the player's guesses
+     */
     public void answerRiddle(Player hero, Map map, Scanner input){
-        try{
-            map.findLocation(hero).getPerson("door").intro(hero);
+        if(map.findLocation(hero).getName().equals("mine")){ //NECESSARY, DONT REMOVE, OTHERWISE RIDDLE FORMATTING MESSED UP
+            System.out.println();
+            System.out.println("The door's rusty eyes peel themselves open,");
+            System.out.println("His voice is mechanical as he informs you that,");
+            System.out.println("should you wish to walk south, you must correctly answer his riddle");
+            System.out.println();
+            System.out.println("Would you like to hear his riddle? (y/n)");
             String response = input.nextLine();
-            if(response.toLowerCase().equals("yarn")){
-                System.out.println("Very well, you may pass.");
-                map.findLocation(hero).setSouth();
-            } else{
-                System.out.println("I'm sorry, you may not pass.");
+            if(response.toLowerCase().equals("yes")){
+                try{
+                    System.out.println();
+                    map.findLocation(hero).getPerson("door").intro(hero);
+                    response = input.nextLine();
+                    if(response.toLowerCase().equals("yarn")){ //guesses correctly
+                        System.out.println("Very well, the door sighs, you may pass.");
+                        System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
+                        System.out.println("The heavy metal door... swings open");
+                        map.findLocation(hero).setSouth();
+                    } else{
+                        System.out.println("I'm sorry, that is incorrect. You have one guess remaining."); //one more chance
+                        System.out.println("What am I?");
+                        response = input.nextLine();
+                        if(response.equals("yarn")){
+                            System.out.println("Very well, the door sighs, you may pass.");
+                            System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
+                            System.out.println("The heavy metal door... swings open");
+                            map.findLocation(hero).setSouth();
+                        } else{
+                            System.out.println("I'm sorry, you may not pass.");
+                        }
+                    }
+                } catch(MissingNPCException e){
+                    System.out.println("There is no door here to talk to.");
+                }
             }
-        } catch(MissingNPCException e){
-            System.out.println("There is no door here to talk to.");
         }
-
     }
 
     /**
@@ -153,7 +183,6 @@ public class Play {
      */
     public void talk(Player hero, String npc, Map map, Scanner input){ 
         if(npc.equals("door")){
-            System.out.println();
             answerRiddle(hero, map, input);
         } else{
             try{
