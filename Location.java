@@ -216,7 +216,7 @@ public class Location {
     public String getCast(){
         String names = "The "; //needs to be initialized
         if(this.cast.size() == 1){
-            return this.cast.get(0).getOccupation(); //if there's only one person, their name/occupation is the only thing passed
+            return "the " + this.cast.get(0).getOccupation(); //if there's only one person, their name/occupation is the only thing passed
         } else if(!this.cast.isEmpty()){
             for(int i = 0; (i < this.cast.size() -1); i++){ //for if there are multiple people
                 names += this.cast.get(i).getOccupation();
@@ -225,7 +225,7 @@ public class Location {
             names += "and " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
             return names;
         } else{
-            return "There are no people in this location.";
+            return "that there are no people in this location.";
         }
     }
 
@@ -235,8 +235,7 @@ public class Location {
      */
     public void lookAround(){
         System.out.println("You see " + getDescription());
-        System.out.println("You also see...");
-        System.out.println(getCast()); //either the names/occupation of the people, or the lack of them
+        System.out.println("You also see " + getCast()); //either the names/occupation of the people, or the lack of them
     }
 
     /**
