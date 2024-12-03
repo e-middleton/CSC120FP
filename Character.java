@@ -196,11 +196,15 @@ public class Character{
         if(positionMatch(player)){ 
             if(this.wants.equals(payment)){
                 if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
-                    drop(trade); //the npc drops the item they're giving away
-                    grab(payment); //they grab the payment
-                    player.grab(trade); //player grabs the item they want
-                    player.drop(payment); //player gives the payment
-                    System.out.println("A successful trade of " + payment + " for " + trade + "!");
+                    try{
+                        if(takePayment(player, payment)){ //ensure that full payment occurs
+                            drop(trade); //the npc drops the item they're giving away
+                            player.grab(trade); //player grabs item they want
+                            System.out.println("A successful trade of " + payment +"(s) for " + trade + "!");
+                        }
+                    } catch(RuntimeException e){
+                        System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
+                    }
                 } else{
                     throw new RuntimeException("Those items cannot be bartered, one or both is not in the inventory.");
                 }
@@ -209,6 +213,27 @@ public class Character{
             } 
         }else{
             throw new PositionMismatchException();
+        }
+    }
+
+    /**
+     * Method for taking payment, useful for when multiple of something is requested. 
+     * The item is dropped by the player and grabbed by the npc, 
+     * who then decrements their required number until the full payment has occurred and the trade is complete
+     * @param player the player who initiated the bartering
+     * @param payment the string of the object the npc wants in exchange for their good
+     * @return t/f if the payment has been completed
+     */
+    public boolean takePayment(Character player, String payment){ 
+        while(wantsNum >= 1){
+            player.drop(payment); //player drops the payment and it is taken by the npc
+            grab(payment); //grabs payment
+            this.wantsNum -= 1;
+        }
+        if(this.wantsNum == 0){ //has the payment in full been given
+            return true;
+        } else{
+            return false;
         }
     }
 
