@@ -249,7 +249,7 @@ public class Player extends Character{
             System.out.println("You now have a pair of socks!");
             
         } else{
-            throw new RuntimeException("You have insufficient materials for this action.");
+            throw new MissingMaterialException();
         }
     }
 
@@ -262,7 +262,7 @@ public class Player extends Character{
             this.outfit.replace("hat", true);
             System.out.println("You now have a hat!");
         } else{
-            throw new RuntimeException("You have insufficient materials for this action.");
+            throw new MissingMaterialException();
         }
     }
 
@@ -275,7 +275,7 @@ public class Player extends Character{
             this.outfit.replace("gloves", true);
             System.out.println("You now have gloves");
         } else{
-            throw new RuntimeException("You have insufficient materials for this action.");
+            throw new MissingMaterialException();
         }
     }
 
@@ -288,7 +288,7 @@ public class Player extends Character{
             this.outfit.replace("sweater", true);
             System.out.println("You now have a sweater");
         } else{
-            throw new RuntimeException("You have insufficient materials for this action.");
+            throw new MissingMaterialException();
         }
     }
 
@@ -301,7 +301,7 @@ public class Player extends Character{
             this.outfit.replace("pants", true);
             System.out.println("You now have a pair of pants.");
         } else{
-            throw new RuntimeException("You have insufficient materials for this action.");
+            throw new MissingMaterialException();
         }
     }
 
