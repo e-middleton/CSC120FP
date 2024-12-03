@@ -23,4 +23,9 @@ public class LocationTest {
         String test = "The a, and b";
         assertEquals(test, homeBase.getCast());
     }
+
+    @Test(expected=MissingNPCException.class)
+    public void testGetPersonFail(){
+        homeBase.getPerson("c"); //"c" is not in this location
+    }
 } 
