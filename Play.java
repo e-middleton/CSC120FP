@@ -381,6 +381,7 @@ public class Play {
         Map map = new Map(); //default 4x4 map
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
+        int counter = 0;
 
         hero.grab("fingering yarn");
     
@@ -391,7 +392,22 @@ public class Play {
 
         //main play loop, it currently ends when the player says end.
         //also checks to see if the win condition has been met
+        outerloop:
         while((!((response.toLowerCase()).equals("end"))) && !(hero.hasWon())){ 
+
+            //seasons + passing time
+            if(counter == 0){
+                System.out.println("You begin in the house. Type HELP for options.");
+            } else if(counter == 50){
+                System.out.println("Hmm... the weather seems to be getting a bit colder...");
+            } else if(counter == 100){
+                System.out.println("You're starting to feel a bit nervous, the trees are turning for fall.");
+            } else if(counter == 150){
+                System.out.println("You only have a few weeks left before the cold front hits!");
+            } else if (counter == 200){
+                break outerloop; //game ends, time is up
+            }
+
             response = input.nextLine();
             String[] command = game.sliceAndDice(response);
 
@@ -492,12 +508,13 @@ public class Play {
                     default:
                         System.out.println(response + " is an unknown command.");
             }
+            counter += 1;
         }
 
         if(hero.hasWon()){
             System.out.println("Congratulations, you've survived winter! Nice and cozy!");
         } else{
-            System.out.println("You're freezing and cold. You haven't knit your outfit. You might not survive! :(");
+            System.out.println("You're freezing and cold. You haven't knit your outfit. You did not survive! :(");
         }
         input.close();  
     }
