@@ -394,95 +394,105 @@ public class Play {
         while((!((response.toLowerCase()).equals("end"))) && !(hero.hasWon())){ 
             response = input.nextLine();
             String[] command = game.sliceAndDice(response);
-            if(command[0].equals("walk")){ //walk north, east, south, west
-                try{
-                    game.walk(command, hero, map);
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the valid form: walk _cardinal direction_");
-                }
-            } else if(command[0].equals("look")){ //look around LOCATION (general) && look at PERSON
-                try{
-                    if(command[1].equals("around")){
-                        game.lookAround(hero, map);
-                    } else if(command[1].equals("at")){
-                        game.lookAt(hero, command[2], map);
+
+            //which command executes, instead of if, else if, else setup
+            switch(command[0]){
+                case("walk"): //walk north, east, south, west
+                    try{
+                        game.walk(command, hero, map);
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the valid form: walk _cardinal direction_");
                     }
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter the valid form: look around or look at _person_");
-                }
-            } else if(command[0].equals("help")){ //show options
-                game.showOptions();
-            } else if(command[0].equals("talk")){ //talk
-                try{
-                    if(command[1].equals("to")){
-                        game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
+                    break;
+                case("look"): //look around LOCATION (general) && look at PERSON
+                    try{
+                        if(command[1].equals("around")){
+                            game.lookAround(hero, map);
+                        } else if(command[1].equals("at")){
+                            game.lookAt(hero, command[2], map);
+                        }
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter the valid form: look around or look at _person_");
                     }
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the form: talk to _person_");
-                }
-            } else if(command[0].equals("drop")){ //dropping an item, adding it as a string to location inventory
-                try{
-                    hero.drop(command[1]);
-                    map.findLocation(hero).addItem(command[1]);
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the form: drop _item_");
-                } catch(RuntimeException e){
-                    System.out.println(e.getMessage());
-                }
-            } else if(command[0].equals("grab")){ //grabbing an item, removing it from location inventory
-                String item = "";
-                try{
-                    if(response.contains("yarn")){ //makes it possible to pick up *weight* yarn (2 words)
-                        item = command[1] + " " + command[2];
-                    } else{
-                        item = command[1];
+                    break;
+                case("help"): //show options
+                    game.showOptions();
+                    break;
+                case("talk"): //talk
+                    try{
+                        if(command[1].equals("to")){
+                            game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
+                        }
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the form: talk to _person_");
                     }
-                    if(map.findLocation(hero).containsItem(item)){
-                        hero.grab(item);
-                        map.findLocation(hero).removeItem(item);
-                    } else{
-                        System.out.println("This item is not in this location. It cannot be grabbed.");
+                    break;
+                case("drop"): //dropping an item, adding it as a string to location inventory
+                    try{
+                        hero.drop(command[1]);
+                        map.findLocation(hero).addItem(command[1]);
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the form: drop _item_");
+                    } catch(RuntimeException e){
+                        System.out.println(e.getMessage());
                     }
-                }catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the form: grab _item_");
-                }
-            } else if(command[0].equals("knit")){ //knit (all)
-                try{
-                    game.knit(hero, command, input);
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the form: knit _item_");
-                }
-            } else if(command[0].equals("what")){ //see knitting options, "what can I knit" "what can she knit"
-                try{
-                    if(command[1].equals("can") && command[3].equals("knit"))
-                    hero.canKnit();
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the form: what can I knit");
-                }
-            } else if(command[0].equals("barter")){ //barter
-                try{
-                    if(command[1].equals("with")){
-                        game.barter(hero, command[2], map, input);
+                    break;
+                case("grab"): //makes it possible to pick up *weight* yarn (2 words)
+                    String item = "";
+                    try{
+                        if(response.contains("yarn")){ //makes it possible to pick up *weight* yarn (2 words)
+                            item = command[1] + " " + command[2];
+                        } else{
+                            item = command[1];
+                        }
+                        if(map.findLocation(hero).containsItem(item)){
+                            hero.grab(item);
+                            map.findLocation(hero).removeItem(item);
+                        } else{
+                            System.out.println("This item is not in this location. It cannot be grabbed.");
+                        }
+                    }catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the form: grab _item_");
                     }
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in a valid form: barter with _person_");
-                }
-            } else if(command[0].equals("check")){ //check inventory
-                try{
-                    if(command[1].equals("inventory")){
-                        hero.checkInventory();
-                    } else{
-                        System.out.println("Please enter in the valid form: check inventory");
+                    break;
+                case("knit"): //knit (all)
+                    try{
+                        game.knit(hero, command, input);
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the form: knit _item_");
                     }
-                } catch(IndexOutOfBoundsException e){
-                    System.out.println("Please enter in the valid form: check inventory");
-                }
-            } else{
-                System.out.println(response + " is an unknown command.");
+                    break;
+                case("what"): //see knitting options, "what can I knit" "what can she knit" 
+                    try{
+                        if(command[1].equals("can") && command[3].equals("knit"))
+                        hero.canKnit();
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the form: what can I knit");
+                    }
+                    break;
+                    case("barter"): //barter
+                        try{
+                            if(command[1].equals("with")){
+                                game.barter(hero, command[2], map, input);
+                            }
+                        } catch(IndexOutOfBoundsException e){
+                            System.out.println("Please enter in a valid form: barter with _person_");
+                        }
+                        break;
+                    case("check"): 
+                        try{
+                            if(command[1].equals("inventory")){
+                                hero.checkInventory();
+                            } else{
+                                System.out.println("Please enter in the valid form: check inventory");
+                            }
+                        } catch(IndexOutOfBoundsException e){
+                            System.out.println("Please enter in the valid form: check inventory");
+                        }
+                    default:
+                        System.out.println(response + " is an unknown command.");
             }
         }
-        
-       // check inventory(print) //Look at inventory?
 
         if(hero.hasWon()){
             System.out.println("Congratulations, you've survived winter! Nice and cozy!");
