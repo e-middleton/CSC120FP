@@ -104,13 +104,6 @@ public class Character{
     }
 
 
-    /**
-     * prints out the character's wants, aka, what they are willing to trade for
-     */
-    public void getWants(){
-        System.out.println("the " + this.occupation + " dreams of owning \n" + this.wants.toString());
-    }
-
     //return a character's inventory as a String
     public String getInventory(){
         return this.inventory.toString();
@@ -182,13 +175,6 @@ public class Character{
         }
     }
 
-    /**
-     * Method for printing out options that the character has. Obsolete now that intro() exists.
-     */
-    public void showOptions(){
-        System.out.println("\n+ barter()"); //currently only bartering is a function
-    }
-
 
     //bartering objects, one for another, the first is what the player wants, the second is what the character is taking as payment
     /**
@@ -228,8 +214,8 @@ public class Character{
      * @param payment the string of the object the npc wants in exchange for their good
      * @return t/f if the payment has been completed
      */
-    public boolean takePayment(Character player, String payment){ 
-        while(this.wantsNum > this.hasNum){ //while they want more than they have
+    private boolean takePayment(Character player, String payment){ //never going to be called from outside of the character themselves
+        while(this.wantsNum > this.hasNum){ //while they want more than they have 
             player.drop(payment); //player drops the payment and it is taken by the npc
             grab(payment); //grabs payment
             this.hasNum += 1;
