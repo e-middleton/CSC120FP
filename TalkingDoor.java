@@ -34,5 +34,12 @@ public class TalkingDoor extends Character{
         System.out.println("What am I?");
     }
 
+    @Override
+    public void barter(String trade, String payment, Character player){ 
+        System.out.println("The door is not quite sure what you think he can barter. \nHe is a door.");
+    }
+    
+    
+
     
 }
