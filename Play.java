@@ -17,7 +17,7 @@ public class Play {
      * @param b the second character
      * @return true or false they're in the same location
      */
-    public boolean positionMatch(Character a, Character b){
+    public boolean positionMatch(NPC a, NPC b){
         if(a.getPosition_x() == b.getPosition_x() && a.getPosition_y() == b.getPosition_y()){
             return true;
         } else{
@@ -26,12 +26,12 @@ public class Play {
     }
 
     /**
-     * A method for checking if a character or player is in the same area as a given location. 
-     * @param a the character or player
+     * A method for checking if a npc or player is in the same area as a given location. 
+     * @param a the npc or player
      * @param b the location they're checking if they're in
      * @return true or false they're in the same location
      */
-    public boolean positionMatch(Character a, Location b){
+    public boolean positionMatch(NPC a, Location b){
         if(a.getPosition_x() == b.getPosition_x() && a.getPosition_y() == b.getPosition_y()){
             return true;
         } else{
@@ -55,13 +55,42 @@ public class Play {
     }
 
     /**
+     * Method for removing punctuation from a given string, (also removes whitespace and numbers)
+     * @param s the String being edited to have no punctuation
+     * @return the same string without punctuation or whitespace or numbers
+     */
+    public String punctuationRemoval(String s){
+        char[] charArray = s.toCharArray();
+        Character[] characterArray = new Character[charArray.length]; //makes it a Character array
+
+        for (int i = 0; i < charArray.length; i++) {
+            characterArray[i] = Character.valueOf(charArray[i]); 
+        }
+
+        //builds the new String, leaving behind anything not a letter 
+        String result = "";        
+        for(int i = 0; i<characterArray.length; i++){ 
+            if(Character.isLetter(characterArray[i])){ 
+                result += characterArray[i];
+            }
+        }
+        return result;
+    }
+
+    /**
     * splits up a string of multiple words based on the white space between them, converting it all to lower case to prevent confusion
     * @param s the string passed into the splitting function to be broken up
     * @return array: each index holds one word from the original string
     */
     public String[] sliceAndDice(String s){
-        String[] words = s.toLowerCase().split("\\s+"); //I tried splitting along " ", but for some reason it gave me grief so I did //s+
-        return words;
+        String[] words = s.toLowerCase().split("\\s+"); //splits along whitespace
+        String[] result = new String[words.length];
+
+        //removes punctuation and numbers
+        for(int i = 0; i < words.length; i++){ 
+            result[i] = punctuationRemoval(words[i]);
+        }
+        return result;
     }
 
     /**
@@ -353,11 +382,12 @@ public class Play {
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
 
-        hero.grab("apple");
+        hero.grab("fingering yarn");
     
         System.out.println("Hello, welcome to the game!");
         System.out.println("Would you like to play? Yes to play end to end");
         String response = input.nextLine();
+        
 
         //main play loop, it currently ends when the player says end.
         //also checks to see if the win condition has been met
@@ -452,7 +482,7 @@ public class Play {
             }
         }
         
-        //check inventory(print) //Look at inventory?
+       // check inventory(print) //Look at inventory?
 
         if(hero.hasWon()){
             System.out.println("Congratulations, you've survived winter! Nice and cozy!");
