@@ -8,7 +8,7 @@ public class PlayerTest {
     ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "cedar"));
 
     Player dorothy = new Player("an old woman", "protagonist", 0, 0, inventoryA);
-    Character b = new Character("n/a", "b", 0, 0, inventoryB, "gold", 1);
+    NPC b = new NPC("n/a", "b", 0, 0, inventoryB, "gold", 1);
 
     @Test
     public void testBarter(){

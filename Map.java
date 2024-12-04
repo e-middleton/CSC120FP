@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 /**
  * Map class, a 2d array of Locations, has methods for walking in the cardinal directions
- * and a method for finding the current location of a character
+ * and a method for finding the current location of a npc
  */
 public class Map {
     private Location[][] locations; //array of locations
@@ -16,20 +16,20 @@ public class Map {
         //Gardener, in map[2][0] "garden", objects for garden
         ArrayList<String> gardenerSupplies = new ArrayList<String>(Arrays.asList("worsted yarn", "hoe", "seedlings"));
         ArrayList<String> gardenStuff = new ArrayList<String>(Arrays.asList("apple", "moldyOrange", "compost"));
-        Character gardener = new Character("An old man, sitting at the bottom of a tree, gently weeding around the base of its roots.", "gardener", 0, 2, gardenerSupplies, "apple", 1);
+        NPC gardener = new NPC("An old man, sitting at the bottom of a tree, gently weeding around the base of its roots.", "gardener", 0, 2, gardenerSupplies, "apple", 1);
 
         //Merchant, in map[1][1] "trading post"
         ArrayList<String> merchantSupplies = new ArrayList<String>(Arrays.asList("dye", "scissors", "needles", "bulky yarn", "bobbin"));
-        Character merchant = new Character("A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity.", "merchant", 1, 1, merchantSupplies, "gold", 1);
+        NPC merchant = new NPC("A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity.", "merchant", 1, 1, merchantSupplies, "gold", 1);
        
         //Spinner, in map[1][0] "repair guild"
         ArrayList<String> spinnerSupplies = new ArrayList<String>(Arrays.asList("roving", "beeswax", "flax", "fingering yarn"));
-        Character spinner = new Character("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
+        NPC spinner = new NPC("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
 
         //Goblin, in map[1][3] "mine"
         ArrayList<String> goblinSupplies = new ArrayList<String>(Arrays.asList("breadcrusts", "knuckles?", "teeth", "needles"));
         TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
-        Character goblin = new Character("A short and hungry looking creature, eyeing your ankles with a disturbing gaze.", "goblin", 3, 1, goblinSupplies, "lichen", 1);
+        NPC goblin = new NPC("A short and hungry looking creature, eyeing your ankles with a disturbing gaze.", "goblin", 3, 1, goblinSupplies, "lichen", 1);
 
         //objects for map[2][3] "ore room"
         ArrayList<String> oreRoomStuff = new ArrayList<String>(Arrays.asList("gold", "gold", "amethyst", "pickaxe", "silver"));
@@ -46,30 +46,30 @@ public class Map {
         //Mermaid for Map[0][1] "sea"
         ArrayList<String> mermaidSupplies = new ArrayList<String>(Arrays.asList("dk yarn", "snail", "guppy"));
         ArrayList<String> seaStuff = new ArrayList<String>(Arrays.asList("pearl", "silk", "mussel", "coral"));
-        Character mermaid = new Character("An old woman, with strands of kelp instead of hair and barnacles clinging to her cheeks.", "mermaid", 1, 0, mermaidSupplies, "shell", 2);
+        NPC mermaid = new NPC("An old woman, with strands of kelp instead of hair and barnacles clinging to her cheeks.", "mermaid", 1, 0, mermaidSupplies, "shell", 2);
 
         //objects for map[0][2] "cove"
         ArrayList<String> coveStuff = new ArrayList<String>(Arrays.asList("shell", "shell", "shell", "driftwood", "bone"));
 
-        //objects for map[0][3] "river"
+        //objects for map[3][0] "river"
         ArrayList<String> riverStuff = new ArrayList<String>(Arrays.asList("pebble", "gold"));
 
-        this.locations[0][0] = new Location("a series of looming cliffs, the bottom is barely, if even visible, staring for too long makes you feel distinctly nauseou.", "cliffs", new ArrayList<String>(), 0, 0, new ArrayList<Character>(), true, true, false, false, false);
-        this.locations[0][1] = new Location("A dark expanse of the sea, with small waves lapping at your feet. You cannot see its farthest edge.", "sea", seaStuff, 1, 0, new ArrayList<Character>(Arrays.asList(mermaid)), true, true, false, true, false);
-        this.locations[0][2] = new Location("A small inlet, with soft embankments of sand and shells scattered along with pieces of driftwood.", "cove", coveStuff, 2, 0, new ArrayList<Character>(), true, false, false, true, false);
-        this.locations[0][3] = new Location("An old and dusty room, shelves look to be filled with yarn?", "yarn trove", yarnTroveStuff, 3, 0, new ArrayList<Character>(), true, false, false, false, false);
-        this.locations[1][0] = new Location("a room filled with old repair equipment, none of which you think you can use.", "repair guild", new ArrayList<String>(), 0, 1, new ArrayList<Character>(Arrays.asList(spinner)), true, true, true, false, false);
-        this.locations[1][1] = new Location("A traders outpost! You see a booth currently occupied with an expectant man.", "trading post", new ArrayList<String>(), 1, 1, new ArrayList<Character>(Arrays.asList(merchant)), true, true, true, true, false);
-        this.locations[1][2] = new Location("A freezing mountain, mist clouds around it's peak. \nSnow crunches on the ground barely covering the gravel and lichen beneath.", "mountain", mountainStuff, 2, 1, new ArrayList<Character>(), true, true, true, true, false);
-        this.locations[1][3] = new Location("An old mine, dark, but you can see something glinting just beyond the entrance.", "mine", new ArrayList<String>(), 3, 1, new ArrayList<Character>(Arrays.asList(goblin, talkingDoor)), true, false, false, true, false);
-        this.locations[2][0] = new Location("A curated garden, lovely trees line a walkway down the central stretch.", "garden", gardenStuff, 0, 2, new ArrayList<Character>(Arrays.asList(gardener)), true, true, true, false, false);
-        this.locations[2][1] = new Location("a small and broken down hovel", "home", new ArrayList<String>(), 1, 2, new ArrayList<Character>(), true, true, true, true, false);
-        this.locations[2][2] = new Location("an empty and dusty road", "road", new ArrayList<String>(Arrays.asList("dirt", "wheel")), 2, 1, new ArrayList<Character>(), true, false, true, true, false); 
-        this.locations[2][3] = new Location("It's an old hollowed out room of the mine, but this one hasn't yet been scraped, large purple gemstones glitter on the walls along with gold and silver ore. \na pickaxe lays to the side.", "ore room", oreRoomStuff, 3, 2, new ArrayList<Character>(), false, false, true, false, false);
-        this.locations[3][0] = new Location("A narrow yet violent river, with white water foaming and swirling around jagged rocks. \nSofter, rounded pebbles line its banks, what is the shiny metal flecked in the sand?", "river", riverStuff, 0, 3, new ArrayList<Character>(), false, true, true, false, false);
-        this.locations[3][1] = new Location("an empty field, nothing as far as the eye can see.", "field", new ArrayList<String>(), 1, 3, new ArrayList<Character>(), false, true, true, true, true);
-        this.locations[3][2] = new Location("A dark and eerie forest...", "forest", new ArrayList<String>(), 2, 3, new ArrayList<Character>(), false, true, true, true, false);
-        this.locations[3][3] = new Location("A magic mushroom circle, eat the mushrooms if you dare...", "magic circle", magicCircleStuff, 3, 3, new ArrayList<Character>(), false, false, false, true, false);
+        this.locations[0][0] = new Location("a series of looming cliffs, the bottom is barely, if even visible, staring for too long makes you feel distinctly nauseous.", "cliffs", new ArrayList<String>(), 0, 0, new ArrayList<NPC>(), true, true, false, false, false);
+        this.locations[0][1] = new Location("A dark expanse of the sea, with small waves lapping at your feet. You cannot see its farthest edge.", "sea", seaStuff, 1, 0, new ArrayList<NPC>(Arrays.asList(mermaid)), true, true, false, true, false);
+        this.locations[0][2] = new Location("A small inlet, with soft embankments of sand and shells scattered along with pieces of driftwood.", "cove", coveStuff, 2, 0, new ArrayList<NPC>(), true, false, false, true, false);
+        this.locations[0][3] = new Location("An old and dusty room, shelves look to be filled with yarn?", "yarn trove", yarnTroveStuff, 3, 0, new ArrayList<NPC>(), true, false, false, false, false);
+        this.locations[1][0] = new Location("a room filled with old repair equipment, none of which you think you can use.", "repair guild", new ArrayList<String>(), 0, 1, new ArrayList<NPC>(Arrays.asList(spinner)), true, true, true, false, false);
+        this.locations[1][1] = new Location("A traders outpost! You see a booth currently occupied with an expectant man.", "trading post", new ArrayList<String>(), 1, 1, new ArrayList<NPC>(Arrays.asList(merchant)), true, true, true, true, false);
+        this.locations[1][2] = new Location("A freezing mountain, mist clouds around it's peak. \nSnow crunches on the ground barely covering the gravel and lichen beneath.", "mountain", mountainStuff, 2, 1, new ArrayList<NPC>(), true, true, true, true, false);
+        this.locations[1][3] = new Location("An old mine, dark, but you can see something glinting just beyond the entrance.", "mine", new ArrayList<String>(), 3, 1, new ArrayList<NPC>(Arrays.asList(goblin, talkingDoor)), true, false, false, true, false);
+        this.locations[2][0] = new Location("A curated garden, lovely trees line a walkway down the central stretch.", "garden", gardenStuff, 0, 2, new ArrayList<NPC>(Arrays.asList(gardener)), true, true, true, false, false);
+        this.locations[2][1] = new Location("a small and broken down hovel", "home", new ArrayList<String>(), 1, 2, new ArrayList<NPC>(), true, true, true, true, false);
+        this.locations[2][2] = new Location("an empty and dusty road", "road", new ArrayList<String>(Arrays.asList("dirt", "wheel")), 2, 1, new ArrayList<NPC>(), true, false, true, true, false); 
+        this.locations[2][3] = new Location("It's an old hollowed out room of the mine, but this one hasn't yet been scraped, large purple gemstones glitter on the walls along with gold and silver ore. \na pickaxe lays to the side.", "ore room", oreRoomStuff, 3, 2, new ArrayList<NPC>(), false, false, true, false, false);
+        this.locations[3][0] = new Location("A narrow yet violent river, with white water foaming and swirling around jagged rocks. \nSofter, rounded pebbles line its banks, what is the shiny metal flecked in the sand?", "river", riverStuff, 0, 3, new ArrayList<NPC>(), false, true, true, false, false);
+        this.locations[3][1] = new Location("an empty field, nothing as far as the eye can see.", "field", new ArrayList<String>(), 1, 3, new ArrayList<NPC>(), false, true, true, true, true);
+        this.locations[3][2] = new Location("A dark and eerie forest...", "forest", new ArrayList<String>(), 2, 3, new ArrayList<NPC>(), false, true, true, true, false);
+        this.locations[3][3] = new Location("A magic mushroom circle, eat the mushrooms if you dare...", "magic circle", magicCircleStuff, 3, 3, new ArrayList<NPC>(), false, false, false, true, false);
     }
 
     /**
@@ -162,6 +162,7 @@ public class Map {
         for(int i = 0; i<4; i++){
             for(int j = 0; j<4; j++){
                 description += i + ", " + j + " " + locations[i][j].getName() + " \n";
+                System.out.println(locations[i][j].getDescription());
             }
         }
         return description;

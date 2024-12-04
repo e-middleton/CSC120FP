@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Character class, used for NPC's and is the parent of the Player class
+ * NPC class, used for NPC's and is the parent of the Player class
  */
-public class Character{
+public class NPC{
     protected String description;
     protected String occupation;
     protected int position_x;
@@ -16,12 +16,12 @@ public class Character{
 
     /**
      * Constructor with everything except the array lists of wishes, and inventory
-     * @param description a brief description of the character, called for when the player looksAround()
+     * @param description a brief description of the npc, called for when the player looksAround()
      * @param occupation the occupation of the NPC
      * @param position_x the horizontal/row index of their position on the map
      * @param position_y vertical/column index of their position on the map
      */
-    public Character(String description, String occupation, int position_x, int position_y){
+    public NPC(String description, String occupation, int position_x, int position_y){
         this.description = description;
         this.occupation = occupation;
         this.position_x = position_x;
@@ -31,17 +31,17 @@ public class Character{
     }
 
     /**
-     * Full constructor for Character with every possible attribute
-     * @param description a written description of the character and their appearance
-     * @param occupation the name/occupation of the character, used as an ID
+     * Full constructor for npc with every possible attribute
+     * @param description a written description of the NPC and their appearance
+     * @param occupation the name/occupation of the NPC, used as an ID
      * @param position_x the x or column position of the npc
      * @param position_y the y or row position of the npc
-     * @param inventory the arrayList of strings that serves as the character's inventory
-     * @param wants what the character wants to trade for, if wants = gold, the character will only trade if given gold
-     * @param wantsNum how many of the given object the Character wants. 
+     * @param inventory the arrayList of strings that serves as the NPC's inventory
+     * @param wants what the NPC wants to trade for, if wants = gold, the NPC will only trade if given gold
+     * @param wantsNum how many of the given object the NPC wants. 
      * @param hasNum how many of the item they have, used to keep track of payment
      */
-    public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory, String wants, int wantsNum){
+    public NPC(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory, String wants, int wantsNum){
         this.description = description;
         this.occupation = occupation;
         this.position_x = position_x;
@@ -52,7 +52,7 @@ public class Character{
         this.hasNum = 0;
     }
 
-    public Character(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
+    public NPC(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
         this.description = description;
         this.occupation = occupation;
         this.position_x = position_x;
@@ -64,7 +64,7 @@ public class Character{
 
 
     /**
-     * Getter for the character's description
+     * Getter for the npc's description
      * @return description as a string
      */
     public String getDescription(){
@@ -72,15 +72,15 @@ public class Character{
     }
 
     /**
-     * getter for the character's occupation, used interchangably as their name
-     * @return occupation of the character
+     * getter for the NPC's occupation, used interchangably as their name
+     * @return occupation of the NPC
      */
     public String getOccupation(){
         return this.occupation;
     }
 
     /**
-     * getter for the x coordinate of a character's position
+     * getter for the x coordinate of a NPC's position
      * @return index x of their position
      */
     public int getPosition_x(){
@@ -88,7 +88,7 @@ public class Character{
     }
 
     /**
-     * getter for the y coordinate of a character's position
+     * getter for the y coordinate of a NPC's position
      * @return index y of their position
      */
     public int getPosition_y(){
@@ -104,14 +104,14 @@ public class Character{
     }
 
 
-    //return a character's inventory as a String
+    //return a NPC's inventory as a String
     public String getInventory(){
         return this.inventory.toString();
     }
 
 
     //checks if characters are in the same location
-    public boolean positionMatch(Character c){
+    public boolean positionMatch(NPC c){
         if ((this.position_x == c.getPosition_x()) && (this.position_y == c.getPosition_y())){
             return true;
         } else{
@@ -124,7 +124,7 @@ public class Character{
      * Method for getting the intro/set speech of an NPC
      * @param player the player who they're talking to
      */
-    public void intro(Character player){ //exception thrown in Location and handled in Play if mismatched
+    public void intro(NPC player){ //exception thrown in Location and handled in Play if mismatched
         System.out.println("Hello traveler, I am the " + this.occupation);
         System.out.println("Would you like to barter?");
         System.out.println("Currently I have " + getInventory());
@@ -132,7 +132,7 @@ public class Character{
     }
 
     /**
-     * Puts an object in the character's inventory, inventory is not allowed to hold more than 15 items.
+     * Puts an object in the npc's inventory, inventory is not allowed to hold more than 15 items.
      * @param s the object being picked up.
      */
     public void grab(String s){
@@ -144,7 +144,7 @@ public class Character{
     }
 
     /**
-     * Checks if a character's inventory contains a given object
+     * Checks if a npc's inventory contains a given object
      * @param s the object being searched for
      * @return true or false if the inventory contains the object
      */
@@ -157,14 +157,14 @@ public class Character{
     }
 
     /**
-     * Prints out a list of what is in a character's inventory
+     * Prints out a list of what is in a npc's inventory
      */
     public void checkInventory(){
         System.out.println(this.inventory.toString());
     }
 
     /**
-     * Removes an item from a character's inventory, provided that it was in the inventory originally.
+     * Removes an item from a npc's inventory, provided that it was in the inventory originally.
      * @param s the item being dropped
      */
     public void drop(String s){
@@ -176,7 +176,7 @@ public class Character{
     }
 
 
-    //bartering objects, one for another, the first is what the player wants, the second is what the character is taking as payment
+    //bartering objects, one for another, the first is what the player wants, the second is what the npc is taking as payment
     /**
      * method for bartering (swapping objects around different inventories), first checks to see if bartering is possible based on matching locations, 
      * Then it checks if the offered item is something the npc even wants
@@ -184,9 +184,9 @@ public class Character{
      * if all these things are true, then the swap takes place and the trade is successful
      * @param trade the item the player wants to get
      * @param payment the payment the player is going to give the npc
-     * @param player currently another character, but eventually is going to be the player, the person asking for something.
+     * @param player currently another npc, but eventually is going to be the player, the person asking for something.
      */
-    public void barter(String trade, String payment, Character player){ 
+    public void barter(String trade, String payment, NPC player){ 
         if(this.wants.equals(payment)){
             if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
                 try{
@@ -214,7 +214,7 @@ public class Character{
      * @param payment the string of the object the npc wants in exchange for their good
      * @return t/f if the payment has been completed
      */
-    private boolean takePayment(Character player, String payment){ //never going to be called from outside of the character themselves
+    private boolean takePayment(NPC player, String payment){ //never going to be called from outside of the npc themselves
         while(this.wantsNum > this.hasNum){ //while they want more than they have 
             player.drop(payment); //player drops the payment and it is taken by the npc
             grab(payment); //grabs payment
@@ -230,7 +230,7 @@ public class Character{
 
 
     /**
-     * Main method in Character, used for testing
+     * Main method in NPC, used for testing
      * @param args empty array of String
      */
     public static void main(String[] args) {
@@ -242,10 +242,10 @@ public class Character{
         bag.add("gold");
         bag.add("sock yarn");
         bag.add("bobbin");
-        Character smith = new Character("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour", 1);
-        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, purse, "gold", 2);
+        NPC smith = new NPC("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour", 1);
+        NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, purse, "gold", 2);
         ArrayList<String> spinnerSupplies = new ArrayList<String>(Arrays.asList("roving", "beeswax", "flax", "sock yarn"));
-        Character spinner = new Character("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
+        NPC spinner = new NPC("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
 
         spinner.barter("sock yarn", "bobbin", smith);
 

@@ -11,7 +11,7 @@ public class Location {
     private ArrayList<String> inventory;
     private int position_x;
     private int position_y;
-    private ArrayList<Character> cast;
+    private ArrayList<NPC> cast;
     private boolean north;
     private boolean east;
     private boolean south;
@@ -34,7 +34,7 @@ public class Location {
         this.inventory = new ArrayList<String>();
         this.position_x = x;
         this.position_y = y;
-        this.cast = new ArrayList<Character>();
+        this.cast = new ArrayList<NPC>();
         this.north = north;
         this.east = east;
         this.south = south;
@@ -56,7 +56,7 @@ public class Location {
      * @param south t/f it is possible to walk south
      * @param west t/f it is possible to walk west
      */
-    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<Character> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
+    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
         this.name = name;
         this.inventory = inventory;
@@ -179,7 +179,7 @@ public class Location {
     }
 
     /**
-     * Method for adding an item to the inventory for a location, no checks done, usually when a character drops something
+     * Method for adding an item to the inventory for a location, no checks done, usually when a npc drops something
      * @param s the item being added to a location
      */
     public void addItem(String s){
@@ -239,11 +239,11 @@ public class Location {
     }
 
     /**
-     * Returns a character based upon their occupation/name by looking through the cast of a given location.
-     * @param s the name/occupation of the character
-     * @return the Character (type) being looked for
+     * Returns a npc based upon their occupation/name by looking through the cast of a given location.
+     * @param s the name/occupation of the npc
+     * @return the NPC (type) being looked for
      */
-    public Character getPerson(String s){
+    public NPC getPerson(String s){
         int index = 0; //only will get passed if the bool is changed
         boolean check = false;
         for(int i = 0; i < this.cast.size(); i++){ //if anybody in the cast has an occupation matching the name given, the index is saved
@@ -260,13 +260,13 @@ public class Location {
     }
 
     /**
-     * A method for getting a description of a Character based on their occupation given that they are in the cast of a location
-     * @param s the occupation/name of the character being described
+     * A method for getting a description of a NPC based on their occupation given that they are in the cast of a location
+     * @param s the occupation/name of the NPC being described
      */
     public void lookAtCharacter(String s){ //describes a person if they are in the location being checked.
         try{
             System.out.println("You see...");
-            Character c = getPerson(s); //returns a person if they exist in the cast of a given location
+            NPC c = getPerson(s); //returns a person if they exist in the cast of a given location
             System.out.println(c.getDescription());
         } catch(MissingNPCException e){
             System.out.println("You don't see any " + s + " in the " + this.name);
@@ -276,9 +276,9 @@ public class Location {
     //do I need an enter/exit method?
 
     public static void main(String[] args) {
-        Character smith = new Character("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
-        Character baker = new Character("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2);
-        ArrayList<Character> village = new ArrayList<>();
+        NPC smith = new NPC("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
+        NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2);
+        ArrayList<NPC> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
         Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true, false);

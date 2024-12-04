@@ -1,13 +1,12 @@
 import java.util.Hashtable;
-import java.util.HashMap;
 import java.util.ArrayList;
 
 /**
- * Class for the player/protagonist of the game. Inherits from Character and is able to walk around, knit, talk to people, look around
+ * Class for the player/protagonist of the game. Inherits from NPC and is able to walk around, knit, talk to people, look around
  */
-public class Player extends Character{
+public class Player extends NPC{
     private Hashtable<String, Boolean> outfit; 
-    private HashMap<String, Integer> workbag; //separate inventory for yarn because their quantity is relevant
+    private Hashtable<String, Integer> workbag; //separate inventory for yarn because their quantity is relevant
 
     /**
      * Default constructor for player, sets their location to home, their name as Dorothy, and their inventory/workbag begins empty
@@ -15,7 +14,7 @@ public class Player extends Character{
     public Player(){
         super("n/a", "Dorothy", 1, 2);
         this.outfit = new Hashtable<String, Boolean>(); //winter outfit (goal)
-        this.workbag = new HashMap<String, Integer>(6); //empty yarn holder
+        this.workbag = new Hashtable<String, Integer>(); //empty yarn holder
 
         this.outfit.put("hat", false);
         this.outfit.put("gloves", false);
@@ -41,7 +40,7 @@ public class Player extends Character{
         super(description, occupation, position_x, position_y);
         this.inventory = new ArrayList<String>(); //empty inventory if not specified
         this.outfit = new Hashtable<String, Boolean>(); //winter outfit (goal)
-        this.workbag = new HashMap<String, Integer>(6); //empty yarn holder
+        this.workbag = new Hashtable<String, Integer>(); //empty yarn holder
          
 
         //winter outfit begins with all clothing items (only possible ones) as false
@@ -62,7 +61,7 @@ public class Player extends Character{
 
     /**
      * Constructor for player with a predetermined inventory created at initialization
-     * @param description a description of the player, not super important but inherited from Character
+     * @param description a description of the player, not super important but inherited from NPC
      * @param occupation typically the player's name
      * @param position_x the x or column index of the player's position
      * @param position_y the y or row index of the player's position
@@ -72,7 +71,7 @@ public class Player extends Character{
     public Player(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
         super(description, occupation, position_x, position_y, inventory);
         this.outfit = new Hashtable<String, Boolean>();
-        this.workbag = new HashMap<String, Integer>(6); //because initial load capacity is 0.75
+        this.workbag = new Hashtable<String, Integer>(); 
 
         this.outfit.put("hat", false);
         this.outfit.put("gloves", false);
@@ -178,7 +177,7 @@ public class Player extends Character{
     }
 
     /**
-     * Puts an object in the character's inventory, inventory is not allowed to hold more than 15 items.
+     * Puts an object in the npc's inventory, inventory is not allowed to hold more than 15 items.
      * @param s the object being picked up.
      */
     public void grab(String s){
@@ -376,7 +375,7 @@ public class Player extends Character{
         // bag.add("needles");
         // bag.add("sock yarn");
         // bag.add("wool");
-        //Character smith = new Character("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour");
+        //NPC smith = new NPC("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour");
         //smith.barter("wool", "flour", dorothy);
 
         System.out.println();
