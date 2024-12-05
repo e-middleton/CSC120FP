@@ -399,12 +399,16 @@ public class Play {
             if(counter == 0){
                 System.out.println("You begin in the house. Type HELP for options.");
             } else if(counter == 50){
+                System.out.println();
                 System.out.println("Hmm... the weather seems to be getting a bit colder...");
             } else if(counter == 100){
+                System.out.println();
                 System.out.println("You're starting to feel a bit nervous, the trees are turning for fall.");
             } else if(counter == 150){
+                System.out.println();
                 System.out.println("You only have a few weeks left before the cold front hits!");
             } else if (counter == 200){
+                System.out.println("You are out of time. It is already winter.");
                 break outerloop; //game ends, time is up
             }
 
