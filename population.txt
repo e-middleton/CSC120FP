@@ -1,0 +1,36 @@
+5
+A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity 
+merchant
+1
+1
+1
+"dye", "scissors", "needles", "bulky yarn", "bobbin"
+gold
+An old woman, with strands of kelp instead of hair and barnacles clinging to her cheeks.
+mermaid
+1
+0
+2
+"dk yarn", "snail", "guppy"
+shell
+An old man, sitting at the bottom of a tree, gently weeding around the base of its roots.
+gardener
+0
+2
+1
+"worsted yarn", "hoe", "seedlings"
+apple
+A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer
+spinner
+0
+1
+1
+"roving", "beeswax", "flax", "lace yarn"
+bobbin
+A short and hungry looking creature, eyeing your ankles with a disturbing gaze.
+goblin
+3
+1
+1
+"breadcrusts", "knuckles?", "teeth", "needles"
+lichen
