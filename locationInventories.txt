@@ -1,0 +1,16 @@
+
+"pearl", "silk", "mussel", "coral"
+"shell", "shell", "shell", "driftwood", "bone"
+"lace yarn", "lace yarn", "worsted yarn"
+
+
+"snow", "gravel", "lichen"
+
+"apple", "orange", "berry", "bush"
+
+"dirt", "wheel"
+"gold", "gold", "amethyst", "pickaxe", "silver"
+"pebble", "gold", "sand"
+
+
+"mushroom", "potion"
