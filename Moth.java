@@ -18,7 +18,7 @@ public class Moth{
     public void eat(Player a){
         if(a.hasYarn()){
             String yarn = a.eatYarn();
-            System.out.print("All of your " + yarn + " has been eaten by a moth!");
+            System.out.print("All of your " + yarn + " has been eaten by a moth!\n");
         }
     }
 
