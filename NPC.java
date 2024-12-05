@@ -254,7 +254,6 @@ public class NPC{
 
         baker.barter("nails", "gold", smith);
         smith.checkInventory();
-
     
         
     }

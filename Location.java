@@ -288,7 +288,7 @@ public class Location {
      */
     public void lookAround(){
         System.out.printf("You see " + getDescription() +"\n");
-        System.out.println("You also see " + getCast()); //either the names/occupation of the people, or the lack of them
+        System.out.println("In this location is " + getCast()); //either the names/occupation of the people, or the lack of them
     }
 
     /**

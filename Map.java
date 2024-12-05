@@ -20,8 +20,6 @@ public class Map {
      * FILES MUST BE FORMATTED CORRECTLY
      */
     public Map(){
-        int count = 0;
-        int numPpl = 0;
         TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
     
         try{
@@ -96,7 +94,7 @@ public class Map {
             Scanner input = new Scanner(file2);
 
             //read in total number npcs
-            numPpl += Integer.parseInt(input.nextLine()); //might throw exception
+            int numPpl = Integer.parseInt(input.nextLine()); //might throw exception
 
             for(int i = 0; i<numPpl; i++){
                 String description = input.nextLine();
@@ -112,6 +110,7 @@ public class Map {
                 } catch(NumberFormatException e){
                     System.out.println("Invalid number formatting " + e.getMessage());
                 }
+                // GRABS WHOLE INVENTORY as one object, then breaks it up into individual items/words
                 String inventory = input.nextLine();
                 String[] individualItems = inventory.split("\\s+");
                 String[] finalInventory = new String[individualItems.length];

@@ -22,6 +22,7 @@
 
 NPC information in text file: 
 MUST BE FORMATTED APPROPRIATELY IN THE FORM
+*yarn types should only have the first word, ommitt "yarn"
 
 int (total number of npcs)
 String (description)
@@ -29,7 +30,7 @@ String (name)
 int (x-position)
 int (y-position)
 int (wantsNum)
-"String", "String", "String" ... (inventory as list of Strings)
+String String String ... (inventory as list of Strings)
 String (want)
 
 example: 
@@ -38,21 +39,16 @@ merchant
 1
 1
 1
-"dye", "scissors", "needles", "bulky yarn", "bobbin"
+dye scissors needles bulky bobbin
 gold
 
 
 Location inventories in text file:
 MUST BE FORMATTED APPROPRIATELY IN THE FORM
 
-"String", "String", "String"
+String String String String
 
 for each location, if a location does not have an inventory, 
 leave the line blank, 
 **YOU MUST HAVE A LINE FOR EACH LOCATION, BLANK OR FILLED IN**
 
-
-INVENTORIES STRINGS NEED TO BE FIXED
-if("lace"){
-    string[i] = "lace yarn" ?
-}
