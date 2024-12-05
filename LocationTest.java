@@ -20,7 +20,7 @@ public class LocationTest {
 
     @Test
     public void testGetCast(){
-        String test = "The a, and b";
+        String test = "The a, and the b";
         assertEquals(test, homeBase.getCast());
     }
 
