@@ -95,15 +95,8 @@ public class Map {
             File file2 = new File("population.txt");
             Scanner input = new Scanner(file2);
 
-            //read in the total number of npcs
-            if(count == 0 && input.hasNextLine()){ 
-                try{
-                    numPpl += Integer.parseInt(input.nextLine()); //might throw exception
-                    count += 1;
-                } catch(NumberFormatException e) {
-                    System.out.println("Invalid number formatting " + e.getMessage());
-                }
-            }
+            //read in total number npcs
+            numPpl += Integer.parseInt(input.nextLine()); //might throw exception
 
             for(int i = 0; i<numPpl; i++){
                 String description = input.nextLine();
@@ -119,9 +112,27 @@ public class Map {
                 } catch(NumberFormatException e){
                     System.out.println("Invalid number formatting " + e.getMessage());
                 }
-                ArrayList<String> inventory = new ArrayList<String>(Arrays.asList(input.nextLine()));
+                String inventory = input.nextLine();
+                String[] individualItems = inventory.split("\\s+");
+                String[] finalInventory = new String[individualItems.length];
+
+                // CHECKING for yarn types, (two word string problem)
+                for(int m = 0; m<individualItems.length; m++){
+                    if(individualItems[m].equals("lace")){
+                        finalInventory[m] = "lace yarn";
+                    } else if(individualItems[m].equals("dk")){
+                        finalInventory[m] = "dk yarn";
+                    }else if(individualItems[m].equals("worsted")){
+                        finalInventory[m] = "worsted yarn";
+                    }else if(individualItems[m].equals("bulky")){
+                        finalInventory[m] = "bulky yarn";
+                    }else{
+                        finalInventory[m] = individualItems[m];
+                    }
+                }
+                ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
                 String want = input.nextLine();
-                NPC npc = new NPC(description, occupation, position_x, position_y, inventory, want, wantsNum);
+                NPC npc = new NPC(description, occupation, position_x, position_y, npcInventory, want, wantsNum);
                 this.locations[position_y][position_x].addPerson(npc);
             }
             input.close();
