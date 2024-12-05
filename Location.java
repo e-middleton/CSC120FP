@@ -288,7 +288,9 @@ public class Location {
      */
     public void lookAround(){
         System.out.printf("You see " + getDescription() +"\n");
-        System.out.println("In this location is " + getCast()); //either the names/occupation of the people, or the lack of them
+        if(this.cast.size()>=1){
+            System.out.println("In this location is " + getCast()); //names/occupations of NPC if they exist
+        }
     }
 
     /**
