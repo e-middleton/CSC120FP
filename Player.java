@@ -111,14 +111,6 @@ public class Player extends NPC{
     }
 
     /**
-     * getter for outfit
-     * @return string version of outfit
-     */
-    public String getOutfit(){
-        return this.outfit.toString();
-    }
-
-    /**
      * Only able to be called by the moth
      * it finds a yarn category that contins yarn, "eats" the yarn
      * and tells you which type of yarn was eaten

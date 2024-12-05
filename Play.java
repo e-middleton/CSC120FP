@@ -509,7 +509,7 @@ public class Play {
                         if(command[1].equals("inventory")){
                             hero.checkInventory();
                         } else if(command[1].equals("outfit")){
-                            System.out.println(hero.getOutfit());
+                            hero.showOutfit();
                         } else{
                             System.out.println("Please enter in the valid form: check inventory/outfit");
                         }
