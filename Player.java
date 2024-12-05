@@ -193,6 +193,7 @@ public class Player extends NPC{
             super.grab(s);
             System.out.println(s + " has been added to your inventory.");
         } else{
+            super.grab(s);
             grabYarn(s);
         }
     }
@@ -207,25 +208,25 @@ public class Player extends NPC{
         if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 2)); //increments the value by two for a pair of socks/gloves
-                System.out.println(s + " is now in your workbag.");
+                System.out.println(s + " is now in your inventory.");
             } 
         } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 7)); //increments the value by seven for pants
-                System.out.println(s + " is now in your workbag.");
+                System.out.println(s + " is now in your inventory.");
             } 
         } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by seven for pants
-                System.out.println(s + " is now in your workbag.");
+                System.out.println(s + " is now in your inventory.");
             } 
         } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 5)); //increments the value by five for a sweater
-                System.out.println(s + " is now in your workbag.");
+                System.out.println(s + " is now in your inventory.");
             } 
         } else{
-            throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your workbag.");
+            throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your inventory.");
         }
     }
 
@@ -258,6 +259,7 @@ public class Player extends NPC{
         if(this.workbag.get("lace weight") >= 2){
             this.workbag.replace("lace weight", (workbag.get("lace weight") - 2)); //decrememnt number of balls of yarn by 2
             this.outfit.replace("socks", true);
+            drop("lace yarn");
             System.out.println("A pair of socks has been added to your outfit!");
             
         } else{
@@ -272,6 +274,7 @@ public class Player extends NPC{
         if(this.workbag.get("dk weight")>= 1){
             this.workbag.replace("dk weight", this.workbag.get("dk weight") - 1); //decrement by 1 for hat
             this.outfit.replace("hat", true);
+            drop("dk yarn");
             System.out.println("A hat has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
@@ -285,6 +288,7 @@ public class Player extends NPC{
         if(this.workbag.get("lace weight")>=2){
             this.workbag.replace("lace weight", this.workbag.get("lace weight") - 2); //decrement by 2 for gloves
             this.outfit.replace("gloves", true);
+            drop("lace yarn");
             System.out.println("A pair of gloves has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
@@ -298,6 +302,7 @@ public class Player extends NPC{
         if(this.workbag.get("bulky weight") >= 5){
             this.workbag.replace("bulky weight", this.workbag.get("bulky weight") - 5); //decrement by 5
             this.outfit.replace("sweater", true);
+            drop("bulky yarn");
             System.out.println("A sweater has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
@@ -311,6 +316,7 @@ public class Player extends NPC{
         if(this.workbag.get("worsted weight") >= 7){
             this.workbag.replace("worsted weight", this.workbag.get("worsted weight") - 7);
             this.outfit.replace("pants", true);
+            drop("worsted yarn");
             System.out.println("A pair of pants has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
