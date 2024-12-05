@@ -22,8 +22,8 @@ public class Player extends NPC{
         this.outfit.put("sweater", false);
         this.outfit.put("socks", false);
 
-        //initialize values in workbag (possible yarn types = "fingering weight", "dk weight", "worsted weight" "bulky weight")
-        this.workbag.put("fingering weight", 0);
+        //initialize values in workbag (possible yarn types = "lace weight", "dk weight", "worsted weight" "bulky weight")
+        this.workbag.put("lace weight", 0);
         this.workbag.put("dk weight", 0);
         this.workbag.put("worsted weight", 0);
         this.workbag.put("bulky weight", 0);
@@ -50,8 +50,8 @@ public class Player extends NPC{
         this.outfit.put("sweater", false);
         this.outfit.put("socks", false);
 
-        //initialize values in workbag (possible yarn types = "fingering weight", "dk weight", "worsted weight" "bulky weight")
-        this.workbag.put("fingering weight", 0);
+        //initialize values in workbag (possible yarn types = "lace weight", "dk weight", "worsted weight" "bulky weight")
+        this.workbag.put("lace weight", 0);
         this.workbag.put("dk weight", 0);
         this.workbag.put("worsted weight", 0);
         this.workbag.put("bulky weight", 0);
@@ -79,7 +79,7 @@ public class Player extends NPC{
         this.outfit.put("sweater", false);
         this.outfit.put("socks", false);
 
-        this.workbag.put("fingering weight", 0);
+        this.workbag.put("lace weight", 0);
         this.workbag.put("dk weight", 0);
         this.workbag.put("worsted weight", 0);
         this.workbag.put("bulky weight", 0);
@@ -98,7 +98,7 @@ public class Player extends NPC{
      */
     public boolean hasYarn(){
         boolean check = false;
-        if(this.workbag.get("fingering weight") >= 1){
+        if(this.workbag.get("lace weight") >= 1){
             check = true;
         } else if(this.workbag.get("dk weight") >= 1){
             check = true;
@@ -118,9 +118,9 @@ public class Player extends NPC{
      */
     public String eatYarn(){
         String yarn = "";
-        if(this.workbag.get("fingering weight") >= 1){
-            yarn += "fingering weight yarn";
-            this.workbag.replace("fingering weight", 0); //yarn is eaten up
+        if(this.workbag.get("lace weight") >= 1){
+            yarn += "lace weight yarn";
+            this.workbag.replace("lace weight", 0); //yarn is eaten up
         } else if(this.workbag.get("dk weight") >= 1){
             yarn += "dk weight yarn";
             this.workbag.replace("dk weight", 0);
@@ -196,7 +196,7 @@ public class Player extends NPC{
      */
     public void grabYarn(String s){
         String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
-        if(s.substring(0, s.lastIndexOf("yarn")).equals("fingering ")){
+        if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
             if(this.workbag.containsKey(yarnWeight)){
                 this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 2)); //increments the value by two for a pair of socks/gloves
                 System.out.println(s + " is now in your workbag.");
@@ -225,8 +225,8 @@ public class Player extends NPC{
      * Method for giving options for what a player is able to knit based on the number of balls of yarn they have
      */
     public void canKnit(){
-        if(this.workbag.get("fingering weight") >= 2){
-            System.out.println("You can knit gloves or socks. You have " + this.workbag.get("fingering weight") + " ball(s) of fingering weight yarn.");
+        if(this.workbag.get("lace weight") >= 2){
+            System.out.println("You can knit gloves or socks. You have " + this.workbag.get("lace weight") + " ball(s) of lace weight yarn.");
         }
         if(this.workbag.get("dk weight") >= 1){
             System.out.println("You can knit a hat. You have " + this.workbag.get("dk weight") + " ball(s) of dk weight yarn.");
@@ -238,7 +238,7 @@ public class Player extends NPC{
             System.out.println("You can knit a sweater. You have " + this.workbag.get("bulky weight") + " ball(s) of bulky weight yarn.");
         }
         //good lord clean this up
-        if((this.workbag.get("fingering weight") < 2) && (this.workbag.get("dk weight") < 1) && (this.workbag.get("worsted weight") < 7) && (this.workbag.get("bulky weight") < 5)){
+        if((this.workbag.get("lace weight") < 2) && (this.workbag.get("dk weight") < 1) && (this.workbag.get("worsted weight") < 7) && (this.workbag.get("bulky weight") < 5)){
             System.out.println("There is nothing you can currently knit. Your workbag currently contains " + this.workbag.toString() + " ball(s) of yarn.");
         }
     }
@@ -247,8 +247,8 @@ public class Player extends NPC{
      * Method for knitting socks provided that there is sufficient yarn in their workbag. 
      */
     public void knitSocks(){
-        if(this.workbag.get("fingering weight") >= 2){
-            this.workbag.replace("fingering weight", (workbag.get("fingering weight") - 2)); //decrememnt number of balls of yarn by 2
+        if(this.workbag.get("lace weight") >= 2){
+            this.workbag.replace("lace weight", (workbag.get("lace weight") - 2)); //decrememnt number of balls of yarn by 2
             this.outfit.replace("socks", true);
             System.out.println("You now have a pair of socks!");
             
@@ -274,8 +274,8 @@ public class Player extends NPC{
      * Method for knitting gloves and adding it to the outfit, provided there is sufficient yarn.
      */
     public void knitGloves(){
-        if(this.workbag.get("fingering weight")>=2){
-            this.workbag.replace("fingering weight", this.workbag.get("fingering weight") - 2); //decrement by 2 for gloves
+        if(this.workbag.get("lace weight")>=2){
+            this.workbag.replace("lace weight", this.workbag.get("lace weight") - 2); //decrement by 2 for gloves
             this.outfit.replace("gloves", true);
             System.out.println("You now have gloves");
         } else{
@@ -369,8 +369,8 @@ public class Player extends NPC{
         ArrayList<String> purse = new ArrayList<String>();
         purse.add("flour");
         Player dorothy = new Player("n/a", "Dorothy", 0, 0, purse);
-        dorothy.grabYarn("fingering weight");
-        dorothy.grabYarn("fingering weight");
+        dorothy.grabYarn("lace weight");
+        dorothy.grabYarn("lace weight");
         // ArrayList<String> bag = new ArrayList<String>();
         // bag.add("needles");
         // bag.add("sock yarn");
