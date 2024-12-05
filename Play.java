@@ -170,14 +170,14 @@ public class Play {
             System.out.println("His voice is mechanical as he informs you that,");
             System.out.println("should you wish to walk south, you must correctly answer his riddle");
             System.out.println();
-            System.out.println("Would you like to hear his riddle? (y/n)");
+            System.out.println("Would you like to hear his riddle? (yes/no)");
             String response = input.nextLine();
             if(response.toLowerCase().equals("yes")){
                 try{
                     System.out.println();
                     map.findLocation(hero).getPerson("door").intro(hero);
                     response = input.nextLine();
-                    if(response.toLowerCase().equals("yarn")){ //guesses correctly
+                    if(punctuationRemoval(response).toLowerCase().equals("yarn")){ //guesses correctly (ignore punctuation and capitals)
                         System.out.println("Very well, the door sighs, you may pass.");
                         System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
                         System.out.println("The heavy metal door... swings open");
@@ -383,7 +383,7 @@ public class Play {
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;
 
-        hero.grab("fingering yarn");
+        hero.grab("lace yarn");
     
         System.out.println("Hello, welcome to the game!");
         System.out.println("Would you like to play? Yes to play end to end");
@@ -437,7 +437,11 @@ public class Play {
                 case("talk"): //talk
                     try{
                         if(command[1].equals("to")){
-                            game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
+                            if(command[2].equals("the")){ //talk to the _person_
+                                game.talk(hero, command[3], map, input);
+                            } else{
+                                game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
+                            }
                         }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the form: talk to _person_");
