@@ -14,42 +14,75 @@ public class Map {
     private int columns;
 
     /**
-     * default constructor for the map, creates pre-determined locations and reads in the npcs from a .txt file
+     * default constructor for the map, creates a 2D array of Locations based on ints from a text file and then
+     * reads in location info from the same text file, and reads in the npcs from a .txt file
+     * reads in inventories from a text file as well
+     * FILES MUST BE FORMATTED CORRECTLY
      */
     public Map(){
         int count = 0;
-        this.rows = 4;
-        this.columns = 4;
-        this.locations = new Location[rows][columns];
         int numPpl = 0;
-
         TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
     
-        this.locations[0][0] = new Location("a series of looming cliffs, the bottom is barely, if even visible, staring for too long makes you feel distinctly nauseous.", "cliffs", 0, 0, new ArrayList<NPC>(), true, true, false, false, false);
-        this.locations[0][1] = new Location("A dark expanse of the sea, with small waves lapping at your feet, mussels, a few with pearls inside, cling to shoreline rocks and corals. \nYou cannot see the water's farthest edge, but near you, fine strands of plants intertwine into silk.", "sea", 1, 0, new ArrayList<NPC>(), true, true, false, true, false);
-        this.locations[0][2] = new Location("A small inlet, with soft embankments of sand and shells scattered along with pieces of driftwood.", "cove", 2, 0, new ArrayList<NPC>(), true, false, false, true, false);
-        this.locations[0][3] = new Location("An old and dusty room, shelves look to be filled with yarn? Most of it is rotted with time, but a few surviving skeins are a thin, lace yarn, but some is thicker, nearer to worsted yarn.", "yarn trove", 3, 0, new ArrayList<NPC>(), true, false, false, false, false);
-        this.locations[1][0] = new Location("a room filled with old repair equipment, none of which you think you can use.", "repair guild", 0, 1, new ArrayList<NPC>(), true, true, true, false, false);
-        this.locations[1][1] = new Location("A traders outpost! You see a booth currently occupied with an expectant merchant.", "trading post", 1, 1, new ArrayList<NPC>(), true, true, true, true, false);
-        this.locations[1][2] = new Location("A freezing mountain, mist clouds around its peak. \nSnow crunches on the ground barely covering the gravel and lichen beneath.", "mountain", 2, 1, new ArrayList<NPC>(), true, true, true, true, false);
-        this.locations[1][3] = new Location("An old mine, dark and empty, but you can see something glinting just beyond the entrance,\n and... is that door alive?", "mine", 3, 1, new ArrayList<NPC>(Arrays.asList(talkingDoor)), true, false, false, true, false);
-        this.locations[2][0] = new Location("A curated garden, lovely fruit trees line a walkway down the central stretch \nThere are apple trees, orange trees, even a few berry bushes in the well-cared-for grove.", "garden", 0, 2, new ArrayList<NPC>(), true, true, true, false, false);
-        this.locations[2][1] = new Location("a small and broken down hovel", "home", 1, 2, new ArrayList<NPC>(), true, true, true, true, false);
-        this.locations[2][2] = new Location("an empty and dusty road", "road", 2, 1, new ArrayList<NPC>(), true, false, true, true, false); 
-        this.locations[2][3] = new Location("It's an old hollowed out room of the mine, but this one hasn't yet been scraped, large purple gemstones glitter on the walls along with gold and silver ore. \na pickaxe lays to the side.", "ore room", 3, 2, new ArrayList<NPC>(), false, false, true, false, false);
-        this.locations[3][0] = new Location("A narrow yet violent river, with white water foaming and swirling around jagged rocks. \nSofter, rounded pebbles line its banks, gold is flecked amongst the sand", "river", 0, 3, new ArrayList<NPC>(), false, true, true, false, false);
-        this.locations[3][1] = new Location("an empty field, nothing as far as the eye can see.", "field", 1, 3, new ArrayList<NPC>(), false, true, true, true, true);
-        this.locations[3][2] = new Location("A dark and eerie forest...", "forest", 2, 3, new ArrayList<NPC>(), false, true, true, true, false);
-        this.locations[3][3] = new Location("In the center of an eerie and still clearing, purple mushrooms grow in a perfect ring, The silence feels heavier than before. \nIn the center of the ring, a small potion in a bottle lies motionless.", "mushroom circle", 3, 3, new ArrayList<NPC>(), false, false, false, true, false);
+        try{
+            File file = new File("locations.txt");
+            Scanner locationInfo = new Scanner(file);
+
+            this.rows += Integer.parseInt(locationInfo.nextLine()); //MIGHT THROW EXCEPTION
+            this.columns += Integer.parseInt(locationInfo.nextLine());
+            this.locations = new Location[rows][columns];
+
             
-        //read in inventory information
+            // Read in locations base information 
+
+            for(int i = 0; i < this.rows; i++){
+                for(int j = 0; j < this.columns; j++){
+                    locationInfo.nextLine(); //get rid of break line in file for clarity
+                    String description = locationInfo.nextLine();
+                    String name = locationInfo.nextLine();
+                    boolean n = Boolean.parseBoolean(locationInfo.nextLine()); //MAKE SURE FORMATTED CORRECT
+                    boolean e = Boolean.parseBoolean(locationInfo.nextLine());
+                    boolean s = Boolean.parseBoolean(locationInfo.nextLine());
+                    boolean w = Boolean.parseBoolean(locationInfo.nextLine());
+                    boolean moth = Boolean.parseBoolean(locationInfo.nextLine());
+                    locations[i][j] = new Location(description, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth);
+                    if(name.equals("mine")){
+                        locations[i][j].addPerson(talkingDoor);
+                    } 
+                }
+            }
+            locationInfo.close();
+        } catch(FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        
+        // Read in inventory information
+
         try{
             File file1 = new File("locationInventories.txt");
             Scanner itemsInput = new Scanner(file1);
 
              for(int i = 0; i < rows; i++){
                 for(int j = 0; j<columns; j++){
-                    locations[i][j].setInventory(new ArrayList<String>(Arrays.asList(itemsInput.nextLine())));
+                    String inventory = itemsInput.nextLine();
+                    String[] individualItems = inventory.split("\\s+");
+                    String[] finalInventory = new String[individualItems.length];
+
+                    // CHECKING for yarn types, (two word string problem)
+                    for(int m = 0; m<individualItems.length; m++){
+                        if(individualItems[m].equals("lace")){
+                            finalInventory[m] = "lace yarn";
+                        } else if(individualItems[m].equals("dk")){
+                            finalInventory[m] = "dk yarn";
+                        }else if(individualItems[m].equals("worsted")){
+                            finalInventory[m] = "worsted yarn";
+                        }else if(individualItems[m].equals("bulky")){
+                            finalInventory[m] = "bulky yarn";
+                        }else{
+                            finalInventory[m] = individualItems[m];
+                        }
+                    }
+                    locations[i][j].setInventory(finalInventory);
                 }
             } 
             itemsInput.close();
@@ -57,7 +90,7 @@ public class Map {
             System.out.println(e.getMessage());
         }
 
-        //Read in NPC information and put them in their locations
+        // Read in NPC information and put them in their locations
         try{
             File file2 = new File("population.txt");
             Scanner input = new Scanner(file2);
@@ -184,7 +217,7 @@ public class Map {
      * Method for getting a description of the map, prints out the locations and their indices 
      */
     public String toString(){
-        String description = ""; //automatically set to an array of 4x4
+        String description = ""; 
 
         for(int i = 0; i<this.rows; i++){
             for(int j = 0; j<this.columns; j++){
@@ -201,7 +234,7 @@ public class Map {
     public static void main(String[] args) {
 
         Map map = new Map();
-        System.out.println(map.toString());
+        System.out.printf(map.toString());
 
     }
 
