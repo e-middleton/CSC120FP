@@ -1,0 +1,130 @@
+4
+4
+
+a series of looming cliffs, the bottom is barely, if even visible, staring for too long makes you feel distinctly nauseous
+cliffs
+true
+true
+false
+false
+false
+
+a dark expanse of the sea, with small waves lapping at your feet, mussels, a few with pearls inside, cling to shoreline rocks and corals. %nYou cannot see the water's farthest edge, but near you, fine strands of plants intertwine into silk.
+sea
+true
+true
+false
+true
+false
+
+a small inlet, with soft embankments of sand and shells scattered along with pieces of driftwood
+cove
+true
+false
+false
+true
+false
+
+an old and dusty room, shelves look to be filled with yarn? Most of it is rotted with time, %nbut a few surviving skeins are a thin, lace yarn, but some is thicker, nearer to worsted yarn
+yarn trove
+true
+false
+false
+false
+false
+
+a room filled with old repair equipment, none of which you think you can use
+repair guild
+true
+true
+true
+false
+false
+
+a traders outpost! You see a booth currently occupied with an expectant merchant
+trading post
+true
+true
+true
+true
+false
+
+a freezing mountain, mist clouds around its peak. %nSnow crunches on the ground barely covering the gravel and lichen beneath.
+mountain
+true
+true
+true
+true
+false
+
+an old mine, dark and empty, but you can see something glinting just beyond the entrance, and... is that door alive?
+mine
+true
+false
+false
+true
+false
+
+a curated garden, lovely fruit trees line a walkway down the central stretch. %nThere are apple trees, orange trees, even a few berry bushes in the well-cared-for grove
+garden
+true
+true
+true
+false
+false
+
+a small and broken down hovel
+home
+true
+true
+true
+true
+false
+
+an empty and dusty road
+road
+true
+false
+true
+true
+false
+
+an old hollowed out room of the mine, but this one hasn't yet been scraped, %nlarge purple gemstones glitter on the walls along with gold and silver ore. A pickaxe lays to the side
+ore room
+false
+false
+true
+false
+false
+
+a narrow yet violent river, with white water foaming and swirling around jagged rocks. %nSofter, rounded pebbles line its banks, gold is flecked amongst the sand.
+river
+false
+true
+true
+false
+false
+
+an empty field, nothing as far as the eye can see
+field
+false
+true
+true
+true
+true
+
+a dark and eerie forest...
+forest
+false
+true
+true
+true
+false
+
+in the center of an eerie and still clearing, purple mushrooms grow in a perfect ring, %nThe silence feels heavier than before. In the center of the ring, a small potion in a bottle lies motionless
+mushroom circle
+false
+false
+false
+true
+false

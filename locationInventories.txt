@@ -1,16 +1,16 @@
 
-"pearl", "silk", "mussel", "coral"
-"shell", "shell", "shell", "driftwood", "bone"
-"lace yarn", "lace yarn", "worsted yarn"
+pearl silk mussel coral rock
+shell shell shell driftwood bone
+lace lace worsted
 
 
-"snow", "gravel", "lichen"
+snow gravel lichen
 
-"apple", "orange", "berry", "bush"
+apple bush
 
-"dirt", "wheel"
-"gold", "gold", "amethyst", "pickaxe", "silver"
-"pebble", "gold", "sand"
+dirt wheel
+gold gold amethyst pickaxe silver
+pebble gold sand
 
 
-"mushroom", "potion"
+mushroom potion
