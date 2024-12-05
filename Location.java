@@ -44,6 +44,42 @@ public class Location {
     }
 
     /**
+     * Constructor for Location with everything except the inventory of objects, to be read in later
+     * @param description  a description of the location
+     * @param name the name/id tag of the location
+     * @param position_x the x or column index of the Location in the map
+     * @param position_y the y or row index of the Location in the map
+     * @param cast the arrayList of NPCs in the Location
+     * @param north t/f it is possible to go north from this location
+     * @param east t/f it is possible to walk east
+     * @param south t/f it is possible to walk south
+     * @param west t/f it is possible to walk west
+     * @param containsMoth t/f there is a moth in this location
+     */
+    public Location(String description, String name, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
+        this.description = description;
+        this.name = name;
+        this.position_x = position_x; //getter but no setter. (or is this given by map?)
+        this.position_y = position_y;
+        this.cast = cast;
+        this.north = north;
+        this.east = east;
+        this.south = south;
+        this.west = west;
+        this.containsMoth = containsMoth;
+        if(this.containsMoth){
+            this.moth = new Moth(); //if a true is passed in, a moth is created in the Location
+        }
+
+        //automatically makes everybody's position correct for the location they're in.
+        for(int i = 0; i < cast.size(); i++){
+            cast.get(i).setPosition_x(this.position_x);
+            cast.get(i).setPosition_y(this.position_y);
+        }
+
+    }
+
+    /**
      * Constructor for Location with all the attributes
      * @param description a description of the location
      * @param name the name/id tag of the location
@@ -55,6 +91,7 @@ public class Location {
      * @param east t/f it is possible to walk east
      * @param south t/f it is possible to walk south
      * @param west t/f it is possible to walk west
+     * @param containsMoth t/f there is a moth in this Location
      */
     public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
@@ -158,8 +195,8 @@ public class Location {
     /**
      * Getter for the inventory of a location. It just prints the objects in the location
      */
-    public void getInventory(){
-        System.out.println(this.inventory.toString());
+    public String getInventory(){
+        return this.inventory.toString();
     }
 
     /**
@@ -184,9 +221,11 @@ public class Location {
      */
     public void addItem(String s){
         this.inventory.add(s);
-         
     }
 
+    public void setInventory(ArrayList<String> s){
+        this.inventory = s;
+    }
     /**
      * Method for removing an item from the inventory of a Location, 
      * first checking if it was in the location originally.
@@ -222,11 +261,19 @@ public class Location {
                 names += this.cast.get(i).getOccupation();
                 names += ", ";
             }
-            names += "and " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
+            names += "and the " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
             return names;
         } else{
             return "that there are no people in this location.";
         }
+    }
+
+    /**
+     * Method for adding a person to a location if they were not initialized within it
+     * @param npc the npc being added to the location
+     */
+    public void addPerson(NPC npc){ 
+        this.cast.add(npc);
     }
 
     /**
@@ -273,6 +320,10 @@ public class Location {
         }
     }
 
+    public String toString(){
+       return "name: " + this.name + "\n" + "description: " + this.description + "\n" + "cast: " + getCast() + "\n" + "items: " + getInventory() +"\n" + "moth: " + this.containsMoth;
+    }
+
     //do I need an enter/exit method?
 
     public static void main(String[] args) {
@@ -282,7 +333,7 @@ public class Location {
         village.add(smith);
         village.add(baker);
         Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true, false);
-        home.lookAround();
+        System.out.println(home.toString());
     }
     
 }
