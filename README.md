@@ -50,3 +50,9 @@ MUST BE FORMATTED APPROPRIATELY IN THE FORM
 for each location, if a location does not have an inventory, 
 leave the line blank, 
 **YOU MUST HAVE A LINE FOR EACH LOCATION, BLANK OR FILLED IN**
+
+
+INVENTORIES STRINGS NEED TO BE FIXED
+if("lace"){
+    string[i] = "lace yarn" ?
+}
