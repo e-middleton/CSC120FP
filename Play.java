@@ -44,7 +44,7 @@ public class Play {
      */
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
-        System.out.println("+walk \n+look around \n+talk to _person_ \n+look at _person_ \n+barter with _person_ \n+what can I knit \n+knit _clothing item_ \n+check inventory \n+grab _item_ \n+drop _item_");
+        System.out.println("+walk (+cardinal direction) \n+look around \n+talk to _person_ \n+look at _person_ \n+barter with _person_ \n+what can I knit \n+knit _clothing item_ \n+check inventory \n+grab _item_ \n+drop _item_");
     }
 
     /**
@@ -108,7 +108,7 @@ public class Play {
                 } 
                 return;
             } else{
-                System.out.println("Unable to walk in this direction. Please to try walk in a new direction.");
+                System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
             }
         } else if(command[1].equals("east")){ //walk east
             if(map.walkEast(a)){
@@ -490,27 +490,30 @@ public class Play {
                         System.out.println("Please enter in the form: what can I knit");
                     }
                     break;
-                    case("barter"): //barter
-                        try{
-                            if(command[1].equals("with")){
-                                game.barter(hero, command[2], map, input);
-                            }
-                        } catch(IndexOutOfBoundsException e){
-                            System.out.println("Please enter in a valid form: barter with _person_");
+                case("barter"): //barter
+                    try{
+                        if(command[1].equals("with")){
+                            game.barter(hero, command[2], map, input);
                         }
-                        break;
-                    case("check"): 
-                        try{
-                            if(command[1].equals("inventory")){
-                                hero.checkInventory();
-                            } else{
-                                System.out.println("Please enter in the valid form: check inventory");
-                            }
-                        } catch(IndexOutOfBoundsException e){
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in a valid form: barter with _person_");
+                    }
+                    break;
+                case("check"): 
+                    try{
+                        if(command[1].equals("inventory")){
+                            hero.checkInventory();
+                        } else{
                             System.out.println("Please enter in the valid form: check inventory");
                         }
-                    default:
-                        System.out.println(response + " is an unknown command.");
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the valid form: check inventory");
+                    }
+                    break;
+                case("end"):
+                    break outerloop; //END
+                default:
+                    System.out.println(response + " is an unknown command.");
             }
             counter += 1;
         }
