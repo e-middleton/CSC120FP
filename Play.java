@@ -495,6 +495,11 @@ public class Play {
                         if(command[1].equals("with")){
                             game.barter(hero, command[2], map, input);
                         }
+                        else{
+                            System.out.println("Please enter valid form: Barter with _person_");
+                            System.out.println("Followed by: ");
+                            System.out.println("Barter _payment_ for _commodity_");
+                        }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in a valid form: barter with _person_");
                     }
