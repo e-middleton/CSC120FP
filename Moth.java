@@ -19,6 +19,11 @@ public class Moth{
         if(a.hasYarn()){
             String yarn = a.eatYarn();
             System.out.print("All of your " + yarn + " has been eaten by a moth!\n");
+            if(yarn.equals("bulky weight yarn")){
+                System.out.println("There is no more bulky yarn in this universe... you're doomed. Please restart. :(");
+            } else if(yarn.equals("dk weight yarn")){
+                System.out.println("There is no more dk yarn in this universe... you're doomed. Please restart. :(");
+            }
         }
     }
 
