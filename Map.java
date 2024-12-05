@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.util.Scanner; // Import the Scanner class to read text files
 
 /**
  * Map class, a 2d array of Locations, has methods for walking in the cardinal directions
@@ -7,69 +10,103 @@ import java.util.Arrays;
  */
 public class Map {
     private Location[][] locations; //array of locations
+    private int rows;
+    private int columns;
 
     /**
-     * Default constructor for map, creates pre-determined locations in a 4x4 grid
+     * default constructor for the map, creates pre-determined locations and reads in the npcs from a .txt file
      */
     public Map(){
-        this.locations = new Location[4][4]; //4x4
+        int count = 0;
+        this.rows = 4;
+        this.columns = 4;
+        this.locations = new Location[rows][columns];
+        int numPpl = 0;
+
         //Gardener, in map[2][0] "garden", objects for garden
-        ArrayList<String> gardenerSupplies = new ArrayList<String>(Arrays.asList("worsted yarn", "hoe", "seedlings"));
-        ArrayList<String> gardenStuff = new ArrayList<String>(Arrays.asList("apple", "moldyOrange", "compost"));
-        NPC gardener = new NPC("An old man, sitting at the bottom of a tree, gently weeding around the base of its roots.", "gardener", 0, 2, gardenerSupplies, "apple", 1);
-
-        //Merchant, in map[1][1] "trading post"
-        ArrayList<String> merchantSupplies = new ArrayList<String>(Arrays.asList("dye", "scissors", "needles", "bulky yarn", "bobbin"));
-        NPC merchant = new NPC("A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity.", "merchant", 1, 1, merchantSupplies, "gold", 1);
+        ArrayList<String> gardenStuff = new ArrayList<String>(Arrays.asList("apple", "orange", "berry", "bush"));
        
-        //Spinner, in map[1][0] "repair guild"
-        ArrayList<String> spinnerSupplies = new ArrayList<String>(Arrays.asList("roving", "beeswax", "flax", "fingering yarn"));
-        NPC spinner = new NPC("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
-
         //Goblin, in map[1][3] "mine"
-        ArrayList<String> goblinSupplies = new ArrayList<String>(Arrays.asList("breadcrusts", "knuckles?", "teeth", "needles"));
         TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
-        NPC goblin = new NPC("A short and hungry looking creature, eyeing your ankles with a disturbing gaze.", "goblin", 3, 1, goblinSupplies, "lichen", 1);
-
+    
         //objects for map[2][3] "ore room"
         ArrayList<String> oreRoomStuff = new ArrayList<String>(Arrays.asList("gold", "gold", "amethyst", "pickaxe", "silver"));
 
-        //objects for map[3][3] "magic circle"
-        ArrayList<String> magicCircleStuff = new ArrayList<String>(Arrays.asList("purple-mushroom", "potion"));
+        //objects for map[3][3] "mushroom circle"
+        ArrayList<String> mushroomCircleStuff = new ArrayList<String>(Arrays.asList("mushroom", "potion"));
 
         //objects for map[0][3] "yarn trove"
-        ArrayList<String> yarnTroveStuff = new ArrayList<String>(Arrays.asList("fingering yarn", "fingering yarn", "worsted yarn"));
+        ArrayList<String> yarnTroveStuff = new ArrayList<String>(Arrays.asList("lace yarn", "lace yarn", "worsted yarn"));
 
         //objects for map[1][2] "mountain"
         ArrayList<String> mountainStuff = new ArrayList<String>(Arrays.asList("snow", "gravel", "lichen"));
 
         //Mermaid for Map[0][1] "sea"
-        ArrayList<String> mermaidSupplies = new ArrayList<String>(Arrays.asList("dk yarn", "snail", "guppy"));
         ArrayList<String> seaStuff = new ArrayList<String>(Arrays.asList("pearl", "silk", "mussel", "coral"));
-        NPC mermaid = new NPC("An old woman, with strands of kelp instead of hair and barnacles clinging to her cheeks.", "mermaid", 1, 0, mermaidSupplies, "shell", 2);
 
         //objects for map[0][2] "cove"
         ArrayList<String> coveStuff = new ArrayList<String>(Arrays.asList("shell", "shell", "shell", "driftwood", "bone"));
 
         //objects for map[3][0] "river"
-        ArrayList<String> riverStuff = new ArrayList<String>(Arrays.asList("pebble", "gold"));
-
+        ArrayList<String> riverStuff = new ArrayList<String>(Arrays.asList("pebble", "gold", "sand"));
+    
         this.locations[0][0] = new Location("a series of looming cliffs, the bottom is barely, if even visible, staring for too long makes you feel distinctly nauseous.", "cliffs", new ArrayList<String>(), 0, 0, new ArrayList<NPC>(), true, true, false, false, false);
-        this.locations[0][1] = new Location("A dark expanse of the sea, with small waves lapping at your feet. You cannot see its farthest edge.", "sea", seaStuff, 1, 0, new ArrayList<NPC>(Arrays.asList(mermaid)), true, true, false, true, false);
+        this.locations[0][1] = new Location("A dark expanse of the sea, with small waves lapping at your feet, mussels, a few with pearls inside, cling to shoreline rocks and corals. \nYou cannot see the water's farthest edge, but near you, fine strands of plants intertwine into silk.", "sea", seaStuff, 1, 0, new ArrayList<NPC>(), true, true, false, true, false);
         this.locations[0][2] = new Location("A small inlet, with soft embankments of sand and shells scattered along with pieces of driftwood.", "cove", coveStuff, 2, 0, new ArrayList<NPC>(), true, false, false, true, false);
-        this.locations[0][3] = new Location("An old and dusty room, shelves look to be filled with yarn?", "yarn trove", yarnTroveStuff, 3, 0, new ArrayList<NPC>(), true, false, false, false, false);
-        this.locations[1][0] = new Location("a room filled with old repair equipment, none of which you think you can use.", "repair guild", new ArrayList<String>(), 0, 1, new ArrayList<NPC>(Arrays.asList(spinner)), true, true, true, false, false);
-        this.locations[1][1] = new Location("A traders outpost! You see a booth currently occupied with an expectant man.", "trading post", new ArrayList<String>(), 1, 1, new ArrayList<NPC>(Arrays.asList(merchant)), true, true, true, true, false);
-        this.locations[1][2] = new Location("A freezing mountain, mist clouds around it's peak. \nSnow crunches on the ground barely covering the gravel and lichen beneath.", "mountain", mountainStuff, 2, 1, new ArrayList<NPC>(), true, true, true, true, false);
-        this.locations[1][3] = new Location("An old mine, dark, but you can see something glinting just beyond the entrance.", "mine", new ArrayList<String>(), 3, 1, new ArrayList<NPC>(Arrays.asList(goblin, talkingDoor)), true, false, false, true, false);
-        this.locations[2][0] = new Location("A curated garden, lovely trees line a walkway down the central stretch.", "garden", gardenStuff, 0, 2, new ArrayList<NPC>(Arrays.asList(gardener)), true, true, true, false, false);
+        this.locations[0][3] = new Location("An old and dusty room, shelves look to be filled with yarn? Most of it is rotted with time, but a few surviving skeins are a thin, lace yarn, but some is thicker, nearer to worsted yarn.", "yarn trove", yarnTroveStuff, 3, 0, new ArrayList<NPC>(), true, false, false, false, false);
+        this.locations[1][0] = new Location("a room filled with old repair equipment, none of which you think you can use.", "repair guild", new ArrayList<String>(), 0, 1, new ArrayList<NPC>(), true, true, true, false, false);
+        this.locations[1][1] = new Location("A traders outpost! You see a booth currently occupied with an expectant merchant.", "trading post", new ArrayList<String>(), 1, 1, new ArrayList<NPC>(), true, true, true, true, false);
+        this.locations[1][2] = new Location("A freezing mountain, mist clouds around its peak. \nSnow crunches on the ground barely covering the gravel and lichen beneath.", "mountain", mountainStuff, 2, 1, new ArrayList<NPC>(), true, true, true, true, false);
+        this.locations[1][3] = new Location("An old mine, dark and empty, but you can see something glinting just beyond the entrance,\n and... is that door alive?", "mine", new ArrayList<String>(), 3, 1, new ArrayList<NPC>(Arrays.asList(talkingDoor)), true, false, false, true, false);
+        this.locations[2][0] = new Location("A curated garden, lovely fruit trees line a walkway down the central stretch \nThere are apple trees, orange trees, even a few berry bushes in the well-cared-for grove.", "garden", gardenStuff, 0, 2, new ArrayList<NPC>(), true, true, true, false, false);
         this.locations[2][1] = new Location("a small and broken down hovel", "home", new ArrayList<String>(), 1, 2, new ArrayList<NPC>(), true, true, true, true, false);
         this.locations[2][2] = new Location("an empty and dusty road", "road", new ArrayList<String>(Arrays.asList("dirt", "wheel")), 2, 1, new ArrayList<NPC>(), true, false, true, true, false); 
         this.locations[2][3] = new Location("It's an old hollowed out room of the mine, but this one hasn't yet been scraped, large purple gemstones glitter on the walls along with gold and silver ore. \na pickaxe lays to the side.", "ore room", oreRoomStuff, 3, 2, new ArrayList<NPC>(), false, false, true, false, false);
-        this.locations[3][0] = new Location("A narrow yet violent river, with white water foaming and swirling around jagged rocks. \nSofter, rounded pebbles line its banks, what is the shiny metal flecked in the sand?", "river", riverStuff, 0, 3, new ArrayList<NPC>(), false, true, true, false, false);
+        this.locations[3][0] = new Location("A narrow yet violent river, with white water foaming and swirling around jagged rocks. \nSofter, rounded pebbles line its banks, gold is flecked amongst the sand", "river", riverStuff, 0, 3, new ArrayList<NPC>(), false, true, true, false, false);
         this.locations[3][1] = new Location("an empty field, nothing as far as the eye can see.", "field", new ArrayList<String>(), 1, 3, new ArrayList<NPC>(), false, true, true, true, true);
         this.locations[3][2] = new Location("A dark and eerie forest...", "forest", new ArrayList<String>(), 2, 3, new ArrayList<NPC>(), false, true, true, true, false);
-        this.locations[3][3] = new Location("A magic mushroom circle, eat the mushrooms if you dare...", "magic circle", magicCircleStuff, 3, 3, new ArrayList<NPC>(), false, false, false, true, false);
+        this.locations[3][3] = new Location("In the center of an eerie and still clearing, purple mushrooms grow in a perfect ring, The silence feels heavier than before. \nIn the center of the ring, a small potion in a bottle lies motionless.", "mushroom circle", mushroomCircleStuff, 3, 3, new ArrayList<NPC>(), false, false, false, true, false);
+            
+        //Read in NPC information and put them in their locations
+        try{
+            File file = new File("population.txt");
+            Scanner input = new Scanner(file);
+
+            //read in the total number of npcs
+            if(count == 0 && input.hasNextLine()){ 
+                try{
+                    numPpl += Integer.parseInt(input.nextLine()); //might throw exception
+                    count += 1;
+                } catch(NumberFormatException e) {
+                    System.out.println("Invalid number formatting " + e.getMessage());
+                }
+            }
+
+            for(int i = 0; i<numPpl; i++){
+                String description = input.nextLine();
+                String occupation = input.nextLine();
+                int position_x = 0; //initialized outside of try-catch
+                int position_y = 0;
+                int wantsNum = 0;
+                try{
+                    position_x += Integer.parseInt(input.nextLine());
+                    position_y += Integer.parseInt(input.nextLine());
+                    wantsNum += Integer.parseInt(input.nextLine());
+
+                } catch(NumberFormatException e){
+                    System.out.println("Invalid number formatting " + e.getMessage());
+                }
+                ArrayList<String> inventory = new ArrayList<String>(Arrays.asList(input.nextLine()));
+                String want = input.nextLine();
+                NPC npc = new NPC(description, occupation, position_x, position_y, inventory, want, wantsNum);
+                this.locations[position_y][position_x].addPerson(npc);
+            }
+            input.close();
+        } catch(FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
     /**
@@ -159,10 +196,12 @@ public class Map {
     public String toString(){
         String description = ""; //automatically set to an array of 4x4
 
-        for(int i = 0; i<4; i++){
-            for(int j = 0; j<4; j++){
-                description += i + ", " + j + " " + locations[i][j].getName() + " \n";
-                System.out.println(locations[i][j].getDescription());
+        for(int i = 0; i<this.rows; i++){
+            for(int j = 0; j<this.columns; j++){
+                description += "index [" + i + "][" + j + "]: \n"; //ex index[0][0]: 
+                description += locations[i][j].toString();
+                description += "\n";
+                description += "\n";
             }
         }
         return description;
@@ -173,7 +212,6 @@ public class Map {
 
         Map map = new Map();
         System.out.println(map.toString());
-
 
     }
 
