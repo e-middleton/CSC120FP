@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Location class, has methods for walking in/out, looking around, looking at specific characters, 
@@ -61,6 +62,7 @@ public class Location {
         this.name = name;
         this.position_x = position_x; //getter but no setter. (or is this given by map?)
         this.position_y = position_y;
+        this.inventory = new ArrayList<String>();
         this.cast = cast;
         this.north = north;
         this.east = east;
@@ -223,8 +225,12 @@ public class Location {
         this.inventory.add(s);
     }
 
-    public void setInventory(ArrayList<String> s){
-        this.inventory = s;
+    /**
+     * method for initializaing an inventory of items outside of the constructor, used in Map when locations are read in from .txt files
+     * @param s the String[] (list) of items in the location
+     */
+    public void setInventory(String[] s){
+        this.inventory.addAll(Arrays.asList(s));  
     }
     /**
      * Method for removing an item from the inventory of a Location, 
@@ -281,7 +287,7 @@ public class Location {
      * and if there are npc's, it gets their occupations as well
      */
     public void lookAround(){
-        System.out.println("You see " + getDescription());
+        System.out.printf("You see " + getDescription() +"\n");
         System.out.println("You also see " + getCast()); //either the names/occupation of the people, or the lack of them
     }
 
@@ -332,8 +338,10 @@ public class Location {
         ArrayList<NPC> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
-        Location home = new Location("a small hovel, decrepit and falling apart.", "home", new ArrayList<String>(), 1, 1, village, true, true, true, true, false);
-        System.out.println(home.toString());
+        Location home = new Location("a small hovel, decrepit and falling apart.", "home", 1, 1, village, true, true, true, true, false);
+    
+        baker.grab("milk");
+        baker.checkInventory();
     }
     
 }
