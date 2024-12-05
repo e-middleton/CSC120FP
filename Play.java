@@ -44,7 +44,7 @@ public class Play {
      */
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
-        System.out.println("+walk (+cardinal direction) \n+look around \n+talk to _person_ \n+look at _person_ \n+barter with _person_ \n+what can I knit \n+knit _clothing item_ \n+check inventory \n+grab _item_ \n+drop _item_");
+        System.out.println("+walk [cardinal direction] \n+look around \n+talk to [person] \n+look at [person] \n+barter with [person] \n+what can I knit \n+knit [clothing item] \n+check inventory \n+check outfit \n+grab [item] \n+drop [item]");
     }
 
     /**
@@ -508,8 +508,10 @@ public class Play {
                     try{
                         if(command[1].equals("inventory")){
                             hero.checkInventory();
+                        } else if(command[1].equals("outfit")){
+                            System.out.println(hero.getOutfit());
                         } else{
-                            System.out.println("Please enter in the valid form: check inventory");
+                            System.out.println("Please enter in the valid form: check inventory/outfit");
                         }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the valid form: check inventory");
