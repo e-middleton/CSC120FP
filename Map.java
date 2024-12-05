@@ -63,25 +63,17 @@ public class Map {
              for(int i = 0; i < rows; i++){
                 for(int j = 0; j<columns; j++){
                     String inventory = itemsInput.nextLine();
-                    String[] individualItems = inventory.split("\\s+");
+                    String[] individualItems = inventory.split(",");
                     String[] finalInventory = new String[individualItems.length];
 
-                    // CHECKING for yarn types, (two word string problem)
-                    for(int m = 0; m<individualItems.length; m++){
-                        if(individualItems[m].equals("lace")){
-                            finalInventory[m] = "lace yarn";
-                        } else if(individualItems[m].equals("dk")){
-                            finalInventory[m] = "dk yarn";
-                        }else if(individualItems[m].equals("worsted")){
-                            finalInventory[m] = "worsted yarn";
-                        }else if(individualItems[m].equals("bulky")){
-                            finalInventory[m] = "bulky yarn";
-                        }else{
-                            finalInventory[m] = individualItems[m];
-                        }
+                    // words are comma separated
+                    // Removes commas and whitespace
+                    for(int a = 0; a < individualItems.length; a++){
+                        finalInventory[a] = individualItems[a].replace(",", "").stripTrailing().stripLeading();
                     }
-                    locations[i][j].setInventory(finalInventory);
+                    locations[i][j].setInventory(finalInventory); 
                 }
+                
             } 
             itemsInput.close();
         } catch(FileNotFoundException e){
@@ -112,23 +104,15 @@ public class Map {
                 }
                 // GRABS WHOLE INVENTORY as one object, then breaks it up into individual items/words
                 String inventory = input.nextLine();
-                String[] individualItems = inventory.split("\\s+");
+                String[] individualItems = inventory.split(",");
                 String[] finalInventory = new String[individualItems.length];
 
-                // CHECKING for yarn types, (two word string problem)
-                for(int m = 0; m<individualItems.length; m++){
-                    if(individualItems[m].equals("lace")){
-                        finalInventory[m] = "lace yarn";
-                    } else if(individualItems[m].equals("dk")){
-                        finalInventory[m] = "dk yarn";
-                    }else if(individualItems[m].equals("worsted")){
-                        finalInventory[m] = "worsted yarn";
-                    }else if(individualItems[m].equals("bulky")){
-                        finalInventory[m] = "bulky yarn";
-                    }else{
-                        finalInventory[m] = individualItems[m];
-                    }
+                // words are comma separated
+                // Removes commas and whitespace
+                for(int a = 0; a < individualItems.length; a++){
+                    finalInventory[a] = individualItems[a].replace(",", "").stripTrailing().stripLeading();
                 }
+
                 ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
                 String want = input.nextLine();
                 NPC npc = new NPC(description, occupation, position_x, position_y, npcInventory, want, wantsNum);
