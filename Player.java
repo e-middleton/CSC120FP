@@ -190,12 +190,16 @@ public class Player extends NPC{
         }
     }
 
+    /**
+     * method for dropping, updated to include yarn dropping from workbag
+     * @param s the thing being dropped
+     */
     public void drop(String s){
-        if(s.contains("yarn")){
-            dropYarn(s);
-        }
         try{
             super.drop(s);
+            if(checkInventory(s)){
+                dropYarn(s);  //removes the yarn from the workbag hashtable
+            }
             System.out.println(s + " has been removed from your inventory.");
         }catch(RuntimeException e){
             System.out.println(e.getMessage());
@@ -239,29 +243,25 @@ public class Player extends NPC{
      * @param s the type of yarn being dropped
      */
     private void dropYarn(String s){
-        if(checkInventory(s)){
-            String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
-            if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
-                if(this.workbag.containsKey(yarnWeight)){
-                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) -2)); //increments the value by two for a pair of socks/gloves
-                } 
-            } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
-                if(this.workbag.containsKey(yarnWeight)){
-                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 7)); //increments the value by seven for pants
-                } 
-            } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
-                if(this.workbag.containsKey(yarnWeight)){
-                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 1)); //increments the value by seven for pants
-                } 
-            } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
-                if(this.workbag.containsKey(yarnWeight)){
-                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 5)); //increments the value by five for a sweater
-                } 
-            } else{
-                throw new RuntimeException("this is not a type of yarn that you know. It cannot be dropped from your inventory.");
-            }
+        String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
+        if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) -2)); //increments the value by two for a pair of socks/gloves
+            } 
+        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 7)); //increments the value by seven for pants
+            } 
+        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 1)); //increments the value by seven for pants
+            } 
+        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
+            if(this.workbag.containsKey(yarnWeight)){
+                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 5)); //increments the value by five for a sweater
+            } 
         } else{
-            throw new RuntimeException("this is not a yarn you have, it cannot be dropped.");
+            throw new RuntimeException("this is not a type of yarn that you know. It cannot be dropped from your inventory.");
         }
     }
 
