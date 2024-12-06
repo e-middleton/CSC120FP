@@ -32,20 +32,22 @@ public class Map {
 
             
             // Read in locations base information 
-
             for(int i = 0; i < this.rows; i++){
                 for(int j = 0; j < this.columns; j++){
                     locationInfo.nextLine(); //get rid of break line in file for clarity
                     String description = locationInfo.nextLine();
-                    String name = locationInfo.nextLine();
+                    String[] mutableDescription = locationInfo.nextLine().split(",");
+                    for(int b = 0; b<mutableDescription.length; b++){
+                    }
+                    String name = locationInfo.nextLine(); 
                     boolean n = Boolean.parseBoolean(locationInfo.nextLine()); //MAKE SURE FORMATTED CORRECT
                     boolean e = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean s = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean w = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean moth = Boolean.parseBoolean(locationInfo.nextLine());
-                    locations[i][j] = new Location(description, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth);
-                    if(name.equals("mine")){
-                        locations[i][j].addPerson(talkingDoor);
+                    locations[i][j] = new Location(description, mutableDescription, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth);
+                    if(name.equals("mine")){ 
+                        locations[i][j].addPerson(talkingDoor); 
                     } 
                 }
             }
@@ -53,9 +55,8 @@ public class Map {
         } catch(FileNotFoundException e){
             System.out.println(e.getMessage());
         }
-        
-        // Read in inventory information
 
+        // Read in inventory information
         try{
             File file1 = new File("locationInventories.txt");
             Scanner itemsInput = new Scanner(file1);
@@ -205,6 +206,10 @@ public class Map {
         } else{
             return false;
         }
+    }
+    
+    public Location getLocation(int x, int y){
+        return this.locations[y][x];
     }
 
     /**

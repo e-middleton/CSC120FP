@@ -8,6 +8,7 @@ import java.util.Arrays;
  */
 public class Location {
     private String description;
+    private ArrayList<String> mutableDescription;
     private String name;
     private ArrayList<String> inventory;
     private int position_x;
@@ -57,8 +58,9 @@ public class Location {
      * @param west t/f it is possible to walk west
      * @param containsMoth t/f there is a moth in this location
      */
-    public Location(String description, String name, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
+    public Location(String description, String[] mutableDescription, String name, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
+        this.mutableDescription = new ArrayList<String>(Arrays.asList(mutableDescription));
         this.name = name;
         this.position_x = position_x; //getter but no setter. (or is this given by map?)
         this.position_y = position_y;
@@ -183,7 +185,12 @@ public class Location {
      * @return a string describing the location
      */
     public String getDescription(){
-        return this.description;
+        String result = this.description + "\n";
+
+        for(int i = 0; i < this.mutableDescription.size(); i++){
+            result += this.mutableDescription.get(i) + " ";
+        }
+        return result;
     }
 
     /**
@@ -240,6 +247,11 @@ public class Location {
     public void removeItem(String s){
         if(this.inventory.contains(s)){
             this.inventory.remove(s);
+            for(int i = 0; i < this.mutableDescription.size(); i++){
+                if(this.mutableDescription.get(i).contains(s)){
+                    this.mutableDescription.remove(i);
+                }
+            }
         } else{
             throw new RuntimeException("This item is not in this location.");
         }
@@ -270,7 +282,7 @@ public class Location {
             names += "and the " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
             return names;
         } else{
-            return "that there are no people in this location.";
+            return "There are no people in this location.";
         }
     }
 
@@ -329,7 +341,7 @@ public class Location {
     }
 
     public String toString(){
-       return "name: " + this.name + "\n" + "description: " + this.description + "\n" + "cast: " + getCast() + "\n" + "items: " + getInventory() +"\n" + "moth: " + this.containsMoth;
+       return "name: " + this.name + "\n" + "description: " + getDescription() + "\n" + "cast: " + getCast() + "\n" + "items: " + getInventory() +"\n" + "moth: " + this.containsMoth;
     }
 
     //do I need an enter/exit method?
@@ -340,10 +352,13 @@ public class Location {
         ArrayList<NPC> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);
-        Location home = new Location("a small hovel, decrepit and falling apart.", "home", 1, 1, village, true, true, true, true, false);
+        String[] descrip = new String[3];
+        descrip[0] = "zero and other words,";
+        descrip[1] = "oh baby";
+        descrip[2] = "now yes";
+        Location home = new Location("a small hovel, decrepit and falling apart.", descrip, "home", 1, 1, village, true, true, true, true, false);
     
-        baker.grab("milk");
-        baker.checkInventory();
+        System.out.println(home.toString());
     }
     
 }
