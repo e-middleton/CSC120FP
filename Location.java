@@ -247,9 +247,11 @@ public class Location {
     public void removeItem(String s){
         if(this.inventory.contains(s)){
             this.inventory.remove(s);
-            for(int i = 0; i < this.mutableDescription.size(); i++){
-                if(this.mutableDescription.get(i).contains(s)){
-                    this.mutableDescription.remove(i);
+            if(!this.inventory.contains(s)){ //only removes the description bit if there are no more of that object
+                for(int i = 0; i < this.mutableDescription.size(); i++){
+                    if(this.mutableDescription.get(i).contains(s)){
+                        this.mutableDescription.remove(i);
+                    }
                 }
             }
         } else{
