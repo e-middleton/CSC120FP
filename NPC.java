@@ -128,7 +128,7 @@ public class NPC{
         System.out.println("Hello traveler, I am the " + this.occupation);
         System.out.println("Would you like to barter?");
         System.out.println("Currently I have " + getInventory());
-        System.out.println("And I am willing to trade for " + "(" + this.wantsNum + ") " + this.wants);
+        System.out.println("And I am willing to barter for " + "(" + this.wantsNum + ") " + this.wants);
     }
 
     /**
