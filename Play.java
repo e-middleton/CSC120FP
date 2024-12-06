@@ -452,9 +452,17 @@ public class Play {
                     }
                     break;
                 case("drop"): //dropping an item, adding it as a string to location inventory
+                    String thing = "";
+                    if(response.contains("yarn")){ //makes it possible to pick up *weight* yarn (2 words)
+                        thing = command[1] + " " + command[2];
+                    } else{
+                        thing = command[1];
+                    }
                     try{
-                        hero.drop(command[1]);
-                        map.findLocation(hero).addItem(command[1]);
+                        if(hero.checkInventory(thing)){
+                            map.findLocation(hero).addItem(thing);
+                        }
+                        hero.drop(thing);
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the form: drop _item_");
                     } catch(RuntimeException e){

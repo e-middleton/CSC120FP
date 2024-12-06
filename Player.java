@@ -190,6 +190,18 @@ public class Player extends NPC{
         }
     }
 
+    public void drop(String s){
+        if(s.contains("yarn")){
+            dropYarn(s);
+        }
+        try{
+            super.drop(s);
+            System.out.println(s + " has been removed from your inventory.");
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
     /**
      * Method for adding yarn to the yarn inventory (workbag), checks to make sure that it's a recognized type of yarn
      * then increments the number of balls of yarn in that category however many is required for the garment (idk why I did this)
@@ -219,6 +231,37 @@ public class Player extends NPC{
             } 
         } else{
             throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your inventory.");
+        }
+    }
+    
+    /**
+     * method for dropping yarn from both inventory and workbag, only called by drop()
+     * @param s the type of yarn being dropped
+     */
+    private void dropYarn(String s){
+        if(checkInventory(s)){
+            String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
+            if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
+                if(this.workbag.containsKey(yarnWeight)){
+                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) -2)); //increments the value by two for a pair of socks/gloves
+                } 
+            } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
+                if(this.workbag.containsKey(yarnWeight)){
+                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 7)); //increments the value by seven for pants
+                } 
+            } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
+                if(this.workbag.containsKey(yarnWeight)){
+                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 1)); //increments the value by seven for pants
+                } 
+            } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
+                if(this.workbag.containsKey(yarnWeight)){
+                    this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 5)); //increments the value by five for a sweater
+                } 
+            } else{
+                throw new RuntimeException("this is not a type of yarn that you know. It cannot be dropped from your inventory.");
+            }
+        } else{
+            throw new RuntimeException("this is not a yarn you have, it cannot be dropped.");
         }
     }
 
