@@ -11,7 +11,7 @@ false
 false
 
 a dark expanse of the sea, with small waves lapping at your feet, you cannot see the waters farthest edge.
-mussels cling to the shoreline rocks and corals, pearls glint amongst them.
+mussels cling to the shoreline,with coral growing nearby.,pearls glint amongst the sand.
 sea
 true
 true
