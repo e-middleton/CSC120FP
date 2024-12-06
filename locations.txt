@@ -55,8 +55,8 @@ true
 true
 false
 
-a freezing mountain, mist clouds around its peak. %nSnow crunches on the ground barely covering the gravel and lichen beneath.
-
+a freezing mountain, mist clouds around its peak,
+snow crunches around the,gravel,lichen clings to the sides of a few bare-limbed trees
 mountain
 true
 true
@@ -73,8 +73,8 @@ false
 true
 false
 
-a curated garden, lovely fruit trees line a walkway down the central stretch. %nThere are apple trees, orange trees, even a few berry bushes in the well-cared-for grove
-
+a curated garden, lovely fruit trees line a walkway down the central stretch.
+apple trees line the path, orange trees wave in the wind.,a few berry bushes thrive in the grove.
 garden
 true
 true
@@ -100,8 +100,8 @@ true
 true
 false
 
-an old hollowed out room of the mine, but this one hasn't yet been scraped, %nlarge purple gemstones glitter on the walls along with gold and silver ore. A pickaxe lays to the side
-
+an old hollowed out room of the mine, but this one hasn't yet been scraped,
+large purple amethyst glitters along the walls.,gold ore glints in the rock,and a lone pickaxe lays to the wayside.
 ore room
 false
 false
@@ -110,7 +110,7 @@ false
 false
 
 a narrow yet violent river, with white water foaming and swirling around jagged rocks. %nSofter, rounded pebbles line its banks, gold is flecked amongst the sand.
-
+Softer rounded pebbles line its banks.,gold is flecked amongst the shoreline,sand
 river
 false
 true
@@ -136,8 +136,8 @@ true
 true
 false
 
-in the center of an eerie and still clearing, purple mushrooms grow in a perfect ring, %nThe silence feels heavier than before. In the center of the ring, a small potion in a bottle lies motionless
-
+in the center of an eerie and still clearing, purple mushrooms grow in a perfect ring, %nThe silence feels heavier than before.
+In the center of the ring, a small potion in a bottle lies motionless.
 mushroom circle
 false
 false
