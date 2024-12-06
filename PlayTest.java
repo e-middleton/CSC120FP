@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class PlayTest {
     Play game = new Play(); 
-    Map map = new Map(); //default 4x4
+    Map map = new Map("locations", "population", "locationInventory"); //default 4x4
     Player hero = new Player(); //auto sets to Dorothy 
 
     //getPerson(s) is what throws the exception for lookAtCharacter()
