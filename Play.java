@@ -378,7 +378,7 @@ public class Play {
      */
     public static void main(String[] args) {
         Play game = new Play();
-        Map map = new Map(); //default from .txt files
+        Map map = new Map("locations", "population", "locationInventories"); //default from .txt files
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;

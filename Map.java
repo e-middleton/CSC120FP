@@ -19,11 +19,11 @@ public class Map {
      * reads in inventories from a text file as well
      * FILES MUST BE FORMATTED CORRECTLY
      */
-    public Map(){
+    public Map(String locationFile, String npcFile, String itemsFile){
         TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
     
         try{
-            File file = new File("locations.txt");
+            File file = new File(locationFile + ".txt");
             Scanner locationInfo = new Scanner(file);
 
             this.rows += Integer.parseInt(locationInfo.nextLine()); //MIGHT THROW EXCEPTION
@@ -58,7 +58,7 @@ public class Map {
 
         // Read in inventory information
         try{
-            File file1 = new File("locationInventories.txt");
+            File file1 = new File(itemsFile + ".txt");
             Scanner itemsInput = new Scanner(file1);
 
              for(int i = 0; i < rows; i++){
@@ -83,7 +83,7 @@ public class Map {
 
         // Read in NPC information and put them in their locations
         try{
-            File file2 = new File("population.txt");
+            File file2 = new File(npcFile + ".txt");
             Scanner input = new Scanner(file2);
 
             //read in total number npcs
@@ -232,7 +232,7 @@ public class Map {
 
     public static void main(String[] args) {
 
-        Map map = new Map();
+        Map map = new Map("locations", "population", "locationInventories");
         System.out.printf(map.toString());
 
     }
