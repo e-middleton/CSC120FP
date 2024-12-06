@@ -230,6 +230,7 @@ public class Location {
      */
     public void addItem(String s){
         this.inventory.add(s);
+        this.mutableDescription.add("\nIn this location is a(n) " + s);
     }
 
     /**
