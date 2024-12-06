@@ -19,8 +19,8 @@ false
 true
 false
 
-a small inlet, with soft embankments of sand and shells scattered along with pieces of driftwood
-
+a small inlet, with soft embankments of sand where you can hear seagulls barking and look out at the deeper expanse of water to the west.
+Here and there a shell lays in the sand.,pieces of driftwood float in the water.
 cove
 true
 false
@@ -28,8 +28,8 @@ false
 true
 false
 
-an old and dusty room, shelves look to be filled with yarn? Most of it is rotted with time, %nbut a few surviving skeins are a thin, lace yarn, but some is thicker, nearer to worsted yarn
-
+an old and dusty room, shelves look to be filled with yarn? Most of it is rotted with time.
+there are a few skeins of lace yarn.,a remaining ball of worsted yarn lays on a shelf.
 yarn trove
 true
 false
