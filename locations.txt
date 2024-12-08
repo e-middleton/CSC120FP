@@ -92,7 +92,7 @@ true
 false
 
 an empty and dusty road
-
+an old cart wheel lies forgotten
 road
 true
 false
@@ -109,7 +109,7 @@ true
 false
 false
 
-a narrow yet violent river, with white water foaming and swirling around jagged rocks. %nSofter, rounded pebbles line its banks, gold is flecked amongst the sand.
+a narrow yet violent river, with white water foaming and swirling around jagged rocks.
 Softer rounded pebbles line its banks.,gold is flecked amongst the shoreline,sand
 river
 false
@@ -136,7 +136,7 @@ true
 true
 false
 
-in the center of an eerie and still clearing, purple mushrooms grow in a perfect ring, %nThe silence feels heavier than before.
+an eerie and still clearing, purple mushrooms grow in a perfect ring, %nThe silence feels heavier than before.
 In the center of the ring, a small potion in a bottle lies motionless.
 mushroom circle
 false
