@@ -481,7 +481,7 @@ public class Play {
                             hero.grab(item);
                             map.findLocation(hero).removeItem(item);
                         } else{
-                            System.out.println("This item is not in this location. It cannot be grabbed.");
+                            System.out.println(item + " cannot be grabbed.");
                         }
                     }catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the form: grab _item_");
