@@ -196,10 +196,10 @@ public class Player extends NPC{
      */
     public void drop(String s){
         try{
-            super.drop(s);
-            if(checkInventory(s)){
+            if(checkInventory(s) && s.contains("yarn")){
                 dropYarn(s);  //removes the yarn from the workbag hashtable
             }
+            super.drop(s);
             System.out.println(s + " has been removed from your inventory.");
         }catch(RuntimeException e){
             System.out.println(e.getMessage());
