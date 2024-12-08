@@ -21,6 +21,24 @@ drop [item]
 If your game includes challenges that must be overcome to win, also list them below.
 
 doesn't need to be overcome to win, but be aware that there is a moth in map[3][1] one step north from the starting position 
-that will eat unknit yarn, some of which has no replacement in the game.
+that will eat unknit yarn, some of which (bulky and dk yarn) has no replacement in the game.
 
 In the mine you must answer the riddle of a door in order to walk south into the yarn trove, the answer is "yarn"
+
+A map .png is in the repo, but a brief overview of the map is below:
+[0][0]: cliffs
+[0][1]: sea
+[0][2]: cove
+[0][3]: yarn trove
+[1][0]: repair guild
+[1][1]: trading post
+[1][2]: mountain
+[1][3]: mine
+[2][0]: garden
+[2][1]: home
+[2][2]: road
+[2][3]: ore room
+[3][0]: river
+[3][1]: field
+[3][2]: forest
+[3][3]: mushroom circle
