@@ -63,9 +63,10 @@ public class Play {
      * @return the same string without punctuation or whitespace or numbers
      */
     public String punctuationRemoval(String s){
-        char[] charArray = s.toCharArray();
-        Character[] characterArray = new Character[charArray.length]; //makes it a Character array
+        char[] charArray = s.toCharArray(); //changes it to an array of char
+        Character[] characterArray = new Character[charArray.length]; 
 
+        //makes it a Character array instead of char
         for (int i = 0; i < charArray.length; i++) {
             characterArray[i] = Character.valueOf(charArray[i]); 
         }
@@ -103,7 +104,6 @@ public class Play {
      * @param a the Player
      */
     public void walk(String[] command, Player a, Map map){
-
         if(command[1].equals("north")){ //walk north
             if(map.walkNorth(a)){
                 if(map.findLocation(a).hasMoth()){ //if there's a moth
@@ -145,7 +145,7 @@ public class Play {
                 System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
             }
         } else{
-            System.out.println(command[1] + " Is an unknown direction. Please try to walk in a different direction."); //typo
+            System.out.println(command[1] + " is an unknown direction. Please try to walk in a different direction."); //typo
         }
     }
 
@@ -203,6 +203,8 @@ public class Play {
                     System.out.println("There is no door here to talk to.");
                 }
             }
+        } else{
+            System.out.println("There is no door here to talk to.");
         }
     }
 
@@ -243,7 +245,7 @@ public class Play {
             String[] command = sliceAndDice(response);
             String trade = null;
             try{
-                for(int i = 0; i<command.length; i++    ){ //fixes issue of barter __ for worsted yarn (two words)
+                for(int i = 0; i<command.length; i++){ //fixes issue of barter __ for worsted yarn (two words)
                     if(command[i].equals("yarn")){
                         trade = command[i-1] + " " + command[i];
                     } else{
@@ -253,8 +255,8 @@ public class Play {
                 map.findLocation(hero).getPerson(npc).barter(trade, command[1], hero);
             } catch(IndexOutOfBoundsException b){                          //handles incorrect typing
                 System.out.println("Please enter a valid for of: barter _payment_ for _commodity_");
-            } catch(RuntimeException e){                                   //if one or more object is missing and the trade is incomplete
-                System.out.println(e.getMessage());
+            } catch(MissingMaterialException e){                           //if one or more object is missing and the trade is incomplete
+                System.out.println("Those items cannot be bartered, one or both is not in the inventory.");
             }
         } catch(MissingNPCException b){ //if the person is in the wrong location
             System.out.println("You are not in the same location as " + npc);
@@ -274,7 +276,7 @@ public class Play {
             if(hero.hasSocks()){
                 System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
                 response = input.nextLine();
-                if(response.equals("yes")){
+                if(punctuationRemoval(response.toLowerCase()).equals("yes")){ //removes any punctuation or whitespace and is lowercase
                     try{
                         hero.knitSocks();
                     } catch(MissingMaterialException e){
@@ -283,7 +285,7 @@ public class Play {
                 } else{
                     return; //exit the knitting method if they don't wish to continue
                 }
-            } else{
+            } else{ //if they don't already have socks there's no need to ask the question
                 try{
                     hero.knitSocks();
                 } catch(MissingMaterialException e){
@@ -294,7 +296,7 @@ public class Play {
             if(hero.hasHat()){
                 System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
                 response = input.nextLine();
-                if(response.equals("yes")){
+                if(punctuationRemoval(response.toLowerCase()).equals("yes")){ 
                     try{
                         hero.knitHat();
                     } catch(MissingMaterialException e){
@@ -314,7 +316,7 @@ public class Play {
             if(hero.hasGloves()){
                 System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
                 response = input.nextLine();
-                if(response.equals("yes")){
+                if(punctuationRemoval(response.toLowerCase()).equals("yes")){
                     try{
                         hero.knitGloves();
                     } catch(MissingMaterialException e){
@@ -334,7 +336,7 @@ public class Play {
             if(hero.hasSweater()){
                 System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
                 response = input.nextLine();
-                if(response.equals("yes")){
+                if(punctuationRemoval(response.toLowerCase()).equals("yes")){
                     try{
                         hero.knitSweater();
                     } catch(MissingMaterialException e){
@@ -354,7 +356,7 @@ public class Play {
             if(hero.hasPants()){
                 System.out.println("You have already knit this item, are you sure you'd like to continue? yes/no");
                 response = input.nextLine();
-                if(response.equals("yes")){
+                if(punctuationRemoval(response.toLowerCase()).equals("yes")){
                     try{
                         hero.knitPants();
                     } catch(MissingMaterialException e){
@@ -417,9 +419,9 @@ public class Play {
             }
 
             response = input.nextLine();
-            String[] command = game.sliceAndDice(response);
+            String[] command = game.sliceAndDice(response); //removes punctuation, whitespace, numbers, uppercase, and separates
 
-            //which command executes, instead of if, else if, else setup
+            //determines which command executes, instead of if, else if, else formatting
             switch(command[0]){
                 case("walk"): //walk north, east, south, west
                     try{
@@ -430,9 +432,9 @@ public class Play {
                     break;
                 case("look"): //look around LOCATION (general) && look at PERSON
                     try{
-                        if(command[1].equals("around")){
+                        if(command[1].equals("around")){ //location
                             game.lookAround(hero, map);
-                        } else if(command[1].equals("at")){
+                        } else if(command[1].equals("at")){ //person
                             game.lookAt(hero, command[2], map);
                         }
                     } catch(IndexOutOfBoundsException e){
@@ -442,7 +444,7 @@ public class Play {
                 case("help"): //show options
                     game.showOptions();
                     break;
-                case("talk"): //talk
+                case("talk"): //talk to [person] OR talk to [the] [person]
                     try{
                         if(command[1].equals("to")){
                             if(command[2].equals("the")){ //talk to the _person_
@@ -455,39 +457,39 @@ public class Play {
                         System.out.println("Please enter in the form: talk to _person_");
                     }
                     break;
-                case("drop"): //dropping an item, adding it as a string to location inventory
+                case("drop"): //dropping an item, adding it as a string to location inventory and mutable description
                     String thing = "";
-                    if(response.contains("yarn")){ //makes it possible to pick up *weight* yarn (2 words)
+                    if(response.contains("yarn")){ //makes it possible to drop [weight] yarn (2 words)
                         thing = command[1] + " " + command[2];
                     } else{
                         thing = command[1];
                     }
                     try{
-                        if(hero.checkInventory(thing)){
-                            map.findLocation(hero).addItem(thing);
+                        if(hero.checkInventory(thing)){ //if they actually have the thing they claim they do
+                            map.findLocation(hero).addItem(thing); //it is added to the location's inventory and description
                         }
-                        hero.drop(thing);
-                    } catch(IndexOutOfBoundsException e){
+                        hero.drop(thing); //removed from player's inventory
+                    } catch(IndexOutOfBoundsException e){                   //incorrect typing
                         System.out.println("Please enter in the form: drop _item_");
-                    } catch(RuntimeException e){
+                    } catch(RuntimeException e){                            //not an item they actually have
                         System.out.println(e.getMessage());
                     }
                     break;
-                case("grab"): //makes it possible to pick up *weight* yarn (2 words)
+                case("grab"): //grab
                     String item = "";
                     try{
-                        if(response.contains("yarn")){ //makes it possible to pick up *weight* yarn (2 words)
+                        if(response.contains("yarn")){ //makes it possible to pick up [weight] yarn (2 words)
                             item = command[1] + " " + command[2];
                         } else{
                             item = command[1];
                         }
-                        if(map.findLocation(hero).containsItem(item)){
-                            hero.grab(item);
-                            map.findLocation(hero).removeItem(item);
+                        if(map.findLocation(hero).containsItem(item)){ //if the object is actually in the location
+                            hero.grab(item); //adds it to the player's inventory
+                            map.findLocation(hero).removeItem(item); //removes it from location inventory and description
                         } else{
-                            System.out.println(item + " cannot be grabbed.");
+                            System.out.println(item + " cannot be grabbed."); //the item does not exist in the location
                         }
-                    }catch(IndexOutOfBoundsException e){
+                    }catch(IndexOutOfBoundsException e){ //incorrect typing
                         System.out.println("Please enter in the form: grab _item_");
                     }
                     break;
@@ -511,7 +513,7 @@ public class Play {
                         if(command[1].equals("with")){
                             game.barter(hero, command[2], map, input);
                         }
-                        else{
+                        else{ 
                             System.out.println("Please enter valid form: Barter with _person_");
                             System.out.println("Followed by: ");
                             System.out.println("Barter _payment_ for _commodity_");
@@ -520,17 +522,17 @@ public class Play {
                         System.out.println("Please enter in a valid form: barter with _person_");
                     }
                     break;
-                case("check"): 
+                case("check"): //check inventory / outfit
                     try{
                         if(command[1].equals("inventory")){
-                            hero.checkInventory();
+                            hero.checkInventory(); //prints out inventory as String
                         } else if(command[1].equals("outfit")){
-                            hero.showOutfit();
-                        } else{
+                            hero.showOutfit(); //prints out outfit as String
+                        } else{ //NECESSARY DON'T REMOVE
                             System.out.println("Please enter in the valid form: check inventory/outfit");
                         }
                     } catch(IndexOutOfBoundsException e){
-                        System.out.println("Please enter in the valid form: check inventory");
+                        System.out.println("Please enter in the valid form: check inventory/outfit");
                     }
                     break;
                 case("end"):
@@ -538,7 +540,7 @@ public class Play {
                 default:
                     System.out.println(response + " is an unknown command.");
             }
-            counter += 1;
+            counter += 1; //passing time
         }
 
         if(hero.hasWon()){
