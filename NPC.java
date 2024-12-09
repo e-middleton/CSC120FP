@@ -10,8 +10,8 @@ public class NPC{
     protected String occupation;
     protected int position_x;
     protected int position_y;
-    protected ArrayList<String> inventory; //change to type ITEM when class has been created
-    protected String wants; //change to type ITEM
+    protected ArrayList<String> inventory; 
+    protected String wants; 
     protected int wantsNum;
     protected int hasNum;
 
@@ -71,6 +71,8 @@ public class NPC{
         this.hasNum = 0;
     }
 
+    //      GETTERS
+    //********************
 
 
     /**
@@ -105,7 +107,40 @@ public class NPC{
         return this.position_y;
     }
 
+
+   /**
+    * Returns the NPC's inventory as a string, used to see what they have for bartering, or testing
+    * @return the inventory of the NPC as a readable String
+    */
+    public String getInventory(){
+        return this.inventory.toString();
+    }
+
     /**
+     * Prints out a list of what is in a npc's inventory
+     */
+    public void checkInventory(){
+        System.out.println(this.inventory.toString());
+    }
+
+    /**
+     * No longer used, but originally was used to make sure characters only interacted if it was situationally appropriate
+     * currently position testing is done primarily in Location class, sometimes in Play() main function
+     * @param c the other character this character is seeing if their positions match
+     * @return t/f they are in the same location
+     */
+    public boolean positionMatch(NPC c){
+        if ((this.position_x == c.getPosition_x()) && (this.position_y == c.getPosition_y())){
+            return true;
+        } else{
+            return false; //other methods will throw exception
+        }
+    }
+
+    //      SETTERS
+    //********************
+
+     /**
      * Setter for the x_position, 
      * called by location class during construction just to ensure continuity
      * @param x the x or column position of the NPC
@@ -123,30 +158,8 @@ public class NPC{
         this.position_y = y;
     }
 
-
-   /**
-    * Returns the NPC's inventory as a string, used to see what they have for bartering, or testing
-    * @return the inventory of the NPC as a readable String
-    */
-    public String getInventory(){
-        return this.inventory.toString();
-    }
-
-
-    /**
-     * No longer used, but originally was used to make sure characters only interacted if it was situationally appropriate
-     * currently position testing is done primarily in Location class, sometimes in Play() main function
-     * @param c the other character this character is seeing if their positions match
-     * @return t/f they are in the same location
-     */
-    public boolean positionMatch(NPC c){
-        if ((this.position_x == c.getPosition_x()) && (this.position_y == c.getPosition_y())){
-            return true;
-        } else{
-            return false; //other methods will throw exception
-        }
-    }
-
+    //      METHODS
+    //**********************
 
     /**
      * Method for getting the intro/set speech of an NPC
@@ -184,12 +197,6 @@ public class NPC{
         }
     }
 
-    /**
-     * Prints out a list of what is in a npc's inventory
-     */
-    public void checkInventory(){
-        System.out.println(this.inventory.toString());
-    }
 
     /**
      * Removes an item from a npc's inventory, provided that it was in the inventory originally.
