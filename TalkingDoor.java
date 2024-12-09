@@ -34,7 +34,7 @@ public class TalkingDoor extends NPC{
         System.out.println("What am I?");
     }
 
-    @Override
+    
     /**
      * Method for bartering, inherited from NPC, but should not be used unless additional functionality
      * is given to the talkingDoor
@@ -42,9 +42,9 @@ public class TalkingDoor extends NPC{
      * @param payment the payment the player is giving
      * @param player the person bartering with the npc
      */
+    @Override
     public void barter(String trade, String payment, NPC player){ 
         System.out.println("The door is not quite sure what you think he can barter. \nHe is a door.");
     }
-    
     
 }

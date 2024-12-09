@@ -21,7 +21,6 @@ public class PlayTest {
         String[] command = game.sliceAndDice("walk north");
         game.walk(command, hero, map); //walking up one into the empty field where a Moth is
         assertEquals(false, hero.hasYarn()); //hero no longer has the yarn after encountering Moth
-        
     }
    
 }
