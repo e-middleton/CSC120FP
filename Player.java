@@ -83,6 +83,62 @@ public class Player extends NPC{
         this.workbag.put("bulky weight", 0);
     }
 
+    //      GETTERS
+    //********************** 
+
+    /**
+     * Method for checking the win condition of the game, if all the items of clothing have been knit and added to outfit.
+     * @return true/false, all the clothing has been knit.
+     */
+    public boolean hasWon(){
+        if(this.outfit.get("hat") && this.outfit.get("gloves") && this.outfit.get("pants") && this.outfit.get("sweater") && this.outfit.get("socks")){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    /**
+     * Whether or not socks have already been knitted
+     * @return t/f the player already has socks
+     */
+    public boolean hasSocks(){
+        return this.outfit.get("socks");
+    }
+
+    /**
+     * Whether or not gloves have already been knitted
+     * @return t/f the player has gloves
+     */
+    public boolean hasGloves(){
+        return this.outfit.get("gloves");
+    }
+
+    /**
+     * whether or not a sweater has already been knitted
+     * @return t/f the player has a sweater
+     */
+    public boolean hasSweater(){
+        return this.outfit.get("sweater");
+    }
+
+    /**
+     * Whether or not pants have already been knitted
+     * @return t/f the player has pants
+     */
+    public boolean hasPants(){
+        return this.outfit.get("pants");
+    }
+
+    /**
+     * Whether or not a hat has already been knitten
+     * @return t/f the player has a hat
+     */
+    public boolean hasHat(){
+        return this.outfit.get("hat");
+    }
+
+
     /**
      * Mini method for testing where a player is
      */
@@ -109,6 +165,33 @@ public class Player extends NPC{
     }
 
     /**
+     * Method for printing out which of the items of winter clothing a player has, based upon the value t/f in the key value pair of outfit
+     */
+    public void showOutfit(){
+        System.out.println(this.occupation + " currently has the following items of winter clothing: ");
+        if(this.outfit.get("hat")){
+            System.out.println("+hat");
+        }
+        if(this.outfit.get("gloves")){
+            System.out.println("+gloves");
+        }
+        if(this.outfit.get("pants")){
+            System.out.println("+pants");
+        }
+        if(this.outfit.get("sweater")){
+            System.out.println("+sweater");
+        }
+        if(this.outfit.get("socks")){
+            System.out.println("+socks");
+        }
+    }
+
+
+    //      METHODS
+    //*********************
+
+
+    /**
      * Only able to be called by the moth
      * it finds a yarn category that contins yarn, "eats" the yarn
      * and tells you which type of yarn was eaten
@@ -130,28 +213,6 @@ public class Player extends NPC{
             this.workbag.replace("bulky weight", 0);
         }
         return yarn;
-    }
-
-    /**
-     * Method for printing out which of the items of winter clothing a player has, based upon the value t/f in the key value pair of outfit
-     */
-    public void showOutfit(){
-        System.out.println(this.occupation + " currently has the following items of winter clothing: ");
-        if(this.outfit.get("hat")){
-            System.out.println("+hat");
-        }
-        if(this.outfit.get("gloves")){
-            System.out.println("+gloves");
-        }
-        if(this.outfit.get("pants")){
-            System.out.println("+pants");
-        }
-        if(this.outfit.get("sweater")){
-            System.out.println("+sweater");
-        }
-        if(this.outfit.get("socks")){
-            System.out.println("+socks");
-        }
     }
 
     
@@ -333,57 +394,7 @@ public class Player extends NPC{
         }
     }
 
-    /**
-     * Method for checking the win condition of the game, if all the items of clothing have been knit and added to outfit.
-     * @return true/false, all the clothing has been knit.
-     */
-    public boolean hasWon(){
-        if(this.outfit.get("hat") && this.outfit.get("gloves") && this.outfit.get("pants") && this.outfit.get("sweater") && this.outfit.get("socks")){
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    /**
-     * Whether or not socks have already been knitted
-     * @return t/f the player already has socks
-     */
-    public boolean hasSocks(){
-        return this.outfit.get("socks");
-    }
-
-    /**
-     * Whether or not gloves have already been knitted
-     * @return t/f the player has gloves
-     */
-    public boolean hasGloves(){
-        return this.outfit.get("gloves");
-    }
-
-    /**
-     * whether or not a sweater has already been knitted
-     * @return t/f the player has a sweater
-     */
-    public boolean hasSweater(){
-        return this.outfit.get("sweater");
-    }
-
-    /**
-     * Whether or not pants have already been knitted
-     * @return t/f the player has pants
-     */
-    public boolean hasPants(){
-        return this.outfit.get("pants");
-    }
-
-    /**
-     * Whether or not a hat has already been knitten
-     * @return t/f the player has a hat
-     */
-    public boolean hasHat(){
-        return this.outfit.get("hat");
-    }
+    
 
     /**
      * Main method, used for testing
