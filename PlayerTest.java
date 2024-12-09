@@ -58,14 +58,14 @@ public class PlayerTest {
 
     @Test
     public void testKnitSocks(){
-        dorothy.grabYarn("lace yarn");
+        dorothy.grab("lace yarn");
         dorothy.knitSocks();
         assertEquals(true, dorothy.hasSocks());
     }
 
     @Test
     public void testKnitGloves(){
-        dorothy.grabYarn("lace yarn");
+        dorothy.grab("lace yarn");
         dorothy.knitGloves();
         assertEquals(true, dorothy.hasGloves());
     }

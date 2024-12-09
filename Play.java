@@ -13,6 +13,7 @@ public class Play {
 
     /**
      * Method for checking if two characters or a character and a player are in the same location
+     * most location testing is taken care of in the Location class
      * @param a the first character
      * @param b the second character
      * @return true or false they're in the same location
@@ -27,6 +28,7 @@ public class Play {
 
     /**
      * A method for checking if a npc or player is in the same area as a given location. 
+     * the majority of location testing is now done in the Location class
      * @param a the npc or player
      * @param b the location they're checking if they're in
      * @return true or false they're in the same location
@@ -48,7 +50,8 @@ public class Play {
     }
 
     /**
-     * Method for looking around a given location. NEED TO CHANGE TO BE THE PLAYER'S CURRENT LOCATION, NOT PASSING IN A SET LOCATION
+     * Method for looking around a given location.
+     * prints out a description of their surroundings
      */
     public void lookAround(Player hero, Map map){
         map.findLocation(hero).lookAround();
@@ -94,7 +97,8 @@ public class Play {
     }
 
     /**
-     * Method for the player walking around, requires them to have typed in their command correctly as walk *direction* and not be walking off the map
+     * Method for the player walking around, requires them to have typed in their command correctly as walk [direction] and not be walking off the map
+     * alerts the player whether or not a moth is in a location, and if applicable, calls the moth to eat their yarn
      * @param command the command that the player typed in broken up by whitespace
      * @param a the Player
      */
@@ -203,7 +207,7 @@ public class Play {
     }
 
     /**
-     * Method for talking to npc's provided that they're in the same location that the player is
+     * Method for talking to npcs provided that they're in the same location that the player is
      * The npc's response never changes, it justs says who they are and what they trade for
      * @param hero the player
      * @param npc the name of the npc they're trying to talk to. They're grabbed from the location's cast.

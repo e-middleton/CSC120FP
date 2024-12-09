@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * NPC class, used for NPC's and is the parent of the Player class
+ * NPC class, used for NPCs and is the parent of the Player class
+ * They're able to talk, barter, and have inventories and check positions
  */
 public class NPC{
     protected String description;
@@ -15,7 +16,7 @@ public class NPC{
     protected int hasNum;
 
     /**
-     * Constructor with everything except the array lists of wishes, and inventory
+     * Stub constructor with bare minimum information, used for testing
      * @param description a brief description of the npc, called for when the player looksAround()
      * @param occupation the occupation of the NPC
      * @param position_x the horizontal/row index of their position on the map
@@ -52,6 +53,14 @@ public class NPC{
         this.hasNum = 0;
     }
 
+    /**
+     * Constructor for an NPC with everything except the "want" item
+     * @param description a brief description of the NPC
+     * @param occupation the name/occupation, used as an ID
+     * @param position_x the x or column position in the map
+     * @param position_y the y or row position in the map
+     * @param inventory the arrayList of objects, Strings, the NPC has
+     */
     public NPC(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
         this.description = description;
         this.occupation = occupation;
@@ -59,6 +68,7 @@ public class NPC{
         this.position_y = position_y;
         this.inventory = inventory;
         this.wants = null;
+        this.hasNum = 0;
     }
 
 
@@ -95,22 +105,40 @@ public class NPC{
         return this.position_y;
     }
 
+    /**
+     * Setter for the x_position, 
+     * called by location class during construction just to ensure continuity
+     * @param x the x or column position of the NPC
+     */
     public void setPosition_x(int x){
         this.position_x = x;
     }
 
+    /**
+     * setter for the y_position of the NPC,
+     * called by Location constructors to make sure everything matches
+     * @param y the y or row position of the NPC
+     */
     public void setPosition_y(int y){
         this.position_y = y;
     }
 
 
-    //return a NPC's inventory as a String
+   /**
+    * Returns the NPC's inventory as a string, used to see what they have for bartering, or testing
+    * @return the inventory of the NPC as a readable String
+    */
     public String getInventory(){
         return this.inventory.toString();
     }
 
 
-    //checks if characters are in the same location
+    /**
+     * No longer used, but originally was used to make sure characters only interacted if it was situationally appropriate
+     * currently position testing is done primarily in Location class, sometimes in Play() main function
+     * @param c the other character this character is seeing if their positions match
+     * @return t/f they are in the same location
+     */
     public boolean positionMatch(NPC c){
         if ((this.position_x == c.getPosition_x()) && (this.position_y == c.getPosition_y())){
             return true;
@@ -176,7 +204,6 @@ public class NPC{
     }
 
 
-    //bartering objects, one for another, the first is what the player wants, the second is what the npc is taking as payment
     /**
      * method for bartering (swapping objects around different inventories), first checks to see if bartering is possible based on matching locations, 
      * Then it checks if the offered item is something the npc even wants

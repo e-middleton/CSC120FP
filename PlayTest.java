@@ -2,7 +2,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-
 public class PlayTest {
     Play game = new Play(); 
     Map map = new Map("locations", "population", "locationInventory"); //default 4x4

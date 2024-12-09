@@ -343,12 +343,18 @@ public class Location {
         }
     }
 
+    /**
+     * getter for the overal description of a Location, used to help with testing in the Map class
+     * @return String description of the Location object and all its relevant information
+     */
     public String toString(){
        return "name: " + this.name + "\n" + "description: " + getDescription() + "\n" + "cast: " + getCast() + "\n" + "items: " + getInventory() +"\n" + "moth: " + this.containsMoth;
     }
 
-    //do I need an enter/exit method?
-
+    /**
+     * Main method for Location, used for testing
+     * @param args empty array of Strings
+     */
     public static void main(String[] args) {
         NPC smith = new NPC("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
         NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2);

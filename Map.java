@@ -208,6 +208,12 @@ public class Map {
         }
     }
     
+    /**
+     * Getter for a specific location based on indexing, used for testing
+     * @param x the x or column position of the Location
+     * @param y the y or row position of the Location
+     * @return the Location at the index specifiec
+     */
     public Location getLocation(int x, int y){
         return this.locations[y][x];
     }
@@ -229,7 +235,10 @@ public class Map {
         return description;
     }
 
-
+    /**
+     * Main method for Map(), used for testing
+     * @param args empty array of Strings
+     */
     public static void main(String[] args) {
 
         Map map = new Map("locations", "population", "locationInventories");

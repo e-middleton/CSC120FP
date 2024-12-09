@@ -1,5 +1,5 @@
 /**
- * Villain class moth
+ * Villain class moth, currently has limited functionality
  */
 public class Moth{
 

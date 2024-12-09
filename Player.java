@@ -177,7 +177,7 @@ public class Player extends NPC{
     }
 
     /**
-     * Puts an object in the npc's inventory, inventory is not allowed to hold more than 15 items.
+     * Puts an object in the player's inventory, inventory is not allowed to hold more than 15 items.
      * @param s the object being picked up.
      */
     public void grab(String s){
@@ -208,10 +208,11 @@ public class Player extends NPC{
 
     /**
      * Method for adding yarn to the yarn inventory (workbag), checks to make sure that it's a recognized type of yarn
-     * then increments the number of balls of yarn in that category however many is required for the garment (idk why I did this)
+     * then increments the number of balls of yarn in that category however many is required for the garment.
+     * only called by grab()
      * @param s the type of yarn being added
      */
-    public void grabYarn(String s){
+    private void grabYarn(String s){
         String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
         if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
             if(this.workbag.containsKey(yarnWeight)){
@@ -288,7 +289,7 @@ public class Player extends NPC{
     }
 
     /**
-     * Method for knitting socks provided that there is sufficient yarn in their workbag. 
+     * Method for knitting socks provided that there is sufficient yarn in the player's workbag. 
      */
     public void knitSocks(){
         if(this.workbag.get("lace weight") >= 2){

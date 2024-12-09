@@ -1,6 +1,6 @@
 /**
  * Class for TalkingDoor which is used differently from other NPCs, 
- * only special ability is to pose riddles instead of barter
+ * Currently, only special ability is to pose riddles instead of barter
  */
 public class TalkingDoor extends NPC{
 
@@ -35,11 +35,16 @@ public class TalkingDoor extends NPC{
     }
 
     @Override
+    /**
+     * Method for bartering, inherited from NPC, but should not be used unless additional functionality
+     * is given to the talkingDoor
+     * @param trade the object the player wants
+     * @param payment the payment the player is giving
+     * @param player the person bartering with the npc
+     */
     public void barter(String trade, String payment, NPC player){ 
         System.out.println("The door is not quite sure what you think he can barter. \nHe is a door.");
     }
     
-    
-
     
 }
