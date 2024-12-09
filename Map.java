@@ -20,25 +20,25 @@ public class Map {
      * FILES MUST BE FORMATTED CORRECTLY
      */
     public Map(String locationFile, String npcFile, String itemsFile){
+        //must be entered manually, no file has formatting appropriate for this class
         TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
     
         try{
             File file = new File(locationFile + ".txt");
             Scanner locationInfo = new Scanner(file);
 
+            //read in map dimensions
             this.rows += Integer.parseInt(locationInfo.nextLine()); //MIGHT THROW EXCEPTION
             this.columns += Integer.parseInt(locationInfo.nextLine());
             this.locations = new Location[rows][columns];
 
             
-            // Read in locations base information 
+            // Read in locations base information
             for(int i = 0; i < this.rows; i++){
                 for(int j = 0; j < this.columns; j++){
-                    locationInfo.nextLine(); //get rid of break line in file for clarity
+                    locationInfo.nextLine(); //get rid of break line in file which was added for readability
                     String description = locationInfo.nextLine();
                     String[] mutableDescription = locationInfo.nextLine().split(",");
-                    for(int b = 0; b<mutableDescription.length; b++){
-                    }
                     String name = locationInfo.nextLine(); 
                     boolean n = Boolean.parseBoolean(locationInfo.nextLine()); //MAKE SURE FORMATTED CORRECT
                     boolean e = Boolean.parseBoolean(locationInfo.nextLine());
@@ -46,7 +46,7 @@ public class Map {
                     boolean w = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean moth = Boolean.parseBoolean(locationInfo.nextLine());
                     locations[i][j] = new Location(description, mutableDescription, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth);
-                    if(name.equals("mine")){ 
+                    if(name.equals("mine")){  //manual insertion, will cause bugs if file changes locations around
                         locations[i][j].addPerson(talkingDoor); 
                     } 
                 }
@@ -56,13 +56,14 @@ public class Map {
             System.out.println(e.getMessage());
         }
 
-        // Read in inventory information
+        // Read in location inventory information
         try{
             File file1 = new File(itemsFile + ".txt");
             Scanner itemsInput = new Scanner(file1);
 
-             for(int i = 0; i < rows; i++){
-                for(int j = 0; j<columns; j++){
+            //all locations have an inventory line in the file, even if it is blank
+            for(int i = 0; i < this.rows; i++){
+                for(int j = 0; j< this.columns; j++){
                     String inventory = itemsInput.nextLine();
                     String[] individualItems = inventory.split(",");
                     String[] finalInventory = new String[individualItems.length];
@@ -74,7 +75,6 @@ public class Map {
                     }
                     locations[i][j].setInventory(finalInventory); 
                 }
-                
             } 
             itemsInput.close();
         } catch(FileNotFoundException e){
@@ -86,7 +86,7 @@ public class Map {
             File file2 = new File(npcFile + ".txt");
             Scanner input = new Scanner(file2);
 
-            //read in total number npcs
+            //read in total number of npcs, MUST BE ACCURATE
             int numPpl = Integer.parseInt(input.nextLine()); //might throw exception
 
             for(int i = 0; i<numPpl; i++){
@@ -99,7 +99,6 @@ public class Map {
                     position_x += Integer.parseInt(input.nextLine());
                     position_y += Integer.parseInt(input.nextLine());
                     wantsNum += Integer.parseInt(input.nextLine());
-
                 } catch(NumberFormatException e){
                     System.out.println("Invalid number formatting " + e.getMessage());
                 }
@@ -123,8 +122,6 @@ public class Map {
         } catch(FileNotFoundException e){
             System.out.println(e.getMessage());
         }
-
-
     }
 
     /**
@@ -136,8 +133,8 @@ public class Map {
     public Location findLocation(Player hero){
         int x = hero.getPosition_x();
         int y = hero.getPosition_y();
-        return locations[y][x]; //might throw  arrayIndexOutOfBoundsException 
         //y, x because array is [row][column]
+        return locations[y][x]; //might throw arrayIndexOutOfBoundsException, but incredibly unlikely?
     }
 
     /**
@@ -166,7 +163,7 @@ public class Map {
     public boolean walkEast(Player hero){
         Location square = findLocation(hero);
         if(square.getEast()){
-            hero.walk(0, 1);
+            hero.walk(0, 1); //updates player's internal position
             System.out.println("You have entered the " + findLocation(hero).getName());
             return true;
         } else{
@@ -245,5 +242,4 @@ public class Map {
         System.out.printf(map.toString());
 
     }
-
 }
