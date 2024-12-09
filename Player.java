@@ -395,18 +395,10 @@ public class Player extends NPC{
         Player dorothy = new Player("n/a", "Dorothy", 0, 0, purse);
         dorothy.grabYarn("lace weight");
         dorothy.grabYarn("lace weight");
-        // ArrayList<String> bag = new ArrayList<String>();
-        // bag.add("needles");
-        // bag.add("sock yarn");
-        // bag.add("wool");
-        //NPC smith = new NPC("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour");
-        //smith.barter("wool", "flour", dorothy);
-
         System.out.println();
         dorothy.canKnit();
         dorothy.knitGloves();
         dorothy.showOutfit();
-
     }
     
 }
