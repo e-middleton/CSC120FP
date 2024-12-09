@@ -32,6 +32,7 @@ public class Location {
      */
     public Location(int x, int y, boolean north, boolean east, boolean south, boolean west){
         this.description = null;
+        this.mutableDescription = null;
         this.name = null;
         this.inventory = new ArrayList<String>();
         this.position_x = x;
@@ -48,6 +49,7 @@ public class Location {
     /**
      * Constructor for Location with everything except the inventory of objects, to be read in later
      * @param description  a description of the location
+     * @param mutableDescription the description which is able to change, passed in as an array of Strings
      * @param name the name/id tag of the location
      * @param position_x the x or column index of the Location in the map
      * @param position_y the y or row index of the Location in the map
@@ -73,18 +75,19 @@ public class Location {
         this.containsMoth = containsMoth;
         if(this.containsMoth){
             this.moth = new Moth(); //if a true is passed in, a moth is created in the Location
+        } else{
+            this.moth = null; //no moth
         }
 
-        //automatically makes everybody's position correct for the location they're in.
+        //automatically makes all npc's positions are correct for the location they're in, double check
         for(int i = 0; i < cast.size(); i++){
             cast.get(i).setPosition_x(this.position_x);
             cast.get(i).setPosition_y(this.position_y);
         }
-
     }
 
     /**
-     * Constructor for Location with all the attributes
+     * Constructor for Location with all the attributes except mutableDescription
      * @param description a description of the location
      * @param name the name/id tag of the location
      * @param inventory the arrayList of objects in the location
@@ -99,9 +102,10 @@ public class Location {
      */
     public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
+        this.mutableDescription = null;
         this.name = name;
         this.inventory = inventory;
-        this.position_x = position_x; //getter but no setter. (or is this given by map?)
+        this.position_x = position_x; //getter but no setter. Set when read into map() and initialized
         this.position_y = position_y;
         this.cast = cast;
         this.north = north;
@@ -111,6 +115,8 @@ public class Location {
         this.containsMoth = containsMoth;
         if(this.containsMoth){
             this.moth = new Moth(); //if a true is passed in, a moth is created in the Location
+        } else{
+            this.moth = null; //no moth
         }
 
         //automatically makes everybody's position correct for the location they're in.
@@ -118,7 +124,6 @@ public class Location {
             cast.get(i).setPosition_x(this.position_x);
             cast.get(i).setPosition_y(this.position_y);
         }
-
     }
 
     /**
@@ -131,6 +136,7 @@ public class Location {
 
     /**
      * method to get the value of the possibility of traveling/walking north
+     * called by Map class to check if walking is possible
      * @return t/f it is possible to walk north
      */
     public boolean getNorth(){
@@ -139,6 +145,7 @@ public class Location {
 
     /**
      * method to get the value of the possibility of traveling/walking east
+     * called by Map class
      * @return t/f it is possible to walk east
      */
     public boolean getEast(){
@@ -147,6 +154,7 @@ public class Location {
 
     /**
      * method to get the value of the possibility of traveling/walking north
+     * called by Map class
      * @return t/f it is possible to walk south
      */
     public boolean getSouth(){
@@ -154,6 +162,7 @@ public class Location {
     }
 
     /**
+     * method to change the value of south attribute, 
      * Only called by Play.answerRiddle() to make going into the yarn room possible
      */
     public void setSouth(){
@@ -162,6 +171,7 @@ public class Location {
 
     /**
      * method to get the value of the possibility of traveling/walking west
+     * called by Map class
      * @return t/f it is possible to walk west
      */
     public boolean getWest(){
@@ -181,12 +191,13 @@ public class Location {
     }
 
     /**
-     * getter for description
+     * getter for description of the location
      * @return a string describing the location
      */
     public String getDescription(){
         String result = this.description + "\n";
 
+        //adds the mutable description to the static one
         for(int i = 0; i < this.mutableDescription.size(); i++){
             result += this.mutableDescription.get(i) + " ";
         }
@@ -203,6 +214,8 @@ public class Location {
 
     /**
      * Getter for the inventory of a location. It just prints the objects in the location
+     * used for testing and the toString method
+     * @return the inventory of the Location as a String
      */
     public String getInventory(){
         return this.inventory.toString();
@@ -225,7 +238,9 @@ public class Location {
     }
 
     /**
-     * Method for adding an item to the inventory for a location, no checks done, usually when a npc drops something
+     * Method for adding an item to the inventory for a location, usually when a npc drops something
+     * adds the object to the mutable description to make sure it's visible
+     * before this happens, Play class CHECKS to make sure the player actually has the object they say they're dropping
      * @param s the item being added to a location
      */
     public void addItem(String s){
@@ -238,8 +253,9 @@ public class Location {
      * @param s the String[] (list) of items in the location
      */
     public void setInventory(String[] s){
-        this.inventory.addAll(Arrays.asList(s));  
+        this.inventory.addAll(Arrays.asList(s));  //adding a collection of type String
     }
+
     /**
      * Method for removing an item from the inventory of a Location, 
      * first checking if it was in the location originally.
@@ -248,10 +264,10 @@ public class Location {
     public void removeItem(String s){
         if(this.inventory.contains(s)){
             this.inventory.remove(s);
-            if(!this.inventory.contains(s)){ //only removes the description bit if there are no more of that object
+            if(!this.inventory.contains(s)){ //only removes the description bit if there are NO MORE of that object in the location's inventory (some objects are duplicates)
                 for(int i = 0; i < this.mutableDescription.size(); i++){
-                    if(this.mutableDescription.get(i).contains(s)){
-                        this.mutableDescription.remove(i);
+                    if(this.mutableDescription.get(i).contains(s)){ //if part of the mutable description includes the object being removed,
+                        this.mutableDescription.remove(i); //it is taken out of the description
                     }
                 }
             }
@@ -271,26 +287,27 @@ public class Location {
 
     /**
      * Method for printing out the occupations/names of the characters in a location as a long String.
-     * @return
+     * @return a String with all the NPCs in a given Location
      */
     public String getCast(){
         String names = "The "; //needs to be initialized
         if(this.cast.size() == 1){
             return "the " + this.cast.get(0).getOccupation(); //if there's only one person, their name/occupation is the only thing passed
-        } else if(!this.cast.isEmpty()){
+        } else if(this.cast.size() > 1){ 
             for(int i = 0; (i < this.cast.size() -1); i++){ //for if there are multiple people
                 names += this.cast.get(i).getOccupation();
                 names += ", ";
             }
             names += "and the " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
             return names;
-        } else{
+        } else{ //if this.cast() is empty
             return "There are no people in this location.";
         }
     }
 
     /**
      * Method for adding a person to a location if they were not initialized within it
+     * for when npcs are read in from the .txt file in Map constructor
      * @param npc the npc being added to the location
      */
     public void addPerson(NPC npc){ 
@@ -299,7 +316,7 @@ public class Location {
 
     /**
      * Method for looking around a location, gets the description of (this) location,
-     * and if there are npc's, it gets their occupations as well
+     * and if there are npcs, it gets their occupations/name as well
      */
     public void lookAround(){
         System.out.printf("You see " + getDescription() +"\n");
@@ -311,7 +328,7 @@ public class Location {
     /**
      * Returns a npc based upon their occupation/name by looking through the cast of a given location.
      * @param s the name/occupation of the npc
-     * @return the NPC (type) being looked for
+     * @return the NPC (object) being looked for
      */
     public NPC getPerson(String s){
         int index = 0; //only will get passed if the bool is changed
