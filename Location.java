@@ -126,6 +126,17 @@ public class Location {
         }
     }
 
+    //      GETTERS
+    // ****************
+
+    /**
+     * Getter for the name of the location, used like an ID tag
+     * @return the name of the location
+     */
+    public String getName(){
+        return this.name;
+    }
+
     /**
      * getter for the containsMoth attribute
      * @return true/false this location has a moth
@@ -162,14 +173,6 @@ public class Location {
     }
 
     /**
-     * method to change the value of south attribute, 
-     * Only called by Play.answerRiddle() to make going into the yarn room possible
-     */
-    public void setSouth(){
-        this.south = true;
-    }
-
-    /**
      * method to get the value of the possibility of traveling/walking west
      * called by Map class
      * @return t/f it is possible to walk west
@@ -191,6 +194,22 @@ public class Location {
     }
 
     /**
+     * Getter for the x coordinate of the position, cannot be changed
+     * @return the x coordinate of the location's position
+     */
+    public int getPosition_x(){
+        return this.position_x;
+    }
+
+    /**
+     * Getter for the y-coordinate of the location's position. cannot be changed.
+     * @return y-coordinate of the location's position.
+     */
+    public int getPosition_y(){
+        return this.position_y;
+    }
+
+    /**
      * getter for description of the location
      * @return a string describing the location
      */
@@ -205,12 +224,25 @@ public class Location {
     }
 
     /**
-     * Getter for the name of the location, used like an ID tag
-     * @return the name of the location
+     * Method for printing out the occupations/names of the characters in a location as a long String.
+     * @return a String with all the NPCs in a given Location
      */
-    public String getName(){
-        return this.name;
+    public String getCast(){
+        String names = "The "; //needs to be initialized
+        if(this.cast.size() == 1){
+            return "the " + this.cast.get(0).getOccupation(); //if there's only one person, their name/occupation is the only thing passed
+        } else if(this.cast.size() > 1){ 
+            for(int i = 0; (i < this.cast.size() -1); i++){ //for if there are multiple people
+                names += this.cast.get(i).getOccupation();
+                names += ", ";
+            }
+            names += "and the " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
+            return names;
+        } else{ //if this.cast() is empty
+            return "There are no people in this location.";
+        }
     }
+
 
     /**
      * Getter for the inventory of a location. It just prints the objects in the location
@@ -222,19 +254,45 @@ public class Location {
     }
 
     /**
-     * Getter for the x coordinate of the position, cannot be changed
-     * @return the x coordinate of the location's position
+     * Method for checking if a given item is in the inventory of a location
+     * @param s the object being checked for
+     * @return true/false the object is in the Location
      */
-    public int getPosition_x(){
-        return this.position_x;
+    public boolean containsItem(String s){
+        return this.inventory.contains(s);
     }
 
     /**
-     * Getter for the y-coordinate of the location's position. cannot be changed.
-     * @return y-coordinate of the location's position.
+     * Returns a npc based upon their occupation/name by looking through the cast of a given location.
+     * @param s the name/occupation of the npc
+     * @return the NPC (object) being looked for
      */
-    public int getPosition_y(){
-        return this.position_y;
+    public NPC getPerson(String s){
+        int index = 0; //only will get passed if the bool is changed
+        boolean check = false;
+        for(int i = 0; i < this.cast.size(); i++){ //if anybody in the cast has an occupation matching the name given, the index is saved
+            if(cast.get(i).getOccupation().equals(s)){
+                index = i;
+                check = true;
+            }
+        }
+        if(check){
+            return cast.get(index); //index of the person matching the occupation, then that index in the cast is passed
+        } else{
+            throw new MissingNPCException();
+        }
+    }
+
+
+    //          SETTERS
+    //*************************** 
+
+    /**
+     * method to change the value of south attribute, 
+     * Only called by Play.answerRiddle() to make going into the yarn room possible
+     */
+    public void setSouth(){
+        this.south = true;
     }
 
     /**
@@ -276,34 +334,7 @@ public class Location {
         }
     }
 
-    /**
-     * Method for checking if a given item is in the inventory of a location
-     * @param s the object being checked for
-     * @return true/false the object is in the Location
-     */
-    public boolean containsItem(String s){
-        return this.inventory.contains(s);
-    }
 
-    /**
-     * Method for printing out the occupations/names of the characters in a location as a long String.
-     * @return a String with all the NPCs in a given Location
-     */
-    public String getCast(){
-        String names = "The "; //needs to be initialized
-        if(this.cast.size() == 1){
-            return "the " + this.cast.get(0).getOccupation(); //if there's only one person, their name/occupation is the only thing passed
-        } else if(this.cast.size() > 1){ 
-            for(int i = 0; (i < this.cast.size() -1); i++){ //for if there are multiple people
-                names += this.cast.get(i).getOccupation();
-                names += ", ";
-            }
-            names += "and the " + this.cast.get(this.cast.size() - 1).getOccupation(); //returns the name of the last npc in the array list, final index
-            return names;
-        } else{ //if this.cast() is empty
-            return "There are no people in this location.";
-        }
-    }
 
     /**
      * Method for adding a person to a location if they were not initialized within it
@@ -313,6 +344,13 @@ public class Location {
     public void addPerson(NPC npc){ 
         this.cast.add(npc);
     }
+
+
+
+    //      METHODS
+    //********************
+
+
 
     /**
      * Method for looking around a location, gets the description of (this) location,
@@ -325,26 +363,6 @@ public class Location {
         }
     }
 
-    /**
-     * Returns a npc based upon their occupation/name by looking through the cast of a given location.
-     * @param s the name/occupation of the npc
-     * @return the NPC (object) being looked for
-     */
-    public NPC getPerson(String s){
-        int index = 0; //only will get passed if the bool is changed
-        boolean check = false;
-        for(int i = 0; i < this.cast.size(); i++){ //if anybody in the cast has an occupation matching the name given, the index is saved
-            if(cast.get(i).getOccupation().equals(s)){
-                index = i;
-                check = true;
-            }
-        }
-        if(check){
-            return cast.get(index); //index of the person matching the occupation, then that index in the cast is passed
-        } else{
-            throw new MissingNPCException();
-        }
-    }
 
     /**
      * A method for getting a description of a NPC based on their occupation given that they are in the cast of a location
