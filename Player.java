@@ -55,8 +55,6 @@ public class Player extends NPC{
         this.workbag.put("dk weight", 0);
         this.workbag.put("worsted weight", 0);
         this.workbag.put("bulky weight", 0);
-
-
     }
 
     /**
@@ -154,7 +152,6 @@ public class Player extends NPC{
         if(this.outfit.get("socks")){
             System.out.println("+socks");
         }
-        
     }
 
     
@@ -199,9 +196,9 @@ public class Player extends NPC{
             if(checkInventory(s) && s.contains("yarn")){
                 dropYarn(s);  //removes the yarn from the workbag hashtable
             }
-            super.drop(s);
+            super.drop(s); //object is removed from the inventory
             System.out.println(s + " has been removed from your inventory.");
-        }catch(RuntimeException e){
+        } catch(RuntimeException e){
             System.out.println(e.getMessage());
         }
     }
@@ -214,26 +211,18 @@ public class Player extends NPC{
      */
     private void grabYarn(String s){
         String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
-        if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 2)); //increments the value by two for a pair of socks/gloves
-                System.out.println(s + " is now in your inventory.");
-            } 
-        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 7)); //increments the value by seven for pants
-                System.out.println(s + " is now in your inventory.");
-            } 
-        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by seven for pants
-                System.out.println(s + " is now in your inventory.");
-            } 
-        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 5)); //increments the value by five for a sweater
-                System.out.println(s + " is now in your inventory.");
-            } 
+        if(yarnWeight.equals("lace weight")){ 
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 2)); //increments the value by two for a pair of socks/gloves
+            System.out.println(s + " is now in your inventory.");
+        } else if(yarnWeight.equals("worsted weight")){
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 7)); //increments the value by seven for pants
+            System.out.println(s + " is now in your inventory.");
+        } else if(yarnWeight.equals("dk weight")){ //increments by one for hat
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 1)); //increments the value by seven for pants
+            System.out.println(s + " is now in your inventory.");
+        } else if(yarnWeight.equals("bulky weight")){
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) + 5)); //increments the value by five for a sweater
+            System.out.println(s + " is now in your inventory.");
         } else{
             throw new RuntimeException("this is not a type of yarn that you know. It cannot be added to your inventory.");
         }
@@ -245,22 +234,14 @@ public class Player extends NPC{
      */
     private void dropYarn(String s){
         String yarnWeight = s.substring(0, s.lastIndexOf("yarn")) + "weight";
-        if(s.substring(0, s.lastIndexOf("yarn")).equals("lace ")){
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) -2)); //increments the value by two for a pair of socks/gloves
-            } 
-        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("worsted ")){
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 7)); //increments the value by seven for pants
-            } 
-        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("dk ")){ //increments by one for hat
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 1)); //increments the value by seven for pants
-            } 
-        } else if(s.substring(0, s.lastIndexOf("yarn")).equals("bulky ")){
-            if(this.workbag.containsKey(yarnWeight)){
-                this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 5)); //increments the value by five for a sweater
-            } 
+        if(yarnWeight.equals("lace weight")){
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) -2)); //decrements the value by two for a pair of socks/gloves
+        } else if(yarnWeight.equals("worsted weight")){
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 7)); //decrements the value by seven for pants
+        } else if(yarnWeight.equals("dk weight")){ //decrements by one for hat
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 1)); //decrements the value by seven for pants
+        } else if(yarnWeight.equals("bulky weight")){
+            this.workbag.replace(yarnWeight, ((this.workbag.get(yarnWeight)) - 5)); //decrements the value by five for a sweater
         } else{
             throw new RuntimeException("this is not a type of yarn that you know. It cannot be dropped from your inventory.");
         }
@@ -282,7 +263,6 @@ public class Player extends NPC{
         if(this.workbag.get("bulky weight") >= 5){
             System.out.println("You can knit a sweater. You have " + this.workbag.get("bulky weight") + " ball(s) of bulky weight yarn.");
         }
-        //good lord clean this up
         if((this.workbag.get("lace weight") < 2) && (this.workbag.get("dk weight") < 1) && (this.workbag.get("worsted weight") < 7) && (this.workbag.get("bulky weight") < 5)){
             System.out.println("There is nothing you can currently knit. Your workbag currently contains " + this.workbag.toString() + " ball(s) of yarn.");
         }
@@ -295,9 +275,8 @@ public class Player extends NPC{
         if(this.workbag.get("lace weight") >= 2){
             this.workbag.replace("lace weight", (workbag.get("lace weight") - 2)); //decrememnt number of balls of yarn by 2
             this.outfit.replace("socks", true);
-            drop("lace yarn");
+            this.inventory.remove("lace yarn"); //removes it from inventory, DO NOT CALL DROP(), IT WILL REMOVE EXTRA FROM WORKBAG
             System.out.println("A pair of socks has been added to your outfit!");
-            
         } else{
             throw new MissingMaterialException();
         }
@@ -310,7 +289,7 @@ public class Player extends NPC{
         if(this.workbag.get("dk weight")>= 1){
             this.workbag.replace("dk weight", this.workbag.get("dk weight") - 1); //decrement by 1 for hat
             this.outfit.replace("hat", true);
-            drop("dk yarn");
+            this.inventory.remove("dk yarn");
             System.out.println("A hat has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
@@ -324,7 +303,7 @@ public class Player extends NPC{
         if(this.workbag.get("lace weight")>=2){
             this.workbag.replace("lace weight", this.workbag.get("lace weight") - 2); //decrement by 2 for gloves
             this.outfit.replace("gloves", true);
-            drop("lace yarn");
+            this.inventory.remove("lace yarn");
             System.out.println("A pair of gloves has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
@@ -338,7 +317,7 @@ public class Player extends NPC{
         if(this.workbag.get("bulky weight") >= 5){
             this.workbag.replace("bulky weight", this.workbag.get("bulky weight") - 5); //decrement by 5
             this.outfit.replace("sweater", true);
-            drop("bulky yarn");
+            this.inventory.remove("bulky yarn");
             System.out.println("A sweater has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
@@ -352,7 +331,7 @@ public class Player extends NPC{
         if(this.workbag.get("worsted weight") >= 7){
             this.workbag.replace("worsted weight", this.workbag.get("worsted weight") - 7);
             this.outfit.replace("pants", true);
-            drop("worsted yarn");
+            this.inventory.remove("worsted yarn");
             System.out.println("A pair of pants has been added to your outfit!");
         } else{
             throw new MissingMaterialException();
