@@ -17,7 +17,7 @@ public class Moth{
      */
     public void eat(Player a){
         if(a.hasYarn()){
-            String yarn = a.eatYarn();
+            String yarn = a.eatYarn(); //returns type of yarn eaten 
             System.out.print("All of your " + yarn + " has been eaten by a moth!\n");
             if(yarn.equals("bulky weight yarn")){
                 System.out.println("There is no more bulky yarn in this universe... you're doomed. Please restart. :(");
@@ -26,5 +26,4 @@ public class Moth{
             }
         }
     }
-
 }
