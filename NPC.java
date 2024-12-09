@@ -214,19 +214,19 @@ public class NPC{
      * @param player currently another npc, but eventually is going to be the player, the person asking for something.
      */
     public void barter(String trade, String payment, NPC player){ 
-        if(this.wants.equals(payment)){
+        if(this.wants.equals(payment)){ //trading won't happen if NPC doesn't want what is offered
             if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
                 try{
-                    if(takePayment(player, payment)){ //ensure that full payment occurs
+                    if(takePayment(player, payment)){ //ensure that full payment occurs t/f
                         drop(trade); //the npc drops the item they're giving away
                         player.grab(trade); //player grabs item they want
                         System.out.println("A successful trade of " + payment +"(s) for " + trade + "!");
                     }
-                } catch(RuntimeException e){
+                } catch(RuntimeException e){ //Exception thrown by player in drop(payment) when there is not any left
                     System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
                 }
             } else{
-                throw new RuntimeException("Those items cannot be bartered, one or both is not in the inventory.");
+                throw new MissingMaterialException(); //either the npc doesn't have the trade the player wants, or the player doesn't have the payment they say they do
             }
         } else{
             System.out.println("The " + this.occupation + " does not want " + payment + " please choose another thing to trade");
@@ -242,16 +242,16 @@ public class NPC{
      * @return t/f if the payment has been completed
      */
     private boolean takePayment(NPC player, String payment){ //never going to be called from outside of the npc themselves
-        while(this.wantsNum > this.hasNum){ //while they want more than they have 
-            player.drop(payment); //player drops the payment and it is taken by the npc
-            grab(payment); //grabs payment
+        while(this.wantsNum > this.hasNum){ //while the NPC wants more than they have 
+            player.drop(payment); //player drops the payment and it is taken by the npc, THROWS EXCEPTION IF SUFFICIENT PAYMENT IS NOT IN INVENTORY
+            grab(payment); //npc grabs payment
             this.hasNum += 1;
         }
         if(this.wantsNum == this.hasNum){ //has the payment in full been given
             this.hasNum = 0; //resets to zero because trade has been completed
             return true;
         } else{
-            return false;
+            return false; //not going to happen, exception is thrown instead by player in drop(payment) if insufficient payment occurs
         }
     }
 
