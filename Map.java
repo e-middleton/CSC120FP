@@ -18,6 +18,9 @@ public class Map {
      * reads in location info from the same text file, and reads in the npcs from a .txt file
      * reads in inventories from a text file as well
      * FILES MUST BE FORMATTED CORRECTLY
+     * @param locationFile information about the locations in the map and the map's dimensions
+     * @param npcFile information about npcs and their inventories
+     * @param itemsFile inventories for locations
      */
     public Map(String locationFile, String npcFile, String itemsFile){
         try{
@@ -217,6 +220,7 @@ public class Map {
 
     /**
      * Method for getting a description of the map, prints out the locations and their indices 
+     * @return a String description of all relevant information for the Map
      */
     public String toString(){
         String description = ""; 
