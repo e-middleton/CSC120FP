@@ -15,7 +15,6 @@ check outfit
 grab [item]
 drop [item]
 
-
 # SPOILER ALERT
 
 If your game includes challenges that must be overcome to win, also list them below.
@@ -39,6 +38,6 @@ A map .png is in the repo, but a brief overview of the map is below:
 [2][2]: road
 [2][3]: ore room
 [3][0]: river
-[3][1]: field
+[3][1]: field (HAS MOTH)
 [3][2]: forest
 [3][3]: mushroom circle
