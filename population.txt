@@ -1,6 +1,10 @@
 6
 door
 A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure
+The door's rusty eyes peel themselves open,%nHis voice is mechanical as he informs you that,%nshould you wish to cross his threshold, you must correctly anwer his riddle.%nWould you like to hear his riddle? (yes/no)%n
+I'm almost a String%nbut that isn't quite right%nfor how could a String%nkeep you warm in the night?%nI'm hard here to find,%nstill harder to use%nHere's a hint,%nI make up socks%ninside of your shoes.%nWhat am I?%n
+south
+yarn
 3
 1
 merchant
