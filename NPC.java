@@ -262,6 +262,17 @@ public class NPC{
         }
     }
 
+    /**
+     * stub method so that the door can pose their riddle, 
+     * unsure why this is necessary
+     */
+    public void riddle(){
+    }
+
+
+    public boolean unlockDoor(String response, Location location){
+        return false;
+    }
 
     /**
      * Main method in NPC, used for testing
@@ -288,8 +299,6 @@ public class NPC{
 
         baker.barter("nails", "gold", smith);
         smith.checkInventory();
-    
-        
     }
     
 
