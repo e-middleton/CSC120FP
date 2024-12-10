@@ -90,8 +90,8 @@ public class Map {
             int numPpl = Integer.parseInt(input.nextLine()); //might throw exception
 
             for(int i = 0; i<numPpl; i++){
-                String description = input.nextLine();
                 String occupation = input.nextLine();
+                String description = input.nextLine();
                 int position_x = 0; //initialized outside of try-catch
                 int position_y = 0;
                 int wantsNum = 0;
