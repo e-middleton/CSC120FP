@@ -240,25 +240,34 @@ public class Play {
                 character.barter("", "", hero);
                 return;
             }
-            while(!success){
+
+            while(!success){ //until you enter a valid item
+                System.out.println("If " + character.getOccupation() + " doesn't have anything you want, type STOP");
                 System.out.println("The " + character.getOccupation() + " has " + character.getInventory()); //the bartering options
                 System.out.println("What would you like to barter for? "); //which object does the player want?
-                String[] trade = sliceAndDice(input.nextLine());
-               
-                for(int i = 0; i<trade.length; i++){ //fixes issue of barter __ for worsted yarn (two words)
+                String response = input.nextLine();
+                if(punctuationRemoval(response).toLowerCase().equals("stop")){ //break out of method
+                    System.out.println("Exiting bartering... please enter next command:");
+                    return;
+                }
+                String[] trade = sliceAndDice(response); //item the player wants
+                
+                for(int i = 0; i<trade.length; i++){ //fixes issue of item being [type] yarn (two words)
                     if(trade[i].equals("yarn")){
                         commodity = trade[i-1] + " " + trade[i];
                     } else{
                         commodity = trade[0];
                     }
                 }
-                if(character.checkInventory(commodity)){        //does the npc have the item?
+                if(character.checkInventory(commodity)){   //does the npc have the item?
                     success = true; //break from loop
                 } else {
                     System.out.println("I'm sorry, the " + character.getOccupation() + " does not have " + commodity);
+                    System.out.println();
                 }
             }
             
+            //gets the player's payment
             System.out.println("Remember, they want (" + (character.getWantsNum() - character.getHasNum()) + ") " + character.getWant());
             System.out.println("What is your payment? ");
             String payment = punctuationRemoval(input.nextLine()).toLowerCase();
