@@ -37,7 +37,7 @@ public class TalkingDoor extends NPC{
         System.out.printf(this.introduction); //print formatted because of how it was written into file
     }
 
-    @Override
+    //@Override
     /**
      * method for posing a riddle
      * prints out the doors specific riddle
@@ -46,7 +46,7 @@ public class TalkingDoor extends NPC{
         System.out.printf(this.riddle);
     }
 
-    @Override
+    //@Override
     /**
      * if the user guesses correctly, the locked path is unlocked and they may continue
      * if they guess incorrectly, the path remains locked
