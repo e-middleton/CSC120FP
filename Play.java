@@ -541,7 +541,7 @@ public class Play {
         }
 
         if(hero.hasWon()){
-            System.out.println("Congratulations, you've survived winter! Nice and cozy!");
+            System.out.println("\n!!!Congratulations!!!\nYou've survived winter! Nice and cozy!");
         } else{
             System.out.println("You're freezing and cold. You haven't knit your outfit. You did not survive! :(");
         }
