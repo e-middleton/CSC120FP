@@ -1,4 +1,8 @@
-5
+6
+door
+A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure
+3
+1
 merchant
 A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity 
 1

@@ -21,7 +21,7 @@ public class Map {
      */
     public Map(String locationFile, String npcFile, String itemsFile){
         //must be entered manually, no file has formatting appropriate for this class
-        TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
+        //TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
     
         try{
             File file = new File(locationFile + ".txt");
@@ -46,9 +46,9 @@ public class Map {
                     boolean w = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean moth = Boolean.parseBoolean(locationInfo.nextLine());
                     locations[i][j] = new Location(description, mutableDescription, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth);
-                    if(name.equals("mine")){  //manual insertion, will cause bugs if file changes locations around
-                        locations[i][j].addPerson(talkingDoor); 
-                    } 
+                    // if(name.equals("mine")){  //manual insertion, will cause bugs if file changes locations around
+                    //     locations[i][j].addPerson(talkingDoor); 
+                    // } 
                 }
             }
             locationInfo.close();
@@ -91,32 +91,34 @@ public class Map {
 
             for(int i = 0; i<numPpl; i++){
                 String occupation = input.nextLine();
-                String description = input.nextLine();
-                int position_x = 0; //initialized outside of try-catch
-                int position_y = 0;
-                int wantsNum = 0;
-                try{
-                    position_x += Integer.parseInt(input.nextLine());
-                    position_y += Integer.parseInt(input.nextLine());
-                    wantsNum += Integer.parseInt(input.nextLine());
-                } catch(NumberFormatException e){
-                    System.out.println("Invalid number formatting " + e.getMessage());
-                }
-                // GRABS WHOLE INVENTORY as one object, then breaks it up into individual items/words
-                String inventory = input.nextLine();
-                String[] individualItems = inventory.split(",");
-                String[] finalInventory = new String[individualItems.length];
+                if(occupation.equals("door")){ //talkingDoor information
+                    String description = input.nextLine();
+                    int position_x = Integer.parseInt(input.nextLine());
+                    int position_y = Integer.parseInt(input.nextLine());
+                    TalkingDoor door = new TalkingDoor(description, occupation, position_x, position_y);
+                    this.locations[position_y][position_x].addPerson(door);
+                } else {                                 //all other npcs
+                    String description = input.nextLine();
+                    int position_x = Integer.parseInt(input.nextLine());
+                    int position_y = Integer.parseInt(input.nextLine());
+                    int wantsNum = Integer.parseInt(input.nextLine());
 
-                // words are comma separated
-                // Removes commas and whitespace
-                for(int a = 0; a < individualItems.length; a++){
-                    finalInventory[a] = individualItems[a].replace(",", "").stripTrailing().stripLeading();
-                }
+                    // GRABS WHOLE INVENTORY as one object, then breaks it up into individual items/words
+                    String inventory = input.nextLine();
+                    String[] individualItems = inventory.split(",");
+                    String[] finalInventory = new String[individualItems.length];
 
-                ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
-                String want = input.nextLine();
-                NPC npc = new NPC(description, occupation, position_x, position_y, npcInventory, want, wantsNum);
-                this.locations[position_y][position_x].addPerson(npc);
+                    // words are comma separated
+                    // Removes commas and whitespace
+                    for(int a = 0; a < individualItems.length; a++){
+                        finalInventory[a] = individualItems[a].replace(",", "").stripTrailing().stripLeading();
+                    }
+
+                    ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
+                    String want = input.nextLine();
+                    NPC npc = new NPC(description, occupation, position_x, position_y, npcInventory, want, wantsNum);
+                    this.locations[position_y][position_x].addPerson(npc);
+                }
             }
             input.close();
         } catch(FileNotFoundException e){
