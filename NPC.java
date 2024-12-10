@@ -237,7 +237,8 @@ public class NPC{
                    System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
                 }
             } else {
-            System.out.println("The " + this.occupation + " does not want " + payment + " please choose another thing to trade");
+            System.out.println("The " + this.occupation + " does not want " + payment + " please return to barter later with a different payment type.");
+            System.out.println("Ending bartering...");
         } 
     }
 
