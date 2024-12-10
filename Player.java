@@ -184,6 +184,9 @@ public class Player extends NPC{
         if(this.outfit.get("socks")){
             System.out.println("+socks");
         }
+        if(!hasSocks() && !hasHat() && !hasGloves() && !hasPants() && !hasSweater()){
+            System.out.println("NONE");
+        }
     }
 
 
