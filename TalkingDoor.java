@@ -56,7 +56,7 @@ public class TalkingDoor extends NPC{
     public boolean unlockDoor(String response, Location location){
         if(response.equals(this.answer)){ //if the user enters the correct response
             System.out.println("Very well, the door sighs, you may pass.");
-            System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
+            System.out.println("A grinding sound of old gears turning bounces around the rock ceiling");
             System.out.println("The heavy metal door... swings open");
             location.unlockPath(directionProtected); // if directionProtected.equals("south") this.south = true in the location
             return true;
