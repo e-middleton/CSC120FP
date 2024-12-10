@@ -8,8 +8,8 @@ import java.util.Arrays;
 public class NPC{
     protected String description;
     protected String occupation;
-    protected int position_x;
-    protected int position_y;
+    protected int positionX;
+    protected int positionY;
     protected ArrayList<String> inventory; 
     protected String wants; 
     protected int wantsNum;
@@ -19,14 +19,14 @@ public class NPC{
      * Stub constructor with bare minimum information, used for testing
      * @param description a brief description of the npc, called for when the player looksAround()
      * @param occupation the occupation of the NPC
-     * @param position_x the horizontal/row index of their position on the map
-     * @param position_y vertical/column index of their position on the map
+     * @param positionX the horizontal/row index of their position on the map
+     * @param positionY vertical/column index of their position on the map
      */
-    public NPC(String description, String occupation, int position_x, int position_y){
+    public NPC(String description, String occupation, int positionX, int positionY){
         this.description = description;
         this.occupation = occupation;
-        this.position_x = position_x;
-        this.position_y = position_y;
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.inventory = new ArrayList<String>(); //empty
         this.wants = null; //doesn't want anything
     }
@@ -35,18 +35,17 @@ public class NPC{
      * Full constructor for npc with every possible attribute
      * @param description a written description of the NPC and their appearance
      * @param occupation the name/occupation of the NPC, used as an ID
-     * @param position_x the x or column position of the npc
-     * @param position_y the y or row position of the npc
+     * @param positionX the x or column position of the npc
+     * @param positionY the y or row position of the npc
      * @param inventory the arrayList of strings that serves as the NPC's inventory
      * @param wants what the NPC wants to trade for, if wants = gold, the NPC will only trade if given gold
      * @param wantsNum how many of the given object the NPC wants. 
-     * @param hasNum how many of the item they have, used to keep track of payment
      */
-    public NPC(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory, String wants, int wantsNum){
+    public NPC(String description, String occupation, int positionX, int positionY, ArrayList<String> inventory, String wants, int wantsNum){
         this.description = description;
         this.occupation = occupation;
-        this.position_x = position_x;
-        this.position_y = position_y;
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.inventory = inventory;
         this.wants = wants;
         this.wantsNum = wantsNum;
@@ -57,15 +56,15 @@ public class NPC{
      * Constructor for an NPC with everything except the "want" item
      * @param description a brief description of the NPC
      * @param occupation the name/occupation, used as an ID
-     * @param position_x the x or column position in the map
-     * @param position_y the y or row position in the map
+     * @param positionX the x or column position in the map
+     * @param positionY the y or row position in the map
      * @param inventory the arrayList of objects, Strings, the NPC has
      */
-    public NPC(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
+    public NPC(String description, String occupation, int positionX, int positionY, ArrayList<String> inventory){
         this.description = description;
         this.occupation = occupation;
-        this.position_x = position_x;
-        this.position_y = position_y;
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.inventory = inventory;
         this.wants = null;
         this.hasNum = 0;
@@ -95,16 +94,16 @@ public class NPC{
      * getter for the x coordinate of a NPC's position
      * @return index x of their position
      */
-    public int getPosition_x(){
-        return this.position_x;
+    public int getPositionX(){
+        return this.positionX;
     }
 
     /**
      * getter for the y coordinate of a NPC's position
      * @return index y of their position
      */
-    public int getPosition_y(){
-        return this.position_y;
+    public int getPositionY(){
+        return this.positionY;
     }
 
 
@@ -130,7 +129,7 @@ public class NPC{
      * @return t/f they are in the same location
      */
     public boolean positionMatch(NPC c){
-        if ((this.position_x == c.getPosition_x()) && (this.position_y == c.getPosition_y())){
+        if ((this.positionX == c.getPositionX()) && (this.positionY == c.getPositionY())){
             return true;
         } else{
             return false; //other methods will throw exception
@@ -145,8 +144,8 @@ public class NPC{
      * called by location class during construction just to ensure continuity
      * @param x the x or column position of the NPC
      */
-    public void setPosition_x(int x){
-        this.position_x = x;
+    public void setPositionX(int x){
+        this.positionX = x;
     }
 
     /**
@@ -154,8 +153,8 @@ public class NPC{
      * called by Location constructors to make sure everything matches
      * @param y the y or row position of the NPC
      */
-    public void setPosition_y(int y){
-        this.position_y = y;
+    public void setPositionY(int y){
+        this.positionY = y;
     }
 
     //      METHODS
@@ -190,11 +189,7 @@ public class NPC{
      * @return true or false if the inventory contains the object
      */
     public boolean checkInventory(String s){
-        if(this.inventory.contains(s)){
-            return true;
-        } else{
-            return false;
-        }
+        return this.inventory.contains(s);
     }
 
 
