@@ -64,7 +64,7 @@ true
 true
 false
 
-an old mine, dark and empty, but you can see something glinting just beyond the entrance, and... is that door alive?
+an old mine, dark and empty, but you can see something glinting just beyond the entrance, and a heavy, ornate door to the south. %nIs that door...alive?
 
 mine
 true
