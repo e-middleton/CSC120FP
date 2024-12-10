@@ -20,9 +20,6 @@ public class Map {
      * FILES MUST BE FORMATTED CORRECTLY
      */
     public Map(String locationFile, String npcFile, String itemsFile){
-        //must be entered manually, no file has formatting appropriate for this class
-        //TalkingDoor talkingDoor = new TalkingDoor("A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure.", "door", 3, 1);
-    
         try{
             File file = new File(locationFile + ".txt");
             Scanner locationInfo = new Scanner(file);
@@ -45,10 +42,7 @@ public class Map {
                     boolean s = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean w = Boolean.parseBoolean(locationInfo.nextLine());
                     boolean moth = Boolean.parseBoolean(locationInfo.nextLine());
-                    locations[i][j] = new Location(description, mutableDescription, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth);
-                    // if(name.equals("mine")){  //manual insertion, will cause bugs if file changes locations around
-                    //     locations[i][j].addPerson(talkingDoor); 
-                    // } 
+                    locations[i][j] = new Location(description, mutableDescription, name, j, i, new ArrayList<NPC>(), n, e, s, w, moth); 
                 }
             }
             locationInfo.close();
@@ -93,9 +87,13 @@ public class Map {
                 String occupation = input.nextLine();
                 if(occupation.equals("door")){ //talkingDoor information
                     String description = input.nextLine();
+                    String intro = input.nextLine();
+                    String riddle = input.nextLine();
+                    String direction = input.nextLine();
+                    String answer = input.nextLine();
                     int position_x = Integer.parseInt(input.nextLine());
                     int position_y = Integer.parseInt(input.nextLine());
-                    TalkingDoor door = new TalkingDoor(description, occupation, position_x, position_y);
+                    TalkingDoor door = new TalkingDoor(description, occupation, intro, riddle, direction, answer, position_x, position_y);
                     this.locations[position_y][position_x].addPerson(door);
                 } else {                                 //all other npcs
                     String description = input.nextLine();
