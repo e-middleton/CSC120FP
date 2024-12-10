@@ -11,8 +11,8 @@ public class Location {
     private ArrayList<String> mutableDescription;
     private String name;
     private ArrayList<String> inventory;
-    private int position_x;
-    private int position_y;
+    private int positionX;
+    private int positionY;
     private ArrayList<NPC> cast;
     private boolean north;
     private boolean east;
@@ -35,8 +35,8 @@ public class Location {
         this.mutableDescription = null;
         this.name = null;
         this.inventory = new ArrayList<String>();
-        this.position_x = x;
-        this.position_y = y;
+        this.positionX = x;
+        this.positionY = y;
         this.cast = new ArrayList<NPC>();
         this.north = north;
         this.east = east;
@@ -51,8 +51,8 @@ public class Location {
      * @param description  a description of the location
      * @param mutableDescription the description which is able to change, passed in as an array of Strings
      * @param name the name/id tag of the location
-     * @param position_x the x or column index of the Location in the map
-     * @param position_y the y or row index of the Location in the map
+     * @param positionX the x or column index of the Location in the map
+     * @param positionY the y or row index of the Location in the map
      * @param cast the arrayList of NPCs in the Location
      * @param north t/f it is possible to go north from this location
      * @param east t/f it is possible to walk east
@@ -60,12 +60,12 @@ public class Location {
      * @param west t/f it is possible to walk west
      * @param containsMoth t/f there is a moth in this location
      */
-    public Location(String description, String[] mutableDescription, String name, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
+    public Location(String description, String[] mutableDescription, String name, int positionX, int positionY, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
         this.mutableDescription = new ArrayList<String>(Arrays.asList(mutableDescription));
         this.name = name;
-        this.position_x = position_x; //getter but no setter. (or is this given by map?)
-        this.position_y = position_y;
+        this.positionX = positionX; //getter but no setter. (or is this given by map?)
+        this.positionY = positionY;
         this.inventory = new ArrayList<String>();
         this.cast = cast;
         this.north = north;
@@ -81,8 +81,8 @@ public class Location {
 
         //automatically makes all npc's positions are correct for the location they're in, double check
         for(int i = 0; i < cast.size(); i++){
-            cast.get(i).setPosition_x(this.position_x);
-            cast.get(i).setPosition_y(this.position_y);
+            cast.get(i).setPositionX(this.positionX);
+            cast.get(i).setPositionY(this.positionY);
         }
     }
 
@@ -91,8 +91,8 @@ public class Location {
      * @param description a description of the location
      * @param name the name/id tag of the location
      * @param inventory the arrayList of objects in the location
-     * @param position_x the x or column index of the Location in the map
-     * @param position_y the y or row index of the Location in the map
+     * @param positionX the x or column index of the Location in the map
+     * @param positionY the y or row index of the Location in the map
      * @param cast the arrayList of Characters in the Location
      * @param north t/f it is possible to go north from this location
      * @param east t/f it is possible to walk east
@@ -100,13 +100,13 @@ public class Location {
      * @param west t/f it is possible to walk west
      * @param containsMoth t/f there is a moth in this Location
      */
-    public Location(String description, String name, ArrayList<String> inventory, int position_x, int position_y, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
+    public Location(String description, String name, ArrayList<String> inventory, int positionX, int positionY, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
         this.mutableDescription = null;
         this.name = name;
         this.inventory = inventory;
-        this.position_x = position_x; //getter but no setter. Set when read into map() and initialized
-        this.position_y = position_y;
+        this.positionX = positionX; //getter but no setter. Set when read into map() and initialized
+        this.positionY = positionY;
         this.cast = cast;
         this.north = north;
         this.east = east;
@@ -121,8 +121,8 @@ public class Location {
 
         //automatically makes everybody's position correct for the location they're in.
         for(int i = 0; i < cast.size(); i++){
-            cast.get(i).setPosition_x(this.position_x);
-            cast.get(i).setPosition_y(this.position_y);
+            cast.get(i).setPositionX(this.positionX);
+            cast.get(i).setPositionY(this.positionY);
         }
     }
 
@@ -197,16 +197,16 @@ public class Location {
      * Getter for the x coordinate of the position, cannot be changed
      * @return the x coordinate of the location's position
      */
-    public int getPosition_x(){
-        return this.position_x;
+    public int getPositionX(){
+        return this.positionX;
     }
 
     /**
      * Getter for the y-coordinate of the location's position. cannot be changed.
      * @return y-coordinate of the location's position.
      */
-    public int getPosition_y(){
-        return this.position_y;
+    public int getPositionY(){
+        return this.positionY;
     }
 
     /**
