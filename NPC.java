@@ -129,11 +129,19 @@ public class NPC{
      * @return t/f they are in the same location
      */
     public boolean positionMatch(NPC c){
-        if ((this.positionX == c.getPositionX()) && (this.positionY == c.getPositionY())){
-            return true;
-        } else{
-            return false; //other methods will throw exception
-        }
+        return ((this.positionX == c.getPositionX()) && (this.positionY == c.getPositionY()));
+    }
+
+    public String getWant(){
+        return this.wants;
+    }
+
+    public int getWantsNum(){
+        return this.wantsNum;
+    }
+
+    public int getHasNum(){
+        return this.hasNum;
     }
 
     //      SETTERS
@@ -217,20 +225,18 @@ public class NPC{
      */
     public void barter(String trade, String payment, NPC player){ 
         if(this.wants.equals(payment)){ //trading won't happen if NPC doesn't want what is offered
-            if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
+            //if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
                 try{
                     if(takePayment(player, payment)){ //ensure that full payment occurs t/f
                         drop(trade); //the npc drops the item they're giving away
                         player.grab(trade); //player grabs item they want
-                        System.out.println("A successful trade of " + payment +"(s) for " + trade + "!");
+                    } else{
+                        throw new MissingMaterialException(); //either the npc doesn't have the trade the player wants, or the player doesn't have the payment they say they do
                     }
                 } catch(RuntimeException e){ //Exception thrown by player in drop(payment) when there is not any left
-                    System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
+                   System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
                 }
-            } else{
-                throw new MissingMaterialException(); //either the npc doesn't have the trade the player wants, or the player doesn't have the payment they say they do
-            }
-        } else{
+            } else {
             System.out.println("The " + this.occupation + " does not want " + payment + " please choose another thing to trade");
         } 
     }
