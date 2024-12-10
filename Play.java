@@ -173,19 +173,20 @@ public class Play {
     
             door.intro(hero);
             String response = input.nextLine();
-            if(response.toLowerCase().equals("yes")){
+            String cleanResponse = punctuationRemoval(response).toLowerCase(); //scrub out punctuation, whitespace, etc.
+            if(cleanResponse.equals("yes")){
                 System.out.println();
                 door.riddle();
                 response = input.nextLine();
-                String response2 = punctuationRemoval(response).toLowerCase();
-                if(door.unlockDoor(response2, map.findLocation(hero))){
+                String CleanResponse2 = punctuationRemoval(response).toLowerCase();
+                if(door.unlockDoor(CleanResponse2, map.findLocation(hero))){
                    return;
                 } else{
                     System.out.println("I'm sorry, that is incorrect. You have one guess remaining."); //one more chance
                     System.out.println("What am I?");
                     response = input.nextLine();
-                    String response3 = punctuationRemoval(response).toLowerCase();
-                    if(door.unlockDoor(response3, map.findLocation(hero))){ 
+                    String CleanResponse3 = punctuationRemoval(response).toLowerCase();
+                    if(door.unlockDoor(CleanResponse3, map.findLocation(hero))){ 
                        return;
                     } else {
                         System.out.println("I'm sorry, you may not pass.");
@@ -383,8 +384,6 @@ public class Play {
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;
-
-        hero.grab("lace yarn");
     
         System.out.println("Hello, welcome to the game!");
         System.out.println("Would you like to play? Yes to play end to end");
@@ -397,7 +396,10 @@ public class Play {
         while((!((response.toLowerCase()).equals("end"))) && !(hero.hasWon())){ 
 
             //seasons + passing time
-            if(counter == 0){
+            if(counter == 0){ //BEGINNING INFORMATION
+                System.out.println("Due to a series of woes, you find yourself tragically unprepared for winter, and in a broken down house.");
+                System.out.println("You must travel around the land to collect yarn to knit yourself an outfit in order to survive the cold to come.");
+                System.out.println("Good luck!\n");
                 System.out.println("You begin in the house. Type HELP for options.");
             } else if(counter == 50){
                 System.out.println();
@@ -545,5 +547,4 @@ public class Play {
         }
         input.close();  
     }
-        
 }
