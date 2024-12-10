@@ -1,6 +1,6 @@
 /**
  * Class for TalkingDoor which is used differently from other NPCs, 
- * Currently, only special ability is to pose riddles instead of barter
+ * Currently, only special ability is to pose riddles and unlock doors
  */
 public class TalkingDoor extends NPC{
     private String introduction;
@@ -12,6 +12,10 @@ public class TalkingDoor extends NPC{
      * Constructor for talking door
      * @param description the description of how the door appears
      * @param occupation name/id
+     * @param intro the intro spiel given by the door when talked to
+     * @param riddle the riddle posed by this specific door, may be changed for other doors
+     * @param directionProtected the path currently locked, will be unlocked if the riddle is guessed
+     * @param answer the correct answer to the riddle
      * @param x x or column position
      * @param y y or row position
      */
@@ -24,22 +28,37 @@ public class TalkingDoor extends NPC{
     }
 
     @Override
+    /**
+     * method for intro spiel given by door when talked to
+     * prints out an introduction and asks if you want to answer the riddle
+     * @param a the necessary parameter from the intro() method in NPC, the player being talked to
+     */
     public void intro(NPC a){
         System.out.printf(this.introduction); //print formatted because of how it was written into file
     }
 
     @Override
-    public void riddle(){ //overrides the super.intro() 
+    /**
+     * method for posing a riddle
+     * prints out the doors specific riddle
+     */
+    public void riddle(){ 
         System.out.printf(this.riddle);
     }
 
     @Override
+    /**
+     * if the user guesses correctly, the locked path is unlocked and they may continue
+     * if they guess incorrectly, the path remains locked
+     * @param response the user's response/guess for the riddle
+     * @param location the location in the map where the door is, and where the protected path needs to be unlocked
+     */
     public boolean unlockDoor(String response, Location location){
         if(response.equals(this.answer)){ //if the user enters the correct response
             System.out.println("Very well, the door sighs, you may pass.");
             System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
             System.out.println("The heavy metal door... swings open");
-            location.unlockPath(directionProtected);
+            location.unlockPath(directionProtected); // if directionProtected.equals("south") this.south = true in the location
             return true;
         } else {
             return false; //the riddle was guessed incorrectly
