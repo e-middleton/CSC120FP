@@ -283,7 +283,6 @@ public class Location {
         }
     }
 
-
     //          SETTERS
     //*************************** 
 
@@ -293,6 +292,24 @@ public class Location {
      */
     public void setSouth(){
         this.south = true;
+    }
+
+    /**
+     * Method for unlocking a path
+     * called by door if a riddle is answered correctly
+     * @param direction the path being unlocked n/e/s/w
+     */
+    public void unlockPath(String direction){
+        if(direction.equals("north")){
+            this.north = true;
+        } else if (direction.equals("east")){
+            this.east = true;
+        } else if (direction.equals("south")){
+            this.south = true;
+        } else if (direction.equals("west")){
+            this.west = true;
+        }
+
     }
 
     /**
