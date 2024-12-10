@@ -19,11 +19,7 @@ public class Play {
      * @return true or false they're in the same location
      */
     public boolean positionMatch(NPC a, NPC b){
-        if (a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY());
     }
 
     /**
@@ -34,11 +30,7 @@ public class Play {
      * @return true or false they're in the same location
      */
     public boolean positionMatch(NPC a, Location b){
-        if (a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY());
     }
 
     /**
@@ -239,28 +231,47 @@ public class Play {
      */
     public void barter(Player hero, String npc, Map map, Scanner input){
         try{
+            boolean success = false;
+            String commodity = "";
+
             map.findLocation(hero).getPerson(npc); //checks for matching location
-            if(map.findLocation(hero).getPerson(npc).getOccupation().equals("door")){ //YOU CANNOT BARTER WITH DOOR
-                map.findLocation(hero).getPerson(npc).barter("", "", hero);
+            NPC character = map.findLocation(hero).getPerson(npc); //the npc being bartered with
+            if(character.getOccupation().equals("door")){ //YOU CANNOT BARTER WITH DOOR
+                character.barter("", "", hero);
                 return;
             }
-            System.out.println("What would you like to barter for? "); //barter __ for __
-            String response = input.nextLine();
-            String[] command = sliceAndDice(response);
-            String trade = null;
-            try{
-                for(int i = 0; i<command.length; i++){ //fixes issue of barter __ for worsted yarn (two words)
-                    if(command[i].equals("yarn")){
-                        trade = command[i-1] + " " + command[i];
+            while(!success){
+                System.out.println("The " + character.getOccupation() + " has " + character.getInventory()); //the bartering options
+                System.out.println("What would you like to barter for? "); //which object does the player want?
+                String[] trade = sliceAndDice(input.nextLine());
+               
+                for(int i = 0; i<trade.length; i++){ //fixes issue of barter __ for worsted yarn (two words)
+                    if(trade[i].equals("yarn")){
+                        commodity = trade[i-1] + " " + trade[i];
                     } else{
-                        trade = command[3];
+                        commodity = trade[0];
                     }
                 }
-                map.findLocation(hero).getPerson(npc).barter(trade, command[1], hero);
-            } catch(IndexOutOfBoundsException b){                          //handles incorrect typing
-                System.out.println("Please enter a valid for of: barter _payment_ for _commodity_");
-            } catch(MissingMaterialException e){                           //if one or more object is missing and the trade is incomplete
-                System.out.println("Those items cannot be bartered, one or both is not in the inventory.");
+                if(character.checkInventory(commodity)){        //does the npc have the item?
+                    success = true; //break from loop
+                } else {
+                    System.out.println("I'm sorry, the " + character.getOccupation() + " does not have " + commodity);
+                }
+            }
+            
+            System.out.println("Remember, they want (" + (character.getWantsNum() - character.getHasNum()) + ") " + character.getWant());
+            System.out.println("What is your payment? ");
+            String payment = punctuationRemoval(input.nextLine()).toLowerCase();
+            if(hero.checkInventory(payment)){
+                try{
+                    character.barter(commodity, payment, hero);
+                } catch (RuntimeException e){
+                    System.out.println(e.getMessage()); //the npc doesn't want that item or player doesn't have enough
+                }
+            } else {
+                System.out.println("You do not appear to have " + payment + " in your inventory.");
+                System.out.println("Please obtain this item and come back to barter after!");
+                return;
             }
         } catch(MissingNPCException b){ //if the person is in the wrong location
             System.out.println("You are not in the same location as " + npc);
@@ -393,10 +404,10 @@ public class Play {
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;
     
-        System.out.println("Hello, welcome to the game!");
-        System.out.println("Would you like to play? Yes to play end to end");
-        String response = input.nextLine();
+        hero.grab("shell");
 
+        System.out.println("Hello, welcome to the game! \nWould you like to play? Yes to play end to end");
+        String response = input.nextLine();
 
         //main play loop, it currently ends when the player says end.
         //also checks to see if the win condition has been met
@@ -474,6 +485,7 @@ public class Play {
                             map.findLocation(hero).addItem(thing); //it is added to the location's inventory and description
                         }
                         hero.drop(thing); //removed from player's inventory
+                        System.out.println(thing + " has been removed from your inventory.");
                     } catch(IndexOutOfBoundsException e){                   //incorrect typing
                         System.out.println("Please enter in the form: drop _item_");
                     } catch(RuntimeException e){                            //not an item they actually have
@@ -524,8 +536,6 @@ public class Play {
                             }
                         } else { 
                             System.out.println("Please enter valid form: Barter with _person_");
-                            System.out.println("Followed by: ");
-                            System.out.println("Barter _payment_ for _commodity_");
                         }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in a valid form: barter with _person_");
