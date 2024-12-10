@@ -91,14 +91,14 @@ public class Map {
                     String riddle = input.nextLine();
                     String direction = input.nextLine();
                     String answer = input.nextLine();
-                    int position_x = Integer.parseInt(input.nextLine());
-                    int position_y = Integer.parseInt(input.nextLine());
-                    TalkingDoor door = new TalkingDoor(description, occupation, intro, riddle, direction, answer, position_x, position_y);
-                    this.locations[position_y][position_x].addPerson(door);
+                    int positionX = Integer.parseInt(input.nextLine());
+                    int positionY = Integer.parseInt(input.nextLine());
+                    TalkingDoor door = new TalkingDoor(description, occupation, intro, riddle, direction, answer, positionX, positionY);
+                    this.locations[positionY][positionX].addPerson(door);
                 } else {                                 //all other npcs
                     String description = input.nextLine();
-                    int position_x = Integer.parseInt(input.nextLine());
-                    int position_y = Integer.parseInt(input.nextLine());
+                    int positionX = Integer.parseInt(input.nextLine());
+                    int positionY = Integer.parseInt(input.nextLine());
                     int wantsNum = Integer.parseInt(input.nextLine());
 
                     // GRABS WHOLE INVENTORY as one object, then breaks it up into individual items/words
@@ -114,8 +114,8 @@ public class Map {
 
                     ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
                     String want = input.nextLine();
-                    NPC npc = new NPC(description, occupation, position_x, position_y, npcInventory, want, wantsNum);
-                    this.locations[position_y][position_x].addPerson(npc);
+                    NPC npc = new NPC(description, occupation, positionX, positionY, npcInventory, want, wantsNum);
+                    this.locations[positionY][positionX].addPerson(npc);
                 }
             }
             input.close();
@@ -131,8 +131,8 @@ public class Map {
      * @return the Location that the player is currently within
      */
     public Location findLocation(Player hero){
-        int x = hero.getPosition_x();
-        int y = hero.getPosition_y();
+        int x = hero.getPositionX();
+        int y = hero.getPositionY();
         //y, x because array is [row][column]
         return locations[y][x]; //might throw arrayIndexOutOfBoundsException, but incredibly unlikely?
     }

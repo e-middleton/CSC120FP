@@ -33,11 +33,11 @@ public class Player extends NPC{
      * Constructor for player with specific attributes
      * @param description the description of the player
      * @param occupation the name/occupation of the player
-     * @param position_x the starting x or column position in the map
-     * @param position_y the starting y or row position in the map, their inventory begins empty
+     * @param positionX the starting x or column position in the map
+     * @param positionY the starting y or row position in the map, their inventory begins empty
      */
-    public Player(String description, String occupation, int position_x, int position_y){
-        super(description, occupation, position_x, position_y);
+    public Player(String description, String occupation, int positionX, int positionY){
+        super(description, occupation, positionX, positionY);
         this.inventory = new ArrayList<String>(); //empty inventory if not specified
         this.outfit = new Hashtable<String, Boolean>(); //winter outfit (goal)
         this.workbag = new Hashtable<String, Integer>(); //empty yarn holder
@@ -61,13 +61,13 @@ public class Player extends NPC{
      * Constructor for player with a predetermined inventory created at initialization
      * @param description a description of the player, not super important but inherited from NPC
      * @param occupation typically the player's name
-     * @param position_x the x or column index of the player's position
-     * @param position_y the y or row index of the player's position
+     * @param positionX the x or column index of the player's position
+     * @param positionY the y or row index of the player's position
      * @param inventory an arrayList of things the player has
      * initializes an empty outfit and workbag
      */
-    public Player(String description, String occupation, int position_x, int position_y, ArrayList<String> inventory){
-        super(description, occupation, position_x, position_y, inventory);
+    public Player(String description, String occupation, int positionX, int positionY, ArrayList<String> inventory){
+        super(description, occupation, positionX, positionY, inventory);
         this.outfit = new Hashtable<String, Boolean>();
         this.workbag = new Hashtable<String, Integer>(); 
 
@@ -143,7 +143,7 @@ public class Player extends NPC{
      * Mini method for testing where a player is
      */
     public void whereAmI(){
-        System.out.println("I am at column " + this.position_x + ", and row " + this.position_y);
+        System.out.println("I am at column " + this.positionX + ", and row " + this.positionY);
     }
 
     /**
@@ -233,8 +233,8 @@ public class Player extends NPC{
         if(y > 1 || y < -1){
             throw new InvalidMovementException();
         }
-        this.position_x += x; 
-        this.position_y += y;
+        this.positionX += x; 
+        this.positionY += y;
     }
 
     /**
