@@ -1,3 +1,3 @@
 {
-    "java.checkstyle.configuration": "/Users/anitamiddleton/Downloads/CSC120_style_checks.xml"
+    "java.checkstyle.configuration": "${workspaceFolder}/CSC120_style_checks.xml"
 }
