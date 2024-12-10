@@ -21,8 +21,8 @@ public class PlayerTest {
     @Test
     public void testWalk(){
         dorothy.walk(1, 1);
-        assertEquals(dorothy.getPosition_x(), 1); //assuming she starts at position 0, 0 (should probably always initialize her in the same spot tbh)
-        assertEquals(dorothy.getPosition_y(), 1);
+        assertEquals(dorothy.getPositionX(), 1); //assuming she starts at position 0, 0 (should probably always initialize her in the same spot tbh)
+        assertEquals(dorothy.getPositionY(), 1);
     }
 
 

@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
 /**
- * Play class, contains all the necessary methods for the text-based game to work together and intake user input
+ * Play class, contains all the necessary methods for the text-based game to work with user input.
  */
 public class Play {
 
     /**
-     * constructor for play, no necessary attributes
+     * Constructor for Play(), no necessary attributes.
      */
     public Play(){
     }
@@ -19,9 +19,9 @@ public class Play {
      * @return true or false they're in the same location
      */
     public boolean positionMatch(NPC a, NPC b){
-        if(a.getPosition_x() == b.getPosition_x() && a.getPosition_y() == b.getPosition_y()){
+        if (a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY()) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -34,9 +34,9 @@ public class Play {
      * @return true or false they're in the same location
      */
     public boolean positionMatch(NPC a, Location b){
-        if(a.getPosition_x() == b.getPosition_x() && a.getPosition_y() == b.getPosition_y()){
+        if (a.getPositionX() == b.getPositionX() && a.getPositionY() == b.getPositionY()) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -52,6 +52,8 @@ public class Play {
     /**
      * Method for looking around a given location.
      * prints out a description of their surroundings
+     * @param hero the player who is doing the looking around
+     * @param map the map used to get the Location of the player
      */
     public void lookAround(Player hero, Map map){
         map.findLocation(hero).lookAround();
@@ -73,8 +75,8 @@ public class Play {
 
         //builds the new String, leaving behind anything not a letter 
         String result = "";        
-        for(int i = 0; i<characterArray.length; i++){ 
-            if(Character.isLetter(characterArray[i])){ 
+        for (int i = 0; i<characterArray.length; i++) { 
+            if (Character.isLetter(characterArray[i])) { 
                 result += characterArray[i];
             }
         }
@@ -91,7 +93,7 @@ public class Play {
         String[] result = new String[words.length];
 
         //removes punctuation and numbers
-        for(int i = 0; i < words.length; i++){ 
+        for (int i = 0; i < words.length; i++) { 
             result[i] = punctuationRemoval(words[i]);
         }
         return result;
@@ -102,16 +104,17 @@ public class Play {
      * alerts the player whether or not a moth is in a location, and if applicable, calls the moth to eat their yarn
      * @param command the command that the player typed in broken up by whitespace
      * @param a the Player
+     * @param map the map, used to get t/f the player is able to walk to the next Location
      */
-    public void walk(String[] command, Player a, Map map){
-        if(command[1].equals("north")){ //walk north
-            if(map.walkNorth(a)){
-                if(map.findLocation(a).hasMoth()){ //if there's a moth
+    public void walk(String[] command, Player a, Map map) {
+        if (command[1].equals("north")) { //walk north
+            if (map.walkNorth(a)) {
+                if (map.findLocation(a).hasMoth()) { //if there's a moth
                     System.out.println("Oh no! There's a moth in here!");
                     map.findLocation(a).getMoth().eat(a); //moth eats yarn
-                } 
+                }
                 return;
-            } else{
+            } else {
                 System.out.println("Unable to walk in this direction. Please try to walk in a new direction.");
             }
         } else if(command[1].equals("east")){ //walk east
@@ -178,15 +181,15 @@ public class Play {
                 System.out.println();
                 door.riddle();
                 response = input.nextLine();
-                String CleanResponse2 = punctuationRemoval(response).toLowerCase();
-                if(door.unlockDoor(CleanResponse2, map.findLocation(hero))){
+                String cleanResponse2 = punctuationRemoval(response).toLowerCase();
+                if(door.unlockDoor(cleanResponse2, map.findLocation(hero))){
                    return;
                 } else{
                     System.out.println("I'm sorry, that is incorrect. You have one guess remaining."); //one more chance
                     System.out.println("What am I?");
                     response = input.nextLine();
-                    String CleanResponse3 = punctuationRemoval(response).toLowerCase();
-                    if(door.unlockDoor(CleanResponse3, map.findLocation(hero))){ 
+                    String cleanResponse3 = punctuationRemoval(response).toLowerCase();
+                    if(door.unlockDoor(cleanResponse3, map.findLocation(hero))){ 
                        return;
                     } else {
                         System.out.println("I'm sorry, you may not pass.");
@@ -210,14 +213,15 @@ public class Play {
      * @param hero the player
      * @param npc the name of the npc they're trying to talk to. They're grabbed from the location's cast.
      * @param map the map, used to get the player's current location
+     * @param input scanner needed to get user's response if they are talking to the door
      */
-    public void talk(Player hero, String npc, Map map, Scanner input){ 
-        if(npc.equals("door")){
+    public void talk(Player hero, String npc, Map map, Scanner input) { 
+        if (npc.equals("door")) {
             answerRiddle(hero, map, input);
-        } else{
+        } else {
             try{
                 map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
-            } catch(MissingNPCException e){
+            } catch (MissingNPCException e) {
                 System.out.println("There is no " + npc + " in the " + map.findLocation(hero).getName());
             }
         }
@@ -236,6 +240,10 @@ public class Play {
     public void barter(Player hero, String npc, Map map, Scanner input){
         try{
             map.findLocation(hero).getPerson(npc); //checks for matching location
+            if(map.findLocation(hero).getPerson(npc).getOccupation().equals("door")){ //YOU CANNOT BARTER WITH DOOR
+                map.findLocation(hero).getPerson(npc).barter("", "", hero);
+                return;
+            }
             System.out.println("What would you like to barter for? "); //barter __ for __
             String response = input.nextLine();
             String[] command = sliceAndDice(response);
@@ -388,7 +396,7 @@ public class Play {
         System.out.println("Hello, welcome to the game!");
         System.out.println("Would you like to play? Yes to play end to end");
         String response = input.nextLine();
-        
+
 
         //main play loop, it currently ends when the player says end.
         //also checks to see if the win condition has been met
@@ -499,8 +507,9 @@ public class Play {
                     break;
                 case("what"): //see knitting options, "what can I knit" "what can she knit" 
                     try{
-                        if(command[1].equals("can") && command[3].equals("knit"))
-                        hero.canKnit();
+                        if(command[1].equals("can") && command[3].equals("knit")){
+                            hero.canKnit();
+                        }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the form: what can I knit");
                     }
@@ -508,9 +517,12 @@ public class Play {
                 case("barter"): //barter
                     try{
                         if(command[1].equals("with")){
-                            game.barter(hero, command[2], map, input);
-                        }
-                        else{ 
+                            if(command[2].equals("the")){
+                                game.barter(hero, command[3], map, input);
+                            } else {
+                                game.barter(hero, command[2], map, input);
+                            }
+                        } else { 
                             System.out.println("Please enter valid form: Barter with _person_");
                             System.out.println("Followed by: ");
                             System.out.println("Barter _payment_ for _commodity_");
