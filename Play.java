@@ -169,21 +169,23 @@ public class Play {
      */
     public void answerRiddle(Player hero, Map map, Scanner input){
         try{
-            map.findLocation(hero).getPerson("door").intro(hero);
+            TalkingDoor door = (TalkingDoor)map.findLocation(hero).getPerson("door");
+    
+            door.intro(hero);
             String response = input.nextLine();
             if(response.toLowerCase().equals("yes")){
                 System.out.println();
-                map.findLocation(hero).getPerson("door").riddle();
+                door.riddle();
                 response = input.nextLine();
                 String response2 = punctuationRemoval(response).toLowerCase();
-                if(map.findLocation(hero).getPerson("door").unlockDoor(response2, map.findLocation(hero))){
+                if(door.unlockDoor(response2, map.findLocation(hero))){
                    return;
                 } else{
                     System.out.println("I'm sorry, that is incorrect. You have one guess remaining."); //one more chance
                     System.out.println("What am I?");
                     response = input.nextLine();
                     String response3 = punctuationRemoval(response).toLowerCase();
-                    if(map.findLocation(hero).getPerson("door").unlockDoor(response3, map.findLocation(hero))){ 
+                    if(door.unlockDoor(response3, map.findLocation(hero))){ 
                        return;
                     } else {
                         System.out.println("I'm sorry, you may not pass.");
@@ -195,6 +197,8 @@ public class Play {
             }
         } catch (MissingNPCException e){
             System.out.println("There is no door to talk to in this location.");
+        } catch (Exception e2){
+            System.out.println(e2.getMessage());
         }
     }
     
