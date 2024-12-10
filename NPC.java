@@ -263,18 +263,6 @@ public class NPC{
     }
 
     /**
-     * stub method so that the door can pose their riddle, 
-     * unsure why this is necessary
-     */
-    public void riddle(){
-    }
-
-
-    public boolean unlockDoor(String response, Location location){
-        return false;
-    }
-
-    /**
      * Main method in NPC, used for testing
      * @param args empty array of String
      */
