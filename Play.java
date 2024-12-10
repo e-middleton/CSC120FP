@@ -168,45 +168,36 @@ public class Play {
      * @param input the Scanner used to get the player's guesses
      */
     public void answerRiddle(Player hero, Map map, Scanner input){
-        if(map.findLocation(hero).getName().equals("mine")){ //NECESSARY, DONT REMOVE, OTHERWISE RIDDLE FORMATTING MESSED UP
-            System.out.println();
-            System.out.println("The door's rusty eyes peel themselves open,");
-            System.out.println("His voice is mechanical as he informs you that,");
-            System.out.println("should you wish to walk south, you must correctly answer his riddle");
-            System.out.println();
-            System.out.println("Would you like to hear his riddle? (yes/no)");
+        try{
+            map.findLocation(hero).getPerson("door").intro(hero);
             String response = input.nextLine();
             if(response.toLowerCase().equals("yes")){
-                try{
-                    System.out.println();
-                    map.findLocation(hero).getPerson("door").intro(hero);
+                System.out.println();
+                map.findLocation(hero).getPerson("door").riddle();
+                response = input.nextLine();
+                String response2 = punctuationRemoval(response).toLowerCase();
+                if(map.findLocation(hero).getPerson("door").unlockDoor(response2, map.findLocation(hero))){
+                   return;
+                } else{
+                    System.out.println("I'm sorry, that is incorrect. You have one guess remaining."); //one more chance
+                    System.out.println("What am I?");
                     response = input.nextLine();
-                    if(punctuationRemoval(response).toLowerCase().equals("yarn")){ //guesses correctly (ignore punctuation and capitals)
-                        System.out.println("Very well, the door sighs, you may pass.");
-                        System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
-                        System.out.println("The heavy metal door... swings open");
-                        map.findLocation(hero).setSouth();
-                    } else{
-                        System.out.println("I'm sorry, that is incorrect. You have one guess remaining."); //one more chance
-                        System.out.println("What am I?");
-                        response = input.nextLine();
-                        if(response.equals("yarn")){
-                            System.out.println("Very well, the door sighs, you may pass.");
-                            System.out.println("A grinding sound of old gears turning bounces around the rock cieling");
-                            System.out.println("The heavy metal door... swings open");
-                            map.findLocation(hero).setSouth();
-                        } else{
-                            System.out.println("I'm sorry, you may not pass.");
-                        }
+                    String response3 = punctuationRemoval(response).toLowerCase();
+                    if(map.findLocation(hero).getPerson("door").unlockDoor(response3, map.findLocation(hero))){ 
+                       return;
+                    } else {
+                        System.out.println("I'm sorry, you may not pass.");
                     }
-                } catch(MissingNPCException e){
-                    System.out.println("There is no door here to talk to.");
                 }
+            } else{
+                System.out.println("I understand, fair travels.");
+                return; //they don't want to answer his riddle
             }
-        } else{
-            System.out.println("There is no door here to talk to.");
+        } catch (MissingNPCException e){
+            System.out.println("There is no door to talk to in this location.");
         }
     }
+    
 
     /**
      * Method for talking to npcs provided that they're in the same location that the player is
