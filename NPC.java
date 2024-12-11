@@ -10,7 +10,7 @@ public class NPC{
     protected String occupation;
     protected int positionX;
     protected int positionY;
-    protected ArrayList<String> inventory; 
+    protected ArrayList<Item> inventory; 
     protected String wants; 
     protected int wantsNum;
     protected int hasNum;
@@ -27,7 +27,7 @@ public class NPC{
         this.occupation = occupation;
         this.positionX = positionX;
         this.positionY = positionY;
-        this.inventory = new ArrayList<String>(); //empty
+        this.inventory = new ArrayList<Item>(); //empty
         this.wants = null; //doesn't want anything
     }
 
@@ -41,7 +41,7 @@ public class NPC{
      * @param wants what the NPC wants to trade for, if wants = gold, the NPC will only trade if given gold
      * @param wantsNum how many of the given object the NPC wants. 
      */
-    public NPC(String description, String occupation, int positionX, int positionY, ArrayList<String> inventory, String wants, int wantsNum){
+    public NPC(String description, String occupation, int positionX, int positionY, ArrayList<Item> inventory, String wants, int wantsNum){
         this.description = description;
         this.occupation = occupation;
         this.positionX = positionX;
@@ -60,7 +60,7 @@ public class NPC{
      * @param positionY the y or row position in the map
      * @param inventory the arrayList of objects, Strings, the NPC has
      */
-    public NPC(String description, String occupation, int positionX, int positionY, ArrayList<String> inventory){
+    public NPC(String description, String occupation, int positionX, int positionY, ArrayList<Item> inventory){
         this.description = description;
         this.occupation = occupation;
         this.positionX = positionX;
@@ -132,14 +132,27 @@ public class NPC{
         return ((this.positionX == c.getPositionX()) && (this.positionY == c.getPositionY()));
     }
 
+    /**
+     * Getter for the wanted object of an npc
+     * @return the String item that the npc wants in exchange for bartering
+     */
     public String getWant(){
         return this.wants;
     }
 
+    /**
+     * getter for the number of the "wanted" object in exchange for bartering
+     * @return the number of the item that the npc wants in order to barter
+     */
     public int getWantsNum(){
         return this.wantsNum;
     }
 
+    /**
+     * getter for the number of objects an npc already has of their "wanted" item
+     * before they barter
+     * @return the number of "want" the npc already has
+     */
     public int getHasNum(){
         return this.hasNum;
     }
@@ -182,10 +195,27 @@ public class NPC{
     /**
      * Puts an object in the npc's inventory, inventory is not allowed to hold more than 15 items.
      * @param s the object being picked up.
+     * @param NPC the NPC holding the object
      */
-    public void grab(String s){
+    public void grab(String s, NPC npc){
         if(this.inventory.size() < 16){
-            this.inventory.add(s);
+            if(npc.checkInventory(s)){
+                this.inventory.add(npc.getItem(s));
+            } else{
+                System.out.println(s + " is nowhere to be found, it cannot be picked up.");
+            }
+        } else{
+            throw new RuntimeException("Your bag is too heavy. This object cannot be picked up.");
+        }
+    }
+
+    public void grab(String s, Location location){
+        if(this.inventory.size() < 16){
+            if(location.containsItem(s)){
+                this.inventory.add(location.getItem(s));
+            } else{
+                System.out.println(s + " is nowhere to be found, it cannot be picked up.");
+            }
         } else{
             throw new RuntimeException("Your bag is too heavy. This object cannot be picked up.");
         }
@@ -193,11 +223,33 @@ public class NPC{
 
     /**
      * Checks if a npc's inventory contains a given object
-     * @param s the object being searched for
-     * @return true or false if the inventory contains the object
+     * @param s the name of the Item being searched for
+     * @return true or false if the inventory contains the Item
      */
     public boolean checkInventory(String s){
-        return this.inventory.contains(s);
+        boolean check = false;
+        for(int i = 0; i < this.inventory.size(); i++){
+            if(this.inventory.get(i).getName().equals(s)){
+                check = true;
+            }
+        }
+        return check;
+    }
+
+    public Item getItem(String s){
+        boolean check = false;
+        int index = 0;
+        for(int i = 0; i < this.inventory.size(); i++){
+            if(this.inventory.get(i).getName().equals(s)){
+                check = true;
+                index = i;
+            }
+        }
+        if(check){
+            return this.inventory.get(index);
+        } else{
+            throw new MissingMaterialException();
+        }
     }
 
 
@@ -206,9 +258,14 @@ public class NPC{
      * @param s the item being dropped
      */
     public void drop(String s){
-        if(this.inventory.contains(s)){
-            this.inventory.remove(s);
-        } else{
+        if(checkInventory(s)){ //if they have the Item
+            for(int i = 0; i < this.inventory.size(); i++){ 
+                if(this.inventory.get(i).getName().equals(s)){
+                    this.inventory.remove(i); //removes the index where the item is
+                }
+                //break; //prevents the loss of all of an Item, only drops one
+            }
+        }else{
             throw new RuntimeException("This object cannot be dropped, it is not in the inventory");
         }
     }
@@ -225,21 +282,20 @@ public class NPC{
      */
     public void barter(String trade, String payment, NPC player){ 
         if(this.wants.equals(payment)){ //trading won't happen if NPC doesn't want what is offered
-            //if(this.inventory.contains(trade) && player.checkInventory(payment)){ //the npc has the right object, and the player's inventory has the payment
-                try{
-                    if(takePayment(player, payment)){ //ensure that full payment occurs t/f
-                        drop(trade); //the npc drops the item they're giving away
-                        player.grab(trade); //player grabs item they want
-                    } else{
-                        throw new MissingMaterialException(); //either the npc doesn't have the trade the player wants, or the player doesn't have the payment they say they do
-                    }
-                } catch(RuntimeException e){ //Exception thrown by player in drop(payment) when there is not any left
-                   System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
+            try{
+                if(takePayment(player, payment)){ //ensure that full payment occurs t/f
+                    player.grab(trade, this); //player grabs item they want from the NPC
+                    drop(trade); //the npc drops the item they're giving away
+                } else{
+                    throw new MissingMaterialException(); //either the npc doesn't have the trade the player wants, or the player doesn't have the payment they say they do
                 }
-            } else {
-            System.out.println("The " + this.occupation + " does not want " + payment + " please return to barter later with a different payment type.");
-            System.out.println("Ending bartering...");
-        } 
+            } catch(RuntimeException e){ //Exception thrown by player in drop(payment) when there is not any left
+                System.out.println("Payment insufficient. Please find more " + payment + "(s) before continuing to barter.");
+            }
+        } else {
+        System.out.println("The " + this.occupation + " does not want " + payment + " please return to barter later with a different payment type.");
+        System.out.println("Ending bartering...");
+    } 
     }
 
     /**
@@ -252,8 +308,8 @@ public class NPC{
      */
     private boolean takePayment(NPC player, String payment){ //never going to be called from outside of the npc themselves
         while(this.wantsNum > this.hasNum){ //while the NPC wants more than they have 
+            grab(payment, player); //npc grabs payment
             player.drop(payment); //player drops the payment and it is taken by the npc, THROWS EXCEPTION IF SUFFICIENT PAYMENT IS NOT IN INVENTORY
-            grab(payment); //npc grabs payment
             this.hasNum += 1;
         }
         if(this.wantsNum == this.hasNum){ //has the payment in full been given
@@ -269,24 +325,30 @@ public class NPC{
      * @param args empty array of String
      */
     public static void main(String[] args) {
-        ArrayList<String> purse = new ArrayList<String>();
-        purse.add("nails");
-        purse.add("gin");
-        ArrayList<String> bag = new ArrayList<String>();
-        bag.add("gold");
-        bag.add("gold");
-        bag.add("sock yarn");
-        bag.add("bobbin");
+        ArrayList<Item> purse = new ArrayList<Item>();
+        Item thing = new Item("nails");
+        Item thing2 = new Item("gin");
+        purse.add(thing);
+        purse.add(thing2);
+        ArrayList<Item> bag = new ArrayList<Item>();
+        Item thing3 = new Item("gold");
+        Item thing4 = new Item("gold");
+        Item thing5 = new Item("sock yarn");
+        Item thing6 = new Item("bobbin");
+        bag.add(thing3);
+        bag.add(thing4);
+        bag.add(thing5);
+        bag.add(thing6);
         NPC smith = new NPC("A traveling smith looking to shod horses", "blacksmith", 0,0, bag, "flour", 1);
-        NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, purse, "gold", 2);
-        ArrayList<String> spinnerSupplies = new ArrayList<String>(Arrays.asList("roving", "beeswax", "flax", "sock yarn"));
+        NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, purse, "gold", 1);
+        ArrayList<Item> spinnerSupplies = new ArrayList<Item>(Arrays.asList(new Item("roving"), new Item("beeswax"), new Item("flax"), new Item("sock yarn")));
         NPC spinner = new NPC("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
 
-        spinner.barter("sock yarn", "bobbin", smith);
+        //spinner.barter("sock yarn", "bobbin", smith);
 
         // smith.checkInventory();
         // baker.checkInventory();
-
+        smith.checkInventory();
         baker.barter("nails", "gold", smith);
         smith.checkInventory();
     }
