@@ -137,7 +137,7 @@ true
 false
 
 an eerie and still clearing, purple mushrooms grow in a perfect ring, %nThe silence feels heavier than before.
-In the center of the ring, a small potion in a bottle lies motionless.
+In the center of the ring a small potion in a bottle lies motionless.
 mushroom circle
 false
 false

@@ -401,10 +401,9 @@ public class Play {
         }
     }
 
-
     /**
      * Main function for Play(), contains the while loop for the game, ends when win condition is reached, or end is typed out
-     * @param args
+     * @param args 
      */
     public static void main(String[] args) {
         Play game = new Play();
@@ -412,17 +411,13 @@ public class Play {
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;
-    
-        hero.grab("shell");
 
         System.out.println("Hello, welcome to the game! \nWould you like to play? Yes to play end to end");
         String response = input.nextLine();
 
-        //main play loop, it currently ends when the player says end.
-        //also checks to see if the win condition has been met
+        //main play loop, it currently ends when the player says end or with win condition
         outerloop:
         while((!((response.toLowerCase()).equals("end"))) && !(hero.hasWon())){ 
-
             //seasons + passing time
             if(counter == 0){ //BEGINNING INFORMATION
                 System.out.println("Due to a series of woes, you find yourself tragically unprepared for winter, and in a broken down house.");
