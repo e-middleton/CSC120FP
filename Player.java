@@ -38,7 +38,7 @@ public class Player extends NPC{
      */
     public Player(String description, String occupation, int positionX, int positionY){
         super(description, occupation, positionX, positionY);
-        this.inventory = new ArrayList<String>(); //empty inventory if not specified
+        this.inventory = new ArrayList<Item>(); //empty inventory if not specified
         this.outfit = new Hashtable<String, Boolean>(); //winter outfit (goal)
         this.workbag = new Hashtable<String, Integer>(); //empty yarn holder
          
@@ -66,7 +66,7 @@ public class Player extends NPC{
      * @param inventory an arrayList of things the player has
      * initializes an empty outfit and workbag
      */
-    public Player(String description, String occupation, int positionX, int positionY, ArrayList<String> inventory){
+    public Player(String description, String occupation, int positionX, int positionY, ArrayList<Item> inventory){
         super(description, occupation, positionX, positionY, inventory);
         this.outfit = new Hashtable<String, Boolean>();
         this.workbag = new Hashtable<String, Integer>(); 
@@ -240,13 +240,24 @@ public class Player extends NPC{
     /**
      * Puts an object in the player's inventory, inventory is not allowed to hold more than 15 items.
      * @param s the object being picked up.
+     * @param a the npc the object is being grabbed from
      */
-    public void grab(String s){
+    public void grab(String s, NPC a){
         if(!s.contains("yarn")){
-            super.grab(s);
+            super.grab(s, a);
             System.out.println(s + " has been added to your inventory.");
         } else{
-            super.grab(s);
+            super.grab(s, a);
+            grabYarn(s);
+        }
+    }
+
+    public void grab(String s, Location a){
+        if(!s.contains("yarn")){
+            super.grab(s, a);
+            System.out.println(s + " has been added to your inventory.");
+        } else{
+            super.grab(s, a);
             grabYarn(s);
         }
     }
@@ -399,8 +410,8 @@ public class Player extends NPC{
      * @param args empty array of Strings
      */
     public static void main(String[] args){
-        ArrayList<String> purse = new ArrayList<String>();
-        purse.add("flour");
+        ArrayList<Item> purse = new ArrayList<Item>();
+        purse.add(new Item("flour"));
         Player dorothy = new Player("n/a", "Dorothy", 0, 0, purse);
         dorothy.grabYarn("lace weight");
         dorothy.grabYarn("lace weight");

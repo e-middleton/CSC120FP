@@ -107,19 +107,17 @@ public class Map {
                     int positionX = Integer.parseInt(input.nextLine());
                     int positionY = Integer.parseInt(input.nextLine());
                     int wantsNum = Integer.parseInt(input.nextLine());
-
-                    // GRABS WHOLE INVENTORY as one object, then breaks it up into individual items/words
-                    String inventory = input.nextLine();
-                    String[] individualItems = inventory.split(",");
-                    String[] finalInventory = new String[individualItems.length];
-
-                    // words are comma separated
-                    // Removes commas and whitespace
-                    for(int b = 0; b < individualItems.length; b++){
-                        finalInventory[b] = individualItems[b].replace(",", "").stripTrailing().stripLeading();
-                    }
-
-                    ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
+                    int numItems = Integer.parseInt(input.nextLine());
+                    Item[] inventory = new Item[numItems];
+                    if(!(numItems == 0)){
+                        for(int a = 0; a < numItems; a++){
+                            String name = input.nextLine();
+                            String response = input.nextLine();
+                            String itemDescription = input.nextLine();
+                            inventory[a] = new Item(name, response, itemDescription);
+                        }
+                    } 
+                    ArrayList<Item> npcInventory = new ArrayList<Item>(Arrays.asList(inventory));
                     String want = input.nextLine();
                     NPC npc = new NPC(description, occupation, positionX, positionY, npcInventory, want, wantsNum);
                     this.locations[positionY][positionX].addPerson(npc);

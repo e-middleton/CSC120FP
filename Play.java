@@ -214,7 +214,7 @@ public class Play {
             try{
                 map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
             } catch (MissingNPCException e) {
-                System.out.println("There is no " + npc + " in the " + map.findLocation(hero).getName());
+                System.out.println("There is nobody named " + npc + " in the " + map.findLocation(hero).getName());
             }
         }
     }
@@ -407,37 +407,30 @@ public class Play {
      */
     public static void main(String[] args) {
         Play game = new Play();
-        Map map = new Map("locations", "population", "locationInventories"); //default from .txt files
+        Map map = new Map("locations", "population", "itemsInfo"); //default from .txt files
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;
-
         System.out.println("Hello, welcome to the game! \nWould you like to play? Yes to play end to end");
         String response = input.nextLine();
 
         //main play loop, it currently ends when the player says end or with win condition
         outerloop:
         while((!((response.toLowerCase()).equals("end"))) && !(hero.hasWon())){ 
-            //seasons + passing time
             if(counter == 0){ //BEGINNING INFORMATION
                 System.out.println("Due to a series of woes, you find yourself tragically unprepared for winter, and in a broken down house.");
                 System.out.println("You must travel around the land to collect yarn to knit yourself an outfit in order to survive the cold to come.");
-                System.out.println("Good luck!\n");
-                System.out.println("You begin in the house. Type HELP for options.");
-            } else if(counter == 50){
-                System.out.println();
-                System.out.println("Hmm... the weather seems to be getting a bit colder...");
+                System.out.println("Good luck! \nYou begin in the house. Type HELP for options.");
+            } else if(counter == 50){ //Seasons + passing time
+                System.out.println("\nHmm... the weather seems to be getting a bit colder...");
             } else if(counter == 100){
-                System.out.println();
-                System.out.println("You're starting to feel a bit nervous, the trees are turning for fall.");
+                System.out.println("\nYou're starting to feel a bit nervous, the trees are turning for fall.");
             } else if(counter == 150){
-                System.out.println();
-                System.out.println("You only have a few weeks left before the cold front hits!");
+                System.out.println("\nYou only have a few weeks left before the cold front hits!");
             } else if (counter == 200){
-                System.out.println("You are out of time. It is already winter.");
+                System.out.println("\nYou are out of time. It is already winter.");
                 break outerloop; //game ends, time is up
             }
-
             response = input.nextLine();
             String[] command = game.sliceAndDice(response); //removes punctuation, whitespace, numbers, uppercase, and separates
 
@@ -466,12 +459,10 @@ public class Play {
                     break;
                 case("talk"): //talk to [person] OR talk to [the] [person]
                     try{
-                        if(command[1].equals("to")){
-                            if(command[2].equals("the")){ //talk to the _person_
-                                game.talk(hero, command[3], map, input);
-                            } else{
-                                game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
-                            }
+                        if(command[1].equals("to") && command[2].equals("the")){ //talk to the _person_
+                            game.talk(hero, command[3], map, input);
+                        } else if (command[1].equals("to")){
+                            game.talk(hero, command[2], map, input); //player, name of the person they're talking to, map for location, input is for riddles
                         }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the form: talk to _person_");
@@ -486,7 +477,7 @@ public class Play {
                     }
                     try{
                         if(hero.checkInventory(thing)){ //if they actually have the thing they claim they do
-                            map.findLocation(hero).addItem(thing); //it is added to the location's inventory and description
+                            map.findLocation(hero).addItem(hero.getItem(thing)); //it is added to the location's inventory and description
                         }
                         hero.drop(thing); //removed from player's inventory
                         System.out.println(thing + " has been removed from your inventory.");
@@ -505,7 +496,7 @@ public class Play {
                             item = command[1];
                         }
                         if(map.findLocation(hero).containsItem(item)){ //if the object is actually in the location
-                            hero.grab(item); //adds it to the player's inventory
+                            hero.grab(item, map.findLocation(hero)); //adds it to the player's inventory from the location's inventory
                             map.findLocation(hero).removeItem(item); //removes it from location inventory and description
                         } else{
                             System.out.println(item + " cannot be grabbed."); //the item does not exist in the location
@@ -565,7 +556,6 @@ public class Play {
             }
             counter += 1; //passing time
         }
-
         if(hero.hasWon()){
             System.out.println("\n!!!Congratulations!!!\nYou've survived winter! Nice and cozy!");
         } else{

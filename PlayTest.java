@@ -16,7 +16,8 @@ public class PlayTest {
 
     @Test
     public void testMothEat(){
-        hero.grab("dk yarn");
+        map.getLocation(1, 2).addItem(new Item("dk yarn"));
+        hero.grab("dk yarn", map.getLocation(1, 2));
         assertEquals(true, hero.hasYarn()); //player has yarn before walking in
         String[] command = game.sliceAndDice("walk north");
         game.walk(command, hero, map); //walking up one into the empty field where a Moth is

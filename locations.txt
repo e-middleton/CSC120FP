@@ -56,7 +56,7 @@ true
 false
 
 a freezing mountain, mist clouds around its peak,
-snow crunches around the,gravel,lichen clings to the sides of a few bare-limbed trees
+snow crunches around the gravel,lichen clings to the sides of a few bare-limbed trees
 mountain
 true
 true

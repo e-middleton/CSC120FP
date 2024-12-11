@@ -455,8 +455,8 @@ public class Location {
      * @param args empty array of Strings
      */
     public static void main(String[] args) {
-        NPC smith = new NPC("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<String>(), "flour", 1);
-        NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, new ArrayList<String>(), "gold", 2);
+        NPC smith = new NPC("A traveling smith looking to shod horses", "smith", 0,0, new ArrayList<Item>(), "flour", 1);
+        NPC baker = new NPC("A worker in a small northern town", "baker", 0, 0, new ArrayList<Item>(), "gold", 2);
         ArrayList<NPC> village = new ArrayList<>();
         village.add(smith);
         village.add(baker);

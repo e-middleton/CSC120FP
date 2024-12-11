@@ -344,7 +344,7 @@ public class NPC{
         ArrayList<Item> spinnerSupplies = new ArrayList<Item>(Arrays.asList(new Item("roving"), new Item("beeswax"), new Item("flax"), new Item("sock yarn")));
         NPC spinner = new NPC("A young woman, sitting at a spinning wheel gently twisting strands of flax as she feeds them into the flyer", "spinner", 0, 1, spinnerSupplies, "bobbin", 1);
 
-        //spinner.barter("sock yarn", "bobbin", smith);
+        spinner.barter("sock yarn", "bobbin", smith);
 
         // smith.checkInventory();
         // baker.checkInventory();

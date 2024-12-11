@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PlayerTest {
-    ArrayList<String> inventoryA = new ArrayList<String>(Arrays.asList("gold", "wool"));
-    ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "cedar"));
-
+    ArrayList<Item> inventoryA = new ArrayList<Item>(Arrays.asList(new Item("gold"), new Item("wool")));
+    ArrayList<Item> inventoryB = new ArrayList<Item>(Arrays.asList(new Item("needles"), new Item("cedar")));
+    Location home = new Location("", "home", new ArrayList<Item>(Arrays.asList(new Item("lace yarn"), new Item("worsted yarn"), new Item("dk yarn"), new Item("bulky yarn"))), 0, 0, new ArrayList<NPC>(), true, true, true, true, false);
     Player dorothy = new Player("an old woman", "protagonist", 0, 0, inventoryA);
     NPC b = new NPC("n/a", "b", 0, 0, inventoryB, "gold", 1);
 
@@ -58,35 +58,35 @@ public class PlayerTest {
 
     @Test
     public void testKnitSocks(){
-        dorothy.grab("lace yarn");
+        dorothy.grab("lace yarn", home);
         dorothy.knitSocks();
         assertEquals(true, dorothy.hasSocks());
     }
 
     @Test
     public void testKnitGloves(){
-        dorothy.grab("lace yarn");
+        dorothy.grab("lace yarn", home);
         dorothy.knitGloves();
         assertEquals(true, dorothy.hasGloves());
     }
 
     @Test
     public void testKnitHat(){
-        dorothy.grab("dk yarn");
+        dorothy.grab("dk yarn", home);
         dorothy.knitHat();
         assertEquals(true, dorothy.hasHat());
     }
 
     @Test
     public void testKnitSweater(){
-        dorothy.grab("bulky yarn");
+        dorothy.grab("bulky yarn", home);
         dorothy.knitSweater();
         assertEquals(true, dorothy.hasSweater());
     }
 
     @Test
     public void testKnitPants(){
-        dorothy.grab("worsted yarn");
+        dorothy.grab("worsted yarn", home);
         dorothy.knitPants();
         assertEquals(true, dorothy.hasPants());
     }

@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class NPCTest{
     //will then have to print out the npc to make sure the test works
-    ArrayList<String> inventoryA = new ArrayList<String>(Arrays.asList("gold", "gold", "myrh"));
-    ArrayList<String> inventoryB = new ArrayList<String>(Arrays.asList("needles", "wool"));
+    ArrayList<Item> inventoryA = new ArrayList<Item>(Arrays.asList(new Item("gold"), new Item("gold"), new Item("myrh")));
+    ArrayList<Item> inventoryB = new ArrayList<Item>(Arrays.asList(new Item("needles"), new Item("wool")));
 
     //for passing tests
     NPC a = new NPC("n/a", "a", 0, 0, inventoryA, "flour", 1);
@@ -38,7 +38,6 @@ public class NPCTest{
         assertEquals(test.toString(), a.getInventory());
     }
 
-    
 
     //not enough gold to trade, so it should fail
     @Test(expected=RuntimeException.class)

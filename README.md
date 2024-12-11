@@ -61,7 +61,6 @@ leave the line blank,
  There is a stub class for Clothing because I wanted knit clothing items to have fun descriptions, but it didn't fit the timeline for this particular submission, so I left it to be completed later. It would involve needing to collect different items like "pattern" "dye" and then using them or having an NPC use them to do something special to the clothing.
 
 
-
  What was your **overall approach** to tackling this project?
  Taking teeny, tiny, itty bitty steps at a time. Lots of automated tests.
  Making sure that the basic functions worked before adding fun features. Before I tried to make a 4x4 map, I made sure I could make a 1x1 map and a 2x2 map and move around in them without any problems. 
@@ -69,7 +68,7 @@ leave the line blank,
 
 
  - What **new thing(s)** did you learn / figure out in completing this project?
- reading in files for java, creating custom exceptions, switch() in java instead of if/else, 
+ reading in files for java, creating custom exceptions, switch() in java instead of if/else, casting classes
 
  - Is there anything that you wish you had **implemented differently**?
  On one hand, it's hard to know what things I wish I had implemented differently, because a lot of the things that bugged me, I don't know if a better way exists, or if it's just awkward because that's how java would work with it. 

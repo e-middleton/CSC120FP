@@ -1,16 +1,100 @@
-
-pearl, mussel, coral, rock
-shell, shell, shell, driftwood, bone
-lace yarn, lace yarn, worsted yarn,
-
-
-snow, gravel, lichen,
-
-apple, bush
-
-dirt, wheel
-gold, gold, amethyst, pickaxe, silver
-pebble, gold, sand
-
-
-mushroom, potion
+0
+4
+pearl
+I don't talk much
+shiny
+mussel
+I don't talk much
+shiny
+coral
+I don't talk much
+bumpy
+rock
+I don't talk much
+hard
+5
+shell
+I don't talk much
+lumpy
+shell
+I don't talk much
+lumpy
+shell
+I don't talk much
+lumpy
+driftwood
+I don't talk much
+lumpy
+bone
+I don't talk much
+lumpy
+3
+lace yarn
+I don't talk much
+fuzzy
+lace yarn
+I don't talk much
+fuzzy
+worsted yarn
+I don't talk much
+fuzzy
+0
+0
+2
+gravel
+I don't talk much
+lumpy
+lichen
+I don't talk much
+fuzzy
+0
+2
+apple
+I don't talk much
+edible
+bush
+I don't talk much
+not edible
+0
+2
+dirt
+I don't talk much
+bacteria laden
+wheel
+I don't talk much
+wooden
+5
+gold
+I don't talk much
+shiny
+gold
+I don't talk much
+shiny
+amethyst
+I don't talk much
+inedible
+pickaxe
+I don't talk much
+rusty
+silver
+I don't talk much
+shiny
+3
+pebble
+I don't talk much
+rocky?
+gold
+I don't talk much
+shiny
+sand
+I don't talk much
+crunchy
+0
+0
+2
+mushroom
+I don't talk much
+probably inedible
+potion
+I don't talk much
+glowing
