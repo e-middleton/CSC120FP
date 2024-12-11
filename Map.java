@@ -61,16 +61,20 @@ public class Map {
             //all locations have an inventory line in the file, even if it is blank
             for(int i = 0; i < this.rows; i++){
                 for(int j = 0; j< this.columns; j++){
-                    String inventory = itemsInput.nextLine();
-                    String[] individualItems = inventory.split(",");
-                    String[] finalInventory = new String[individualItems.length];
+                    int numItems = Integer.parseInt(itemsInput.nextLine());
+                    if(!(numItems == 0)){
+                        Item[] inventory = new Item[numItems];
+                        for(int a = 0; a < numItems; a++){
+                            String name = itemsInput.nextLine();
+                            String response = itemsInput.nextLine();
+                            String description = itemsInput.nextLine();
+                            inventory[a] = new Item(name, response, description);
+                        }
 
-                    // words are comma separated
-                    // Removes commas and whitespace
-                    for(int a = 0; a < individualItems.length; a++){
-                        finalInventory[a] = individualItems[a].replace(",", "").stripTrailing().stripLeading();
+                        locations[i][j].setInventory(inventory); 
+                    } else {
+                        locations[i][j].setInventory(new Item[0]);
                     }
-                    locations[i][j].setInventory(finalInventory); 
                 }
             } 
             itemsInput.close();
@@ -86,7 +90,7 @@ public class Map {
             //read in total number of npcs, MUST BE ACCURATE
             int numPpl = Integer.parseInt(input.nextLine()); //might throw exception
 
-            for(int i = 0; i<numPpl; i++){
+            for(int j = 0; j<numPpl; j++){
                 String occupation = input.nextLine();
                 if(occupation.equals("door")){ //talkingDoor information
                     String description = input.nextLine();
@@ -111,8 +115,8 @@ public class Map {
 
                     // words are comma separated
                     // Removes commas and whitespace
-                    for(int a = 0; a < individualItems.length; a++){
-                        finalInventory[a] = individualItems[a].replace(",", "").stripTrailing().stripLeading();
+                    for(int b = 0; b < individualItems.length; b++){
+                        finalInventory[b] = individualItems[b].replace(",", "").stripTrailing().stripLeading();
                     }
 
                     ArrayList<String> npcInventory = new ArrayList<String>(Arrays.asList(finalInventory));
