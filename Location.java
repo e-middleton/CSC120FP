@@ -10,7 +10,7 @@ public class Location {
     private String description;
     private ArrayList<String> mutableDescription;
     private String name;
-    private ArrayList<String> inventory;
+    private ArrayList<Item> inventory;
     private int positionX;
     private int positionY;
     private ArrayList<NPC> cast;
@@ -32,9 +32,9 @@ public class Location {
      */
     public Location(int x, int y, boolean north, boolean east, boolean south, boolean west){
         this.description = null;
-        this.mutableDescription = null;
+        this.mutableDescription = new ArrayList<String>();
         this.name = null;
-        this.inventory = new ArrayList<String>();
+        this.inventory = new ArrayList<Item>();
         this.positionX = x;
         this.positionY = y;
         this.cast = new ArrayList<NPC>();
@@ -66,7 +66,7 @@ public class Location {
         this.name = name;
         this.positionX = positionX; //getter but no setter. (or is this given by map?)
         this.positionY = positionY;
-        this.inventory = new ArrayList<String>();
+        this.inventory = new ArrayList<Item>();
         this.cast = cast;
         this.north = north;
         this.east = east;
@@ -100,9 +100,9 @@ public class Location {
      * @param west t/f it is possible to walk west
      * @param containsMoth t/f there is a moth in this Location
      */
-    public Location(String description, String name, ArrayList<String> inventory, int positionX, int positionY, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
+    public Location(String description, String name, ArrayList<Item> inventory, int positionX, int positionY, ArrayList<NPC> cast, boolean north, boolean east, boolean south, boolean west, boolean containsMoth){
         this.description = description;
-        this.mutableDescription = null;
+        this.mutableDescription = new ArrayList<String>();
         this.name = name;
         this.inventory = inventory;
         this.positionX = positionX; //getter but no setter. Set when read into map() and initialized
@@ -249,17 +249,46 @@ public class Location {
      * used for testing and the toString method
      * @return the inventory of the Location as a String
      */
-    public String getInventory(){
-        return this.inventory.toString();
+    public String getInventory(){ 
+       return this.inventory.toString();
     }
+
+
+    /**
+     * Method for getting an item from a location's inventory
+     * @param s the name of the item being searched for
+     * @return the item, if it exists in the inventory
+     */
+    public Item getItem(String s){
+        boolean check = false;
+        int index = 0;
+        for(int i = 0; i < this.inventory.size(); i ++){
+            if(this.inventory.get(i).getName().equals(s)){
+                check = true;
+                index = i;
+            }
+        }
+        if(check){
+            return this.inventory.get(index);
+        } else{
+            throw new MissingMaterialException();
+        }
+    }
+        
 
     /**
      * Method for checking if a given item is in the inventory of a location
-     * @param s the object being checked for
+     * @param s the name of the item being checked for
      * @return true/false the object is in the Location
      */
     public boolean containsItem(String s){
-        return this.inventory.contains(s);
+        boolean check = false;
+        for(int i = 0; i < this.inventory.size(); i ++){
+            if(this.inventory.get(i).getName().equals(s)){
+                check = true;
+            }
+        }
+        return check;
     }
 
     /**
@@ -319,16 +348,16 @@ public class Location {
      * before this happens, Play class CHECKS to make sure the player actually has the object they say they're dropping
      * @param s the item being added to a location
      */
-    public void addItem(String s){
+    public void addItem(Item s){
         this.inventory.add(s);
-        this.mutableDescription.add("\nIn this location is a(n) " + s);
+        this.mutableDescription.add("\nIn this location is a(n) " + s.getName());
     }
 
     /**
      * method for initializaing an inventory of items outside of the constructor, used in Map when locations are read in from .txt files
      * @param s the String[] (list) of items in the location
      */
-    public void setInventory(String[] s){
+    public void setInventory(Item[] s){
         this.inventory.addAll(Arrays.asList(s));  //adding a collection of type String
     }
 
@@ -338,16 +367,20 @@ public class Location {
      * @param s the object being taken out of the Location
      */
     public void removeItem(String s){
-        if(this.inventory.contains(s)){
-            this.inventory.remove(s);
-            if(!this.inventory.contains(s)){ //only removes the description bit if there are NO MORE of that object in the location's inventory (some objects are duplicates)
+        if(containsItem(s)){ //if the item is in the location 
+            for(int i = 0; i < this.inventory.size(); i ++){ //it is removed
+                if(this.inventory.get(i).getName().equals(s)){
+                    this.inventory.remove(i); //removes the index where the item is
+                } 
+            }
+            if(!containsItem(s)){ //if there is no more remaining of that item, it is removed from the description
                 for(int i = 0; i < this.mutableDescription.size(); i++){
-                    if(this.mutableDescription.get(i).contains(s)){ //if part of the mutable description includes the object being removed,
+                    if(this.mutableDescription.get(i).contains(s)){ //if part of the mutable description includes the name of the object being removed,
                         this.mutableDescription.remove(i); //it is taken out of the description
                     }
                 }
             }
-        } else{
+        } else{ //item cannot be removed, it was never in the location
             throw new RuntimeException("This item is not in this location.");
         }
     }
@@ -397,6 +430,19 @@ public class Location {
     }
 
     /**
+     * Method for looking at an Item in a location
+     * @param s the name of the item being looked at
+     */
+    public void lookAtItem(String s){
+        try{
+            Item a = getItem(s);
+            System.out.println(a.getDescription());
+        } catch(MissingMaterialException e){
+            System.out.println("You do not see any " + s + " in this location.");
+        }
+    }
+
+    /**
      * getter for the overal description of a Location, used to help with testing in the Map class
      * @return String description of the Location object and all its relevant information
      */
@@ -418,9 +464,21 @@ public class Location {
         descrip[0] = "zero and other words,";
         descrip[1] = "oh baby";
         descrip[2] = "now yes";
+        ArrayList<Item> inventory = new ArrayList<Item>();
+
+        Item thing = new Item("cup", "The cup is a poor conversation partner", "A simple glass cup, with a crack in the handle");
+        inventory.add(thing);
+        Item thing2 = new Item("dk yarn", "conversation with yarn is annoying and mostly fuzz words", "It is a thin undyed yarn, perfect for hats");
+        inventory.add(thing2);
+
         Location home = new Location("a small hovel, decrepit and falling apart.", descrip, "home", 1, 1, village, true, true, true, true, false);
+        home.addItem(thing);
+        home.addItem(thing2);
+        //home.lookAround();
+        home.lookAtItem("dk yarn");
+        System.out.println(home.containsItem("cup"));
     
-        System.out.println(home.toString());
+        //System.out.println(home.toString());
     }
     
 }
