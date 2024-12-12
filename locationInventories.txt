@@ -2,15 +2,15 @@
 4
 pearl
 I don't talk much
-shiny
+The pearl has a shiny, lacquered surface and the beautiful misshapen aspect of a freshwater pearl.
 mussel
-I don't talk much
-shiny
+The mussel isn't liable to talk much I'm afraid
+The mussel no longer looks to be alive, but could make a lovely pair of earrings.
 coral
 I don't talk much
-bumpy
+The coral is less vibrant than it should be, not even java text games escape reef bleaching.
 rock
-I don't talk much
+I'm not quite sure what response you want from the rock, but it will not be saying anything to you.
 hard
 5
 shell
@@ -24,33 +24,33 @@ I don't talk much
 lumpy
 driftwood
 I don't talk much
-lumpy
+The driftwood was rotted through long ago and is now as light as a cloud
 bone
-I don't talk much
-lumpy
+The bone may be able to speak of its past life if it wishes, but it most certainly will not talk to you.
+The bone is perhaps from a sailor, perhaps from some sea creature not yet known
 3
 lace yarn
-I don't talk much
+To be honest, talking to yarn is just full of fuzz words.
 fuzzy
 lace yarn
-I don't talk much
+To be honest, talking to yarn is just full of fuzz words.
 fuzzy
 worsted yarn
-I don't talk much
+To be honest, talking to yarn is just full of fuzz words.
 fuzzy
 0
 0
 2
 gravel
-I don't talk much
+some people have gravely voices, gravel doesn't have a voice at all, it remains silent
 lumpy
 lichen
-I don't talk much
+lichen is slow to grow, but slower still to respond. It doesn't speak with you.
 fuzzy
 0
 2
 apple
-I don't talk much
+trying to talk to the apple is a rather fruitless endeavor, don't you think?
 edible
 bush
 I don't talk much
@@ -61,14 +61,14 @@ dirt
 I don't talk much
 bacteria laden
 wheel
-I don't talk much
+speaking to a wheel will only get you a circular conversation
 wooden
 5
 gold
-I don't talk much
+while the gold is bright, it's responses are not, it remains silent
 shiny
 gold
-I don't talk much
+while the gold is bright, it's responses are not, it remains silent
 shiny
 amethyst
 I don't talk much
@@ -84,7 +84,7 @@ pebble
 I don't talk much
 rocky?
 gold
-I don't talk much
+silence is worth its weight in gold, clearly something you have yet to discover. The gold does not respond.
 shiny
 sand
 I don't talk much
@@ -93,8 +93,8 @@ crunchy
 0
 2
 mushroom
-I don't talk much
-probably inedible
+you try to TALK? to the mushroom??? Oh woe to you traveler! They have nothing to say
+the mushroom is definitely inedible, potentially malicious
 potion
 I don't talk much
-glowing
+glowing liquid swirls around in the glass bottle, sparkling and warm to touch

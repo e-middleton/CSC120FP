@@ -14,19 +14,19 @@ A man, perhaps in his mid thirties in richly dyed clothing who eyes you with cur
 1
 5
 dye
-It doesn't say much
+you'll never get a response from them, so it's no use if you 'dye' trying
 Of indeterminate color, it could make a very beautiful or very ugly dye batch.
 scissors
-It doesn't say much
+the conversation is abruptly cut off when the scissors don't respond
 rusty, but they probably work
-needles
+needle
 They won't talk back, no matter how much you needle them
 Useful for sewing or weaving in ends of yarn
 bulky yarn
 The conversation is full of fuzz words
 The largest type of yarn, excellent for large squishy sweaters
 bobbin
-It doesn't say much
+while a bobbin is useful for spinning a yarn, it doesn't have one of its own to say
 It holds thread while a person is sewing
 gold
 mermaid
@@ -39,7 +39,7 @@ dk yarn
 The conversation is all fuzz words
 A thin undyed yarn, perfect for hats
 snail
-slow of thought, it doesn't respond
+it is slow of thought... the snail doesn't respond
 small, not particularly useful
 guppy
 glub glub glub
@@ -68,7 +68,7 @@ A young woman, sitting at a spinning wheel gently twisting strands of flax as sh
 1
 4
 roving
-fluff fluff fluff
+roving, being so fluffy, is a bit airheaded and doesn't lend anything to the conversation
 A fluffy wool ready to be spun into yarn or thread
 beeswax
 It doesn't say much
@@ -87,12 +87,12 @@ A short and hungry looking creature, eyeing your ankles with a disturbing gaze
 1
 3
 breadcrust
-They really don't want to talk to you
-crumbly and a little moldy to be honest
+The breadcrust REALLY doesn't want to talk to you
+the breadcrust is crumbly, and a little moldy to be honest
 knuckles
-They might talk, but only to a person who knows the future, who is not you by the way
+They might talk, but only to a person who knows how to read the future, who is not you by the way
 knuckle bones from an unknown source
 teeth
-They whisper amongst themselves of things past, but you can't quite hear.
+The teeth whisper amongst themselves of things past, you could fight tooth and nail and still not understand them
 Old yellow and elongated teeth, they might have once belonged to a human?
 lichen
