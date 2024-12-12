@@ -48,10 +48,13 @@ lichen
 lichen is slow to grow, but slower still to respond. It doesn't speak with you.
 fuzzy
 0
-2
+3
+orange
+the orange says nothing, orange you glad you tried to talk to it?
+the orange is incongruous for the climate, but excellent for preventing scurvy in these trying times
 apple
 trying to talk to the apple is a rather fruitless endeavor, don't you think?
-edible
+the apple is perfectly ripe and shiny, with the light scent of summer
 bush
 I don't talk much
 not edible
