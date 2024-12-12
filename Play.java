@@ -39,6 +39,24 @@ public class Play {
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
         System.out.println("+walk [cardinal direction] \n+look around \n+talk to [person] \n+look at [person] \n+barter with [person] \n+what can I knit \n+knit [clothing item] \n+check inventory \n+check outfit \n+grab [item] \n+drop [item] \n+examine[item]");
+        System.out.println("typing SHORTCUT will show you available command shortcuts");
+    }
+
+    /**
+     * Prints out all available command shortcuts the player is capable of using
+     */
+    public void showShortcuts(){
+        System.out.println("REMINDER: NOT ALL COMMANDS HAVE A SHORTCUT");
+        System.out.println("A list of accepted shorcuts is below \n");
+        System.out.println("walk north: n");
+        System.out.println("walk east: e");
+        System.out.println("walk south: s");
+        System.out.println("walk west: w");
+        System.out.println("check inventory: i");
+        System.out.println("check outfit: o");
+        System.out.println("look around: l");
+        System.out.println("examine [item]: x [item]");
+
     }
 
     /**
@@ -461,6 +479,9 @@ public class Play {
                 case("help"): //show options
                     game.showOptions();
                     break;
+                case("shortcut"):
+                    game.showShortcuts();
+                    break;
                 case("talk"): //talk to [person] OR talk to [the] [person]
                     try{
                         if(command[1].equals("to") && command[2].equals("the")){ //talk to the _person_
@@ -553,7 +574,15 @@ public class Play {
                         System.out.println("Please enter in the valid form: check inventory/outfit");
                     }
                     break;
-                case("examine"):
+                case("examine"):                //examine an item
+                    if(command[1].equals("the")){ //reshuffle the command if "the" is included
+                        String temp = command[1];
+                        command[1] = command[2];
+                        if(command.length > 3){
+                            command[2] = command[3];
+                        }
+                        command[command.length - 1] = temp;
+                    }
                     try{
                         String subject = "";
                         if(response.contains("yarn")){ //makes it possible to examine [weight] yarn (2 words)
@@ -578,6 +607,61 @@ public class Play {
                         System.out.println("Please enter in the valid form: examine [item]");
                     }
                     break;
+                //SHORTCUT COMMANDS
+                case("n"):
+                    game.walk(new String[]{"walk", "north"}, hero, map);
+                    break;
+                case("e"):
+                    game.walk(new String[]{"walk", "east"}, hero, map);
+                    break;
+                case("s"):
+                    game.walk(new String[]{"walk", "south"}, hero, map);
+                    break;
+                case("w"): 
+                    game.walk(new String[]{"walk", "west"}, hero, map);
+                    break;
+                case("i"):
+                    hero.checkInventory();
+                    break;
+                case("o"):
+                    hero.showOutfit();
+                    break;
+                case("l"):
+                    game.lookAround(hero, map);
+                    break;
+                case("x"):
+                    if(command[1].equals("the")){ //reshuffle the command if "the" is included
+                    String temp = command[1];
+                    command[1] = command[2];
+                    if(command.length > 3){
+                        command[2] = command[3];
+                    }
+                    command[command.length - 1] = temp;
+                }
+                try{
+                    String subject = "";
+                    if(response.contains("yarn")){ //makes it possible to examine [weight] yarn (2 words)
+                        subject = command[1] + " " + command[2];
+                    } else{
+                        subject = command[1];
+                    }
+                    System.out.println(map.findLocation(hero).getItem(subject).getDescription());
+                } catch(MissingMaterialException e){
+                    try{
+                        String subject = "";
+                        if(response.contains("yarn")){ //makes it possible to examine [weight] yarn (2 words)
+                            subject = command[1] + " " + command[2];
+                        } else{
+                            subject = command[1];
+                        }
+                        System.out.println(hero.getItem(subject).getDescription());
+                    } catch(MissingMaterialException b){
+                        System.out.println("This item cannot be examined.");
+                    }
+                } catch(IndexOutOfBoundsException e){
+                    System.out.println("Please enter in the valid form: examine [item]");
+                }
+                break;
                 case("end"):
                     break outerloop; //END
                 default:
