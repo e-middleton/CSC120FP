@@ -91,11 +91,7 @@ public class Player extends NPC{
      * @return true/false, all the clothing has been knit.
      */
     public boolean hasWon(){
-        if(this.outfit.get("hat") && this.outfit.get("gloves") && this.outfit.get("pants") && this.outfit.get("sweater") && this.outfit.get("socks")){
-            return true;
-        } else{
-            return false;
-        }
+        return (this.outfit.get("hat") && this.outfit.get("gloves") && this.outfit.get("pants") && this.outfit.get("sweater") && this.outfit.get("socks"));
     }
 
     /**
@@ -252,6 +248,12 @@ public class Player extends NPC{
         }
     }
 
+    /**
+     * method for grabbing an Item from a location, done more often than 
+     * grabbing an Item from an NPC which is typically only during bartering 
+     * @param s the name/id of the item being grabbed
+     * @param a the location where the item is in the inventory and where the player is currently located
+     */
     public void grab(String s, Location a){
         if(!s.contains("yarn")){
             super.grab(s, a);
