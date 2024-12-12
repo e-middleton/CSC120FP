@@ -1,3 +1,7 @@
+/**
+ * Class for Items in the game, contains a name (id), response if you try to talk to it
+ * and a description if it is examined
+ */
 public class Item {
     private String name;
     private String response;
@@ -48,7 +52,6 @@ public class Item {
     public String getDescription(){
         return this.description;
     }
-
     
     /**
      * To string method for an item, getting relevant information, just the name/id

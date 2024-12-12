@@ -555,9 +555,25 @@ public class Play {
                     break;
                 case("examine"):
                     try{
-                        System.out.println(map.findLocation(hero).getItem(command[1]).getDescription());
+                        String subject = "";
+                        if(response.contains("yarn")){ //makes it possible to examine [weight] yarn (2 words)
+                            subject = command[1] + " " + command[2];
+                        } else{
+                            subject = command[1];
+                        }
+                        System.out.println(map.findLocation(hero).getItem(subject).getDescription());
                     } catch(MissingMaterialException e){
-                        System.out.println("There is no " + command[1] + " in this location.");
+                        try{
+                            String subject = "";
+                            if(response.contains("yarn")){ //makes it possible to examine [weight] yarn (2 words)
+                                subject = command[1] + " " + command[2];
+                            } else{
+                                subject = command[1];
+                            }
+                            System.out.println(hero.getItem(subject).getDescription());
+                        } catch(MissingMaterialException b){
+                            System.out.println("This item cannot be examined.");
+                        }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the valid form: examine [item]");
                     }
