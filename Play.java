@@ -38,7 +38,7 @@ public class Play {
      */
     public void showOptions(){
         System.out.println("As a player, you are capable of:");
-        System.out.println("+walk [cardinal direction] \n+look around \n+talk to [person] \n+look at [person] \n+barter with [person] \n+what can I knit \n+knit [clothing item] \n+check inventory \n+check outfit \n+grab [item] \n+drop [item]");
+        System.out.println("+walk [cardinal direction] \n+look around \n+talk to [person] \n+look at [person] \n+barter with [person] \n+what can I knit \n+knit [clothing item] \n+check inventory \n+check outfit \n+grab [item] \n+drop [item] \n+examine[item]");
     }
 
     /**
@@ -214,7 +214,11 @@ public class Play {
             try{
                 map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
             } catch (MissingNPCException e) {
-                System.out.println("There is nobody named " + npc + " in the " + map.findLocation(hero).getName());
+                try{
+                    System.out.println(map.findLocation(hero).getItem(npc).getResponse()); //if they typed an object name, they'll get a snarky response
+                } catch(MissingMaterialException b){
+                    System.out.println("There is nobody named " + npc + " in the " + map.findLocation(hero).getName()); 
+                }
             }
         }
     }
@@ -407,7 +411,7 @@ public class Play {
      */
     public static void main(String[] args) {
         Play game = new Play();
-        Map map = new Map("locations", "population", "itemsInfo"); //default from .txt files
+        Map map = new Map("locations", "population", "locationInventories"); //default from .txt files
         Scanner input = new Scanner(System.in);
         Player hero = new Player(); //auto sets to Dorothy at 0,0
         int counter = 0;
@@ -547,6 +551,15 @@ public class Play {
                         }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter in the valid form: check inventory/outfit");
+                    }
+                    break;
+                case("examine"):
+                    try{
+                        System.out.println(map.findLocation(hero).getItem(command[1]).getDescription());
+                    } catch(MissingMaterialException e){
+                        System.out.println("There is no " + command[1] + " in this location.");
+                    } catch(IndexOutOfBoundsException e){
+                        System.out.println("Please enter in the valid form: examine [item]");
                     }
                     break;
                 case("end"):
