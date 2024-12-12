@@ -233,7 +233,11 @@ public class Play {
                 map.findLocation(hero).getPerson(npc).intro(hero); //MissingNPCException in Location if not found
             } catch (MissingNPCException e) {
                 try{
-                    System.out.println(map.findLocation(hero).getItem(npc).getResponse()); //if they typed an object name, they'll get a snarky response
+                    if(npc.equals("lace") || npc.equals("worsted") || npc.equals("bulky") || npc.equals("dk")){
+                        System.out.println(map.findLocation(hero).getItem(npc+" yarn").getResponse()); // if they typed in a type of yarn
+                    } else{
+                        System.out.println(map.findLocation(hero).getItem(npc).getResponse()); //if they typed an object name, they'll get a snarky response
+                    }
                 } catch(MissingMaterialException b){
                     System.out.println("There is nobody named " + npc + " in the " + map.findLocation(hero).getName()); 
                 }
