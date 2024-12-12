@@ -187,15 +187,16 @@ public class NPC{
      */
     public void intro(NPC player){ //exception thrown in Location and handled in Play if mismatched
         System.out.println("Hello traveler, I am the " + this.occupation);
-        System.out.println("Would you like to barter?");
-        System.out.println("Currently I have " + getInventory());
-        System.out.println("And I am willing to barter for " + "(" + this.wantsNum + ") " + this.wants);
+        System.out.println("Lets make a trade!");
+        System.out.println("I currently have " + getInventory());
+        System.out.println("And I am willing to barter for " + "(" + (this.wantsNum - this.hasNum) + ") " + this.wants);
     }
 
     /**
      * Puts an object in the npc's inventory, inventory is not allowed to hold more than 15 items.
+     * grabbing from an npc is typically only done in bartering
      * @param s the object being picked up.
-     * @param NPC the NPC holding the object
+     * @param npc the NPC holding the object
      */
     public void grab(String s, NPC npc){
         if(this.inventory.size() < 16){
@@ -209,6 +210,11 @@ public class NPC{
         }
     }
 
+    /**
+     * method for grabbing an object from a location, used much more often than grabbing from an npc
+     * @param s the name/id of the item being grabbed
+     * @param location the location where the item is found
+     */
     public void grab(String s, Location location){
         if(this.inventory.size() < 16){
             if(location.containsItem(s)){
@@ -236,6 +242,12 @@ public class NPC{
         return check;
     }
 
+    /**
+     * method for getting an Item from an npc
+     * used for bartering or looking at the description of items
+     * @param s the name/id of the item being looked for
+     * @return the Item object being asked for
+     */
     public Item getItem(String s){
         boolean check = false;
         int index = 0;
