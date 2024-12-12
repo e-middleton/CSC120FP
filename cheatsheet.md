@@ -7,13 +7,14 @@ walk [cardinal direction]
 look around
 talk to [[the] person]
 look at [person]
-barter with [person] **must be immediately followed by barter [payment] for [commodity]
+barter with [person]
 what can I knit?
 knit [clothing item]
 check inventory
 check outfit
 grab [item]
 drop [item]
+examine [item]
 
 # SPOILER ALERT
 
@@ -23,6 +24,9 @@ doesn't need to be overcome to win, but be aware that there is a moth in map[3][
 that will eat unknit yarn, some of which (bulky and dk yarn) has no replacement in the game.
 
 In the mine you must answer the riddle of a door in order to walk south into the yarn trove, the answer is "yarn"
+
+try talking to items in locations, I think it's funny
+also please look at people and objects, I spent way too much time on descriptions
 
 A map .png is in the repo, but a brief overview of the map is below:
 [0][0]: cliffs
