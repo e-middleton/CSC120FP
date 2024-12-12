@@ -188,6 +188,7 @@ public class NPC{
     public void intro(NPC player){ //exception thrown in Location and handled in Play if mismatched
         System.out.println("Hello traveler, I am the " + this.occupation);
         System.out.println("Lets make a trade!");
+        System.out.println("to barter, say: barter with [person]");
         System.out.println("I currently have " + getInventory());
         System.out.println("And I am willing to barter for " + "(" + (this.wantsNum - this.hasNum) + ") " + this.wants);
     }
