@@ -331,12 +331,16 @@ public class Location {
      */
     public void unlockPath(String direction){
         if(direction.equals("north")){
+            System.out.println("You are now able to walk north");
             this.north = true;
         } else if (direction.equals("east")){
+            System.out.println("You are now able to walk east.");
             this.east = true;
         } else if (direction.equals("south")){
+            System.out.println("You are now able to walk south.");
             this.south = true;
         } else if (direction.equals("west")){
+            System.out.println("You are now able to walk west.");
             this.west = true;
         }
 
