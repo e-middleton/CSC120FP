@@ -96,11 +96,12 @@ public class Map {
                     String description = input.nextLine();
                     String intro = input.nextLine();
                     String riddle = input.nextLine();
+                    String entrancePhrase = input.nextLine();
                     String direction = input.nextLine();
                     String answer = input.nextLine();
                     int positionX = Integer.parseInt(input.nextLine());
                     int positionY = Integer.parseInt(input.nextLine());
-                    TalkingDoor door = new TalkingDoor(description, occupation, intro, riddle, direction, answer, positionX, positionY);
+                    TalkingDoor door = new TalkingDoor(description, occupation, intro, riddle, entrancePhrase, direction, answer, positionX, positionY);
                     this.locations[positionY][positionX].addPerson(door);
                 } else {                                 //all other npcs
                     String description = input.nextLine();
