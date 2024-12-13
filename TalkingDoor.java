@@ -5,6 +5,7 @@
 public class TalkingDoor extends NPC{
     private String introduction;
     private String riddle;
+    private String entrancePhrase;
     private String directionProtected; //which path are they protecting (north, south, east, west)
     private String answer;
 
@@ -12,6 +13,7 @@ public class TalkingDoor extends NPC{
      * Constructor for talking door
      * @param description the description of how the door appears
      * @param occupation name/id
+     * @param entrancePhrase the phrase the door says when it opens the path
      * @param intro the intro spiel given by the door when talked to
      * @param riddle the riddle posed by this specific door, may be changed for other doors
      * @param directionProtected the path currently locked, will be unlocked if the riddle is guessed
@@ -19,8 +21,9 @@ public class TalkingDoor extends NPC{
      * @param x x or column position
      * @param y y or row position
      */
-    public TalkingDoor(String description, String occupation, String intro, String riddle, String directionProtected, String answer, int x, int y){
+    public TalkingDoor(String description, String occupation, String intro, String riddle, String entrancePhrase, String directionProtected, String answer, int x, int y){
         super(description, occupation, x, y);
+        this.entrancePhrase = entrancePhrase;
         this.introduction = intro;
         this.riddle = riddle;
         this.directionProtected = directionProtected;
@@ -55,9 +58,7 @@ public class TalkingDoor extends NPC{
      */
     public boolean unlockDoor(String response, Location location){
         if(response.equals(this.answer)){ //if the user enters the correct response
-            System.out.println("Very well, the door sighs, you may pass.");
-            System.out.println("A grinding sound of old gears turning bounces around the rock ceiling");
-            System.out.println("The heavy metal door... swings open");
+            System.out.printf(this.entrancePhrase);
             location.unlockPath(directionProtected); // if directionProtected.equals("south") this.south = true in the location
             return true;
         } else {
