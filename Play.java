@@ -481,7 +481,11 @@ public class Play {
                         if(command[1].equals("around")){ //location
                             game.lookAround(hero, map);
                         } else if(command[1].equals("at")){ //person
-                            game.lookAt(hero, command[2], map);
+                            if(command[2].equals("the")){
+                                game.lookAt(hero, command[3], map);
+                            } else{
+                                game.lookAt(hero, command[2], map);
+                            }
                         }
                     } catch(IndexOutOfBoundsException e){
                         System.out.println("Please enter the valid form: look around or look at _person_");
