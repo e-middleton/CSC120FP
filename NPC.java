@@ -203,8 +203,6 @@ public class NPC{
         if(this.inventory.size() < 16){
             if(npc.checkInventory(s)){
                 this.inventory.add(npc.getItem(s));
-            } else{
-                System.out.println(s + " is nowhere to be found, it cannot be picked up.");
             }
         } else{
             throw new RuntimeException("Your bag is too heavy. This object cannot be picked up.");
