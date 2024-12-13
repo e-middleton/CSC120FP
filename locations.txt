@@ -127,11 +127,11 @@ true
 true
 true
 
-a dark and eerie forest...
+a dark and eerie forest. All around you the trees feel as though they're closing in, %nperhaps there's a clearing further east, but the way is blocked by a door%nthe door is made up of an old tree and its many, woven roots...is that a face in the bark?
 
 forest
 false
-true
+false
 true
 true
 false

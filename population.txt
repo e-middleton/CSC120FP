@@ -3,10 +3,20 @@ door
 A man who appears to be melted into the metal of a heavy door, or perhaps he was always a part of the structure
 The door's rusty eyes peel themselves open,%nHis voice is mechanical as he informs you that,%nshould you wish to cross his threshold, you must correctly anwer his riddle.%nWould you like to hear his riddle? (yes/no)%n
 I'm almost a String%nbut that isn't quite right%nfor how could a String%nkeep you warm in the night?%nI'm hard here to find,%nstill harder to use%nHere's a hint,%nI make up socks%ninside of your shoes.%nWhat am I?%n
+Very well, the door sighs, you may pass.%nA grinding sound of old gears turning bounces around the rock ceiling%nThe heavy metal door... swings open
 south
 yarn
 3
 1
+door
+a man long since grown into the bark of the trees, covered in a light layer of moss. He seems very, very tired
+the door's wooden eyes roll open, the way a leaf uncurls as it rises from the dirt,%nthe smell of cedar fills the air as he begins to speak%nshould you wish to pass through his doorway in the forest, you must answer his riddle.%nWould you like to hear his riddle? (yes/no)%n
+a little, a touch, or a byte%nbut not a single one's right%nI'll give you one clue%nthink now cpu%nyou count me by powers of two%nI am a _ _ _%n
+Very well, the door sighs, you may pass.%nwood creaks as his arms retrace and roots shift to break up the dirt as they move%na clear, unhindered path emerges%n
+east
+bit
+2
+3
 merchant
 A man, perhaps in his mid thirties in richly dyed clothing who eyes you with curiosity 
 1
