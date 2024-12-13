@@ -35,6 +35,8 @@ that will eat unknit yarn, some of which (bulky and dk yarn) has no replacement 
 
 In the mine you must answer the riddle of a door in order to walk south into the yarn trove, the answer is "yarn"
 
+You don't have to go into the mushroom circle, there's nothing of interest, but the way is blocked by a door who's riddle's answer is "bit"
+
 try talking to items in locations, I think it's funny
 also please look at people and objects, I spent way too much time on descriptions
 
