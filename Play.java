@@ -296,7 +296,14 @@ public class Play {
             //gets the player's payment
             System.out.println("Remember, they want (" + (character.getWantsNum() - character.getHasNum()) + ") " + character.getWant());
             System.out.println("What is your payment? ");
-            String payment = punctuationRemoval(input.nextLine()).toLowerCase();
+            String pay = punctuationRemoval(input.nextLine()).toLowerCase();
+            String payment = "";
+            if(pay.endsWith("s")){
+                payment += pay.substring(0, pay.lastIndexOf("s")); //resolves issue of typing "shells" instead of "shell"
+            } else{
+                payment += pay;
+            }
+
             if(hero.checkInventory(payment)){
                 try{
                     character.barter(commodity, payment, hero);
