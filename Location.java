@@ -375,6 +375,7 @@ public class Location {
             for(int i = 0; i < this.inventory.size(); i ++){ //it is removed
                 if(this.inventory.get(i).getName().equals(s)){
                     this.inventory.remove(i); //removes the index where the item is
+                    break;
                 } 
             }
             if(!containsItem(s)){ //if there is no more remaining of that item, it is removed from the description
