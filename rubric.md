@@ -43,6 +43,6 @@ ___YES__ 2 pt: Complies with style guidelines (missing items 1 pt each):
 
       ___YES__ Methods avoid confusing side effects.
 
-___YES__ 1 pt: All required files included with submission (including completed checklist file).
+___YES__ 1 pt: All required files included with submission (including completed checklist file). (Rubric?)
 
 ___YES__ 1 pt: `readme.md` contains your reflection on the project and responses to all prompts .

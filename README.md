@@ -120,4 +120,7 @@ for each location, if a location does not have an inventory, type 0 for numItems
  Not much, I really think I liked the way I broke things down into little bits and waited to add complexity/fun features after the main basic functions were working.
  Maybe I would tell myself to keep the scope smaller in the beginning though. Because there were some high and lofty ideas about what was and was not possible for the time frame, and to have a long think about what is a class, and what could be a specific instance of a different class.
 
+ *Reflection*
+ - I had so much fun working on this project and testing out the game, I feel like I learned a lot and I'm really glad this was our final  :)
  - _If you worked with a team:_ please comment on how your **team dynamics** influenced your experience working on this project.
+ N/A

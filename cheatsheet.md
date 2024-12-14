@@ -37,10 +37,10 @@ In the mine you must answer the riddle of a door in order to walk south into the
 
 You don't have to go into the mushroom circle, there's nothing of interest, but the way is blocked by a door who's riddle's answer is "bit"
 
-try talking to items in locations, I think it's funny
-also please look at people and objects, I spent way too much time on descriptions
+try talking to items in locations, I think it's funny, especially the gold in river[3][0] or the gold ore room [2][3]
+also please look at people and objects, I spent way too much time on descriptions, examine coral in sea[0][1]
 
-A map .png is in the repo, but a brief overview of the map is below:
+A map .png is in the repo, but a brief text overview of the map is below:
 [0][0]: cliffs
 [0][1]: sea
 [0][2]: cove
